@@ -16,17 +16,39 @@ class Course: Identifiable {
     
     @Attribute(.unique)
     var name: String
-    
+
     @Relationship(deleteRule: .cascade)
     var baskets: [Basket]? 
     
     @Relationship(inverse: \Game.course)
     var games: [Game]?
     
+    @Attribute(.externalStorage)
+    var image: Data?
+    
     var latitude: Double?
     var longitude: Double?
-    var image: Data?
     var cityState: String?
+    
+    @Transient
+    var locationManager = LocationManager()
+
+    var lastPlayedString: String {
+        let games = games?.sorted(by: {$0.startDate > $1.startDate})
+        if let mostRecentGame = games?.first?.formattedStartDate {
+            return "Last Played \(mostRecentGame)"
+        }
+        return "Never Played"
+    }
+    
+    var distance: Double {
+        let userClLocation = locationManager.lastLocation?.coordinate
+        let userCoordinates = CLLocation(latitude: userClLocation?.latitude ?? 0.0, longitude: userClLocation?.longitude ?? 0.0)
+        let courseCoordinates = CLLocation(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0)
+
+        let distanceKiloMeters = (userCoordinates.distance(from: courseCoordinates))/1000
+        return distanceKiloMeters*0.6213712
+    }
     
     init() {
         name = ""
@@ -68,7 +90,6 @@ class Course: Identifiable {
 
 @Model
 class Basket {
-//    @Relationship(deleteRule: .nullify, inverse: \Course.holes)
     @Relationship(inverse: \Course.baskets)
     var course: Course?
     

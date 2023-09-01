@@ -16,9 +16,10 @@ struct SelectCourseView: View {
     
     @State var selectedItem: Course?
     @State private var isCreatingNewCourse = true
+    
     var body: some View {
         NavigationStack {
-            List(courses, id: \.self) { course in
+            List(courses.sorted(by: {$1.distance > $0.distance})) { course in
                 NavigationLink(value: course) {
                     HStack {
                         if let courseImage = course.image, let image = UIImage(data: courseImage) {
@@ -39,12 +40,12 @@ struct SelectCourseView: View {
                             Text(String(course.name))
                                 .font(.headline)
                                 .foregroundStyle(Color("Navy"))
-                            Text("Last Played")
+                            Text(course.lastPlayedString)
                                 .font(.subheadline)
                                 .foregroundStyle(Color("Navy"))
                             HStack(spacing: 0.0) {
                                 Image(systemName: "location.fill")
-                                Text("Distance")
+                                Text("\(String(format: "%.1f", course.distance)) mi away")
                             }
                             .font(.caption)
                             .foregroundStyle(Color("Teal"))
@@ -115,7 +116,7 @@ struct SelectPlayerView: View {
                 print("Tapped \(player.name), \(player.isSelected)")
             }, label: {
                 HStack {
-                    PlayerProfileCircleView(player: player)
+                    PlayerProfileCircleView(player: player, size: 50)
                     Text(player.name)
                         .font(.headline)
                         .foregroundStyle(Color("Navy"))

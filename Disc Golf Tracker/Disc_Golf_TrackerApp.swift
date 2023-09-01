@@ -22,18 +22,18 @@ struct Disc_Golf_TrackerApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-
+    @Environment(\.undoManager) var undoManager
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-//        .modelContainer(for: [
-//            Course.self,
-//            Player.self,
-//            Basket.self,
-//            Game.self
-//        ])
-        .modelContainer(sharedModelContainer)
+        .modelContainer(for: [
+            Course.self,
+            Player.self,
+            Basket.self,
+            Game.self
+        ], isUndoEnabled: true)
+//        .modelContainer(sharedModelContainer)
     }
     
     init() {

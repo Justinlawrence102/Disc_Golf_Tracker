@@ -20,19 +20,27 @@ class Game {
     @Attribute(.unique)
     var id: UUID = UUID()
     
-    var startDate: Date?
+    var startDate: Date
     var endDate: Date?
     var photo: Data?
     var currentHole: Int?
     
-    init() {
+    var formattedStartDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: startDate)
 
+    }
+    init() {
+        startDate = Date()
     }
     
     func createGame(course: Course, players: [Player], modelContext: ModelContext) {
         modelContext.insert(self)
 //                    newGame.course = selectedCourse
 //                    selectedCourse.games?.append(newGame)
+        self.startDate = Date()
         self.playerScores = []
         
         self.course = course

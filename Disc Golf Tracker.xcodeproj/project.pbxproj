@@ -10,6 +10,8 @@
 		981E14BB2A9E999900786125 /* CreateCourseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BA2A9E999900786125 /* CreateCourseViews.swift */; };
 		981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */; };
 		981E14BF2A9EC3C500786125 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BE2A9EC3C500786125 /* Game.swift */; };
+		988A6A252AA14E3E00DFC73F /* CreatePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */; };
+		988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A262AA1588A00DFC73F /* LocationManager.swift */; };
 		98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB41C2A96B3D400354654 /* Disc_Golf_TrackerApp.swift */; };
 		98CCB41F2A96B3D400354654 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB41E2A96B3D400354654 /* ContentView.swift */; };
 		98CCB4212A96B3D400354654 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB4202A96B3D400354654 /* Player.swift */; };
@@ -25,6 +27,8 @@
 		981E14BA2A9E999900786125 /* CreateCourseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseViews.swift; sourceTree = "<group>"; };
 		981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCourseView.swift; sourceTree = "<group>"; };
 		981E14BE2A9EC3C500786125 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
+		988A6A262AA1588A00DFC73F /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		98CCB4192A96B3D400354654 /* Disc Golf Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Disc Golf Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CCB41C2A96B3D400354654 /* Disc_Golf_TrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disc_Golf_TrackerApp.swift; sourceTree = "<group>"; };
 		98CCB41E2A96B3D400354654 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				98CCB4342A96C4E400354654 /* PlayerListView.swift */,
+				988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */,
 			);
 			path = Players;
 			sourceTree = "<group>";
@@ -106,6 +111,7 @@
 				98CCB4282A96B3D600354654 /* Info.plist */,
 				98CCB4252A96B3D600354654 /* Preview Content */,
 				98F0E9522A990E49007E0948 /* SampleData.swift */,
+				988A6A262AA1588A00DFC73F /* LocationManager.swift */,
 			);
 			path = "Disc Golf Tracker";
 			sourceTree = "<group>";
@@ -201,9 +207,11 @@
 				981E14BF2A9EC3C500786125 /* Game.swift in Sources */,
 				98DBF9512A9842160063F6AD /* Course.swift in Sources */,
 				98F0E9532A990E49007E0948 /* SampleData.swift in Sources */,
+				988A6A252AA14E3E00DFC73F /* CreatePlayerView.swift in Sources */,
 				98CCB4352A96C4E400354654 /* PlayerListView.swift in Sources */,
 				98CCB41F2A96B3D400354654 /* ContentView.swift in Sources */,
 				98CCB4332A96C47E00354654 /* GameSelectionView.swift in Sources */,
+				988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */,
 				98CCB4212A96B3D400354654 /* Player.swift in Sources */,
 				98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */,
 				981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */,
@@ -336,7 +344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Disc Golf Tracker/Preview Content\"";
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = 28L3G462YX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -375,7 +383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Disc Golf Tracker/Preview Content\"";
-				DEVELOPMENT_TEAM = Y48L6965QA;
+				DEVELOPMENT_TEAM = 28L3G462YX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

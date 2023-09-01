@@ -12,6 +12,8 @@ import SwiftUI
 @Model
 final class Player {
     var name: String
+    
+    @Attribute(.externalStorage)
     var image: Data?
     var lastPlay: Date?
     var color: String

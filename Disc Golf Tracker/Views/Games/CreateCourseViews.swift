@@ -49,12 +49,23 @@ struct CreateCourseDetailsView: View {
                                 .foregroundStyle(Color("Navy"))
                             Spacer()
                             Image(systemName: "camera.fill")
+                            Button(action: {
+                                course.image = nil
+                            }, label: {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(Color("Pink"))
+                            })
                         }
                     }
                     .onChange(of: selectedItem, initial: false, {
                         Task {
                             if let data = try? await selectedItem?.loadTransferable(type: Data.self) {
-                                course.image = data
+                                if let uiImage = UIImage(data: data) {
+                                    if let compressedData = uiImage.jpegData(compressionQuality: 0) {
+                                        course.image = compressedData
+                                    }
+                                }
+//                                course.image = data
                             }
                         }
                     })
