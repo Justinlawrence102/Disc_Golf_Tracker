@@ -10,6 +10,7 @@
 		981E14BB2A9E999900786125 /* CreateCourseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BA2A9E999900786125 /* CreateCourseViews.swift */; };
 		981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */; };
 		981E14BF2A9EC3C500786125 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BE2A9EC3C500786125 /* Game.swift */; };
+		9840FBB62AA53D380052CB63 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9840FBB52AA53D380052CB63 /* GameView.swift */; };
 		988A6A252AA14E3E00DFC73F /* CreatePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */; };
 		988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A262AA1588A00DFC73F /* LocationManager.swift */; };
 		98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB41C2A96B3D400354654 /* Disc_Golf_TrackerApp.swift */; };
@@ -27,6 +28,7 @@
 		981E14BA2A9E999900786125 /* CreateCourseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseViews.swift; sourceTree = "<group>"; };
 		981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCourseView.swift; sourceTree = "<group>"; };
 		981E14BE2A9EC3C500786125 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		9840FBB52AA53D380052CB63 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
 		988A6A262AA1588A00DFC73F /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		98CCB4192A96B3D400354654 /* Disc Golf Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Disc Golf Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +71,7 @@
 				98CCB4322A96C47E00354654 /* GameSelectionView.swift */,
 				981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */,
 				981E14BA2A9E999900786125 /* CreateCourseViews.swift */,
+				9840FBB52AA53D380052CB63 /* GameView.swift */,
 			);
 			path = Games;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */,
 				98CCB4212A96B3D400354654 /* Player.swift in Sources */,
 				98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */,
+				9840FBB62AA53D380052CB63 /* GameView.swift in Sources */,
 				981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

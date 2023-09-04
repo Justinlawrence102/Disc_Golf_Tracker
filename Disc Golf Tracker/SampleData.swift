@@ -94,6 +94,24 @@ let GamesPreviewContainer: ModelContainer = {
         let game = Game()
         game.course = sampleCourse
         container.mainContext.insert(game)
+        
+        let player = Player(name: "Sample Player", color: "C7F465")
+        container.mainContext.insert(player)
+        
+        let playerScore = PlayerScore(player: player)
+        player.scores?.append(playerScore)
+        game.playerScores?.append(playerScore)
+        container.mainContext.insert(playerScore)
+        
+        let player2 = Player(name: "Sample Player2", color: "C70465")
+        container.mainContext.insert(player2)
+        
+        let playerScore2 = PlayerScore(player: player2)
+        player2.scores?.append(playerScore2)
+        game.playerScores?.append(playerScore2)
+        container.mainContext.insert(playerScore2)
+//        player.
+        
 
         return container
     } catch {

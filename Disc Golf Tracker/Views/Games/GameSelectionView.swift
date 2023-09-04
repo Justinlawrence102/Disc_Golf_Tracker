@@ -11,13 +11,15 @@ import CoreLocation
 import CoreLocationUI
 
 struct GameSelectionView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) var dismiss
+    
     @State private var showCreateNewGame = false
     @State private var showSettingsPage = false
 
     @State var newCourseDetent: PresentationDetent = .medium
     
-//    @Query(sort: [SortDescriptor(\.startDate, comparator: .localized)]) private var games: [Game]
-    @Query(sort: [SortDescriptor(\Game.startDate)]) private var games: [Game]
+    @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
 
     var body: some View {
         NavigationStack {
@@ -65,19 +67,9 @@ struct GameSelectionView: View {
             }
             .listStyle(.plain)
             .navigationDestination(for: Game.self) { game in
-//                let _ = Self._printChanges()
-                // 4
-                VStack {
-                    Text("Num Players: \(game.playerScores?.count ?? 0)")
-
-                    ForEach(game.playerScores ?? []) {
-                        playerScore in
-                        Text("\(playerScore.player?.name ?? "N/A")")
-                    }
-                    Text("Num Baskets: \(game.course?.baskets?.count ?? 0)")
-                }                        .navigationTitle(game.course?.name ?? "Course")
+                GameView(game: game)
+                    .navigationTitle(game.course?.name ?? "Course")
                     .navigationBarTitleDisplayMode(.inline)
-                
             }
             .navigationTitle("Games")
             .toolbar {

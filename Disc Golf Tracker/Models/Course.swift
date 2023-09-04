@@ -20,6 +20,13 @@ class Course: Identifiable {
     @Relationship(deleteRule: .cascade)
     var baskets: [Basket]? 
     
+    var sortedBaskets: [Basket] {
+        if let baskets = baskets {
+            return baskets.sorted(by: {$1.number > $0.number})
+        }
+        return []
+    }
+    
     @Relationship(inverse: \Game.course)
     var games: [Game]?
     

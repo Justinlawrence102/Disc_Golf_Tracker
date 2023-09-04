@@ -23,8 +23,14 @@ class Game {
     var startDate: Date
     var endDate: Date?
     var photo: Data?
-    var currentHole: Int?
+    var currentHoleIndex: Int = 0
     
+    var currentBasket: Basket? {
+        if let course = course, course.sortedBaskets.indices.contains(currentHoleIndex) {
+            return course.sortedBaskets[currentHoleIndex]
+        }
+        return nil
+    }
     var formattedStartDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium //.long
@@ -36,6 +42,16 @@ class Game {
         startDate = Date()
     }
     
+//    init(sample: Bool) {
+//        startDate = Date()
+//        course = Course(name: "Sample Course")
+//        let basket = Basket(number: 1, course: course!)
+//        course?.baskets = []
+//        course?.baskets?.append(basket)
+//        let player = Player(name: "Player 1", color: "C7F465")
+//        playerScores = []
+//        playerScores?.append(PlayerScore(player: player))
+//    }
     func createGame(course: Course, players: [Player], modelContext: ModelContext) {
         modelContext.insert(self)
 //                    newGame.course = selectedCourse
@@ -78,7 +94,7 @@ class PlayerScore {
     
 //    var name: String
     
-//    var scores: [Int] = []
+    var scores: [Int] = []
     
     @Relationship(inverse: \Game.playerScores)
     var game: Game?
