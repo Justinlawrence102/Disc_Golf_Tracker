@@ -98,19 +98,19 @@ let GamesPreviewContainer: ModelContainer = {
         let player = Player(name: "Sample Player", color: "C7F465")
         container.mainContext.insert(player)
         
-        let playerScore = PlayerScore(player: player)
-        player.scores?.append(playerScore)
-        game.playerScores?.append(playerScore)
+        let playerScore = PlayerScore(player: player, game: game, basket: basket1)
         container.mainContext.insert(playerScore)
+        
+        let playerScore2 = PlayerScore(player: player, game: game, basket: basket2)
+        container.mainContext.insert(playerScore2)
         
         let player2 = Player(name: "Sample Player2", color: "C70465")
         container.mainContext.insert(player2)
         
-        let playerScore2 = PlayerScore(player: player2)
-        player2.scores?.append(playerScore2)
-        game.playerScores?.append(playerScore2)
-        container.mainContext.insert(playerScore2)
-//        player.
+        let playerScore3 = PlayerScore(player: player2, game: game, basket: basket1)
+        container.mainContext.insert(playerScore3)
+        let playerScore4 = PlayerScore(player: player2, game: game, basket: basket2)
+        container.mainContext.insert(playerScore4)
         
 
         return container

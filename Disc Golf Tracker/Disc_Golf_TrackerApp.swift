@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import MapKit
 
 @main
 struct Disc_Golf_TrackerApp: App {
@@ -14,7 +15,10 @@ struct Disc_Golf_TrackerApp: App {
         let schema = Schema([
             Basket.self, Course.self, Player.self, Game.self
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        //, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker")
+//        modelConfiguration.cloudKitContainerIdentifier = "iCloud.justinlawrence.discGolfTracker"
+//        let configuration = ModelConfiguration(cloudKitContainerIdentifier: "iCloud.justinlawrence.discGolfTracker")
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -23,9 +27,12 @@ struct Disc_Golf_TrackerApp: App {
         }
     }()
     @Environment(\.undoManager) var undoManager
+    var locationManager = LocationManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(locationManager)
+                .navigationBarColor(text: UIColor(named: "Pink")!)
         }
         .modelContainer(for: [
             Course.self,
@@ -36,11 +43,12 @@ struct Disc_Golf_TrackerApp: App {
 //        .modelContainer(sharedModelContainer)
     }
     
-    init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(named: "Pink")!]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(named: "Pink")!]
-    }
-//    
+//    init() {
+//        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(named: "Pink")!]
+//        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(named: "Pink")!]
+//    }
+    
+//
 //    var body: some Scene {
 //        WindowGroup {
 //            ContentView()
@@ -70,5 +78,38 @@ extension UIColor{
             }
         }
         return nil
+    }
+}
+
+struct NavigationBarColor: ViewModifier {
+
+  init(tintColor: UIColor) {
+    let coloredAppearance = UINavigationBarAppearance()
+    coloredAppearance.titleTextAttributes = [.foregroundColor: tintColor]
+    coloredAppearance.largeTitleTextAttributes = [.foregroundColor: tintColor]
+                   
+    UINavigationBar.appearance().standardAppearance = coloredAppearance
+    UINavigationBar.appearance().tintColor = tintColor
+  }
+
+  func body(content: Content) -> some View {
+    content
+  }
+}
+
+extension View {
+  func navigationBarColor(text: UIColor) -> some View {
+    self.modifier(NavigationBarColor(tintColor: text))
+  }
+}
+
+extension CLLocationCoordinate2D: Hashable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(latitude)
+        hasher.combine(longitude)
     }
 }

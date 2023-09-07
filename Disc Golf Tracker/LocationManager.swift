@@ -26,6 +26,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func askPermission() {
         locationManager.requestWhenInUseAuthorization()
     }
+    
+    func requestLocation() {
+        locationManager.requestLocation()
+    }
    
     
     var statusString: String {

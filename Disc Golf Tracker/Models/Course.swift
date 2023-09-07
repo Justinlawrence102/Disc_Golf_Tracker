@@ -14,15 +14,15 @@ import MapKit
 class Course: Identifiable {
     var id: UUID = UUID()
     
-    @Attribute(.unique)
-    var name: String
+//    @Attribute(.unique)
+    var name: String = ""
 
     @Relationship(deleteRule: .cascade)
     var baskets: [Basket]? 
     
     var sortedBaskets: [Basket] {
         if let baskets = baskets {
-            return baskets.sorted(by: {$1.number > $0.number})
+            return baskets.sorted(by: {$1.number ?? 0 > $0.number ?? 0})
         }
         return []
     }
@@ -36,9 +36,7 @@ class Course: Identifiable {
     var latitude: Double?
     var longitude: Double?
     var cityState: String?
-    
-    @Transient
-    var locationManager = LocationManager()
+
 
     var lastPlayedString: String {
         let games = games?.sorted(by: {$0.startDate > $1.startDate})
@@ -73,7 +71,17 @@ class Course: Identifiable {
         return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 29, longitude: -82), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 20), longitudeDelta: CLLocationDegrees(floatLiteral: 20)))
     }
     
-//    func lookUpCurrentLocation(completionHandler: @escaping (String?) -> Void ) {
+    func getDistance(locationManager: LocationManager) ->Double {
+        if let userClLocation = locationManager.lastLocation?.coordinate, let latitude = latitude, let longitude = longitude {
+            let userCoordinates = CLLocation(latitude: userClLocation.latitude, longitude: userClLocation.longitude)
+            let courseCoordinates = CLLocation(latitude: latitude, longitude: longitude)
+
+            let distanceKiloMeters = (userCoordinates.distance(from: courseCoordinates))/1000
+            return distanceKiloMeters*0.6213712
+        }
+        return 0
+    }
+    
     func lookUpCurrentLocation() {
         if let latitude = latitude, let longitude = longitude {
             let location = CLLocation(latitude: latitude, longitude: longitude)
@@ -85,12 +93,8 @@ class Course: Identifiable {
                 }
                 if let placemark = placemarks.first {
                     self.cityState = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "")"
-//                    completionHandler("\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "")")
                 }
-//                completionHandler(nil)
             })
-        }else {
-//            completionHandler(nil)
         }
     }
 }
@@ -100,17 +104,61 @@ class Basket {
     @Relationship(inverse: \Course.baskets)
     var course: Course?
     
-    @Attribute(.unique)
+    @Relationship(deleteRule: .noAction)
+    var playerScores: [PlayerScore]?
+    
     var id: UUID = UUID()
     
-    var number: Int
-    var par: String
-    var distance: String
+    var number: Int?
+    var par: String = ""
+    var distance: String = ""
+    
+    var basketLatitudes: [Double] = []
+    var basketLongitudes: [Double] = []
+    
+    var teeLatitudes: [Double] = []
+    var teeLongitudes: [Double] = []
+    
+    var basketCoordinates: [CLLocationCoordinate2D] {
+        var coordinates = [CLLocationCoordinate2D]()
+        for i in 0..<basketLatitudes.count {
+            coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(basketLatitudes[i]), longitude: CLLocationDegrees(basketLongitudes[i])))
+        }
+        return coordinates
+    }
+    
+    var teeCoordinates: [CLLocationCoordinate2D] {
+        var coordinates = [CLLocationCoordinate2D]()
+        for i in 0..<teeLatitudes.count {
+            coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(teeLatitudes[i]), longitude: CLLocationDegrees(teeLongitudes[i])))
+        }
+        return coordinates
+    }
     
     init(number: Int, course: Course) {
         self.number = number
         par = ""
         distance = ""
         self.course = course
+    }
+    
+    func saveTeeLocation(holeNumber: Int, locationManager: LocationManager) {
+        locationManager.requestLocation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if let currentLocation = locationManager.lastLocation?.coordinate {
+                self.teeLatitudes.append(currentLocation.latitude)
+                self.teeLongitudes.append(currentLocation.longitude)
+            }
+        }
+    }
+    
+    func saveBasketLocation(holeNumber: Int, locationManager: LocationManager) {
+        locationManager.requestLocation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if let currentLocation = locationManager.lastLocation?.coordinate {
+                self.basketLatitudes.append(currentLocation.latitude)
+                self.basketLongitudes.append(currentLocation.longitude)
+            }
+        }
     }
 }

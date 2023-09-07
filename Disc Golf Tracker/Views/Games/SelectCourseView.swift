@@ -16,10 +16,11 @@ struct SelectCourseView: View {
     
     @State var selectedItem: Course?
     @State private var isCreatingNewCourse = true
-    
+    @EnvironmentObject var locationManager: LocationManager
+
     var body: some View {
         NavigationStack {
-            List(courses.sorted(by: {$1.distance > $0.distance})) { course in
+            List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) > $0.getDistance(locationManager: locationManager)})) { course in
                 NavigationLink(value: course) {
                     HStack {
                         if let courseImage = course.image, let image = UIImage(data: courseImage) {
@@ -45,7 +46,7 @@ struct SelectCourseView: View {
                                 .foregroundStyle(Color("Navy"))
                             HStack(spacing: 0.0) {
                                 Image(systemName: "location.fill")
-                                Text("\(String(format: "%.1f", course.distance)) mi away")
+                                Text("\(String(format: "%.1f", course.getDistance(locationManager: locationManager))) mi away")
                             }
                             .font(.caption)
                             .foregroundStyle(Color("Teal"))

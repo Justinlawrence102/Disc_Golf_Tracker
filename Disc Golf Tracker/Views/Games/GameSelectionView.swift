@@ -68,8 +68,6 @@ struct GameSelectionView: View {
             .listStyle(.plain)
             .navigationDestination(for: Game.self) { game in
                 GameView(game: game)
-                    .navigationTitle(game.course?.name ?? "Course")
-                    .navigationBarTitleDisplayMode(.inline)
             }
             .navigationTitle("Games")
             .toolbar {

@@ -11,12 +11,12 @@ import SwiftUI
 
 @Model
 final class Player {
-    var name: String
+    var name: String = ""
     
     @Attribute(.externalStorage)
     var image: Data?
     var lastPlay: Date?
-    var color: String
+    var color: String = "C7F465"
     var numGames: Int?
     
     @Relationship(deleteRule: .cascade, inverse: \PlayerScore.player)

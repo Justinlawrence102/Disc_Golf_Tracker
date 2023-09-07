@@ -131,7 +131,7 @@ struct CreateCourseBasketListView: View {
                     .background(Color("Teal"))
                     .cornerRadius(12)
             })
-            List((course.baskets ?? []).sorted { $1.number > $0.number}) {
+            List((course.baskets ?? []).sorted { $1.number ?? 0 > $0.number ?? 0}) {
                 basket in
                 Section{
                     BasketDetailRow(basket: basket)
