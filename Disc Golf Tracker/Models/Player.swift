@@ -17,7 +17,6 @@ final class Player {
     var image: Data?
     var lastPlay: Date?
     var color: String = "C7F465"
-    var numGames: Int?
     
     @Relationship(deleteRule: .cascade, inverse: \PlayerScore.player)
     var scores: [PlayerScore]?
@@ -33,7 +32,11 @@ final class Player {
     init(name: String, color: String) {
         self.name = name
         self.color = color
-        self.numGames = 0
+    }
+    init(name: String, color: String, image: Data?) {
+        self.name = name
+        self.color = color
+        self.image = image
     }
     
     func getColor()-> Color {

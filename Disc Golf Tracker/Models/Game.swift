@@ -137,7 +137,7 @@ class Game {
         latitude = latitude/Double(coordinates.count)
         longitude = longitude/Double(coordinates.count)
         
-        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+0.0005), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+0.0005)))
+        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+0.001), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+0.001)))
     }
 }
 
@@ -150,9 +150,7 @@ class PlayerScore {
     var basket: Basket?
     
     var score: Int = 0
-    
-//    var scores: [Int] = []
-    
+        
     @Relationship(inverse: \Game.playerScores)
     var game: Game?
     
@@ -179,4 +177,31 @@ class PlayerScore {
 //            self.player = player
 //        }
 //    }
+}
+
+
+struct ResultScores: Identifiable {
+    let name: String
+    var score: Int
+    var id: String { name }
+    let image: Data?
+    var color: String
+    
+    init(player: Player, totalScore: Int, image: Data?, color: String) {
+        self.name = player.name
+        self.score = totalScore
+        self.image = image
+        self.color = color
+    }
+    func getParDiff(game: Game) -> String {
+        var parTotal = 0
+        for basket in game.course?.baskets ?? [] {
+            parTotal += Int(basket.par) ?? 0
+        }
+        let parDiff = score - parTotal
+        if parDiff > 0 {
+            return "+\(parDiff)"
+        }
+        return String(parDiff)
+    }
 }

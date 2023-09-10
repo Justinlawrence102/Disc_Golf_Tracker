@@ -55,6 +55,7 @@ struct GameSelectionView: View {
                                 .font(.caption)
                                 .fontWeight(.semibold)
                                 .foregroundStyle(Color("Teal"))
+                                .shadow(radius: 3)
                             }
                         }
                         .padding(8.0)
@@ -68,6 +69,7 @@ struct GameSelectionView: View {
             .listStyle(.plain)
             .navigationDestination(for: Game.self) { game in
                 GameView(game: game)
+//                GameView()
             }
             .navigationTitle("Games")
             .toolbar {

@@ -99,17 +99,21 @@ let GamesPreviewContainer: ModelContainer = {
         container.mainContext.insert(player)
         
         let playerScore = PlayerScore(player: player, game: game, basket: basket1)
+        playerScore.score = 3
         container.mainContext.insert(playerScore)
         
         let playerScore2 = PlayerScore(player: player, game: game, basket: basket2)
+        playerScore2.score = 3
         container.mainContext.insert(playerScore2)
         
         let player2 = Player(name: "Sample Player2", color: "C70465")
         container.mainContext.insert(player2)
         
         let playerScore3 = PlayerScore(player: player2, game: game, basket: basket1)
+        playerScore3.score = 4
         container.mainContext.insert(playerScore3)
         let playerScore4 = PlayerScore(player: player2, game: game, basket: basket2)
+        playerScore4.score = 4
         container.mainContext.insert(playerScore4)
         
 
