@@ -87,6 +87,7 @@ struct PlayerProfileCircleView: View {
         if let playerImage = player.image, let image = UIImage(data: playerImage) {
             Image(uiImage: image)
                 .resizable()
+                .aspectRatio(contentMode: .fill)
                 .frame(width: size, height: size)
                 .background(player.getColor())
                 .cornerRadius(size/2)

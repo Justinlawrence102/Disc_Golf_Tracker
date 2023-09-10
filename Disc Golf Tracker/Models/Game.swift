@@ -46,43 +46,19 @@ class Game {
         startDate = Date()
     }
     
-//    init(sample: Bool) {
-//        startDate = Date()
-//        course = Course(name: "Sample Course")
-//        let basket = Basket(number: 1, course: course!)
-//        course?.baskets = []
-//        course?.baskets?.append(basket)
-//        let player = Player(name: "Player 1", color: "C7F465")
-//        playerScores = []
-//        playerScores?.append(PlayerScore(player: player))
-//    }
     func createGame(course: Course, players: [Player], modelContext: ModelContext) {
-//        var test2 = course.baskets?[currentHoleIndex].cameraPosition
         modelContext.insert(self)
-//                    newGame.course = selectedCourse
-//                    selectedCourse.games?.append(newGame)
         self.startDate = Date()
         self.playerScores = []
         
         self.course = course
         course.games?.append(self)
-        
-
-        
-//            course.games?.append(self)
-//            self.course = course
-//            modelContext.insert(course)
+    
         for player in players {
             for basket in self.course?.baskets ?? [] {
                 let playerScore = PlayerScore(player: player, game: self, basket: basket)
                 modelContext.insert(playerScore)
             }
-//            self.playerScores?.append(playerScore)
-//            playerScore.game = self
-            
-//                modelContext.insert(playerScore)
-////                playerScore.addPlayersToPlayerScore(player: player)
-////                self.playerScores.append(playerScore)
         }
     }
     func getImage()->UIImage? {

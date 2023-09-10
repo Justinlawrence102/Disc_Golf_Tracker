@@ -84,7 +84,7 @@ struct GameSelectionView: View {
                     Button(action: {
                         showSettingsPage.toggle()
                     }) {
-                        Label("New Game", systemImage: "gearshape.fill")
+                        Label("Settings", systemImage: "gearshape.fill")
                     }
                 }
             }

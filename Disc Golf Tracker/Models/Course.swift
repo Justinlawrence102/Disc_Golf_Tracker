@@ -162,7 +162,7 @@ class Basket {
             }
         }
     }
-    func getHighScore(modelContext: ModelContext) -> [String]? {
+    func getHighScore(modelContext: ModelContext) -> [Any]? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium //.long
         dateFormatter.timeStyle = .none
@@ -178,6 +178,9 @@ class Basket {
             let sortedScores = scores.sorted(by: {$1.score > $0.score})
             let topScore = sortedScores.first?.score
             let scoreDate = sortedScores.first?.game?.startDate
+            if let player = sortedScores.first?.player {
+                return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date()), player]
+            }
             return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date())]
         }catch {
             print("Error")

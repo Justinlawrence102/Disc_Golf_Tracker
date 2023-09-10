@@ -11,11 +11,11 @@ import SwiftData
 struct ResultsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-
+    
     //    @Query private var games: [Game]
     //    var game: Game! { games.first }
     
-//        private let playerScores: [ResultScores] = []
+    //        private let playerScores: [ResultScores] = []
     private var scoreResults: [ResultScores] = []
     @State var game: Game
     
@@ -36,7 +36,7 @@ struct ResultsView: View {
                     scoreResults[scoreResults.count-1].score += score.score
                 }
             }
-            //            _playerScores = .init(initialValue: scores)
+            scoreResults.sort(by: {$1.score > $0.score})
             
         }catch {
             print("Error")
@@ -55,7 +55,7 @@ struct ResultsView: View {
             }
             ScrollView {
                 VStack {
-                    VStack {
+                    VStack(spacing: 8) {
                         ForEach(scoreResults) { score in
                             HStack {
                                 PlayerProfileCircleView(player: Player(name: score.name, color: score.color, image: score.image), size: 35)
@@ -78,26 +78,26 @@ struct ResultsView: View {
                             }
                             .padding()
                         }
-                        .background(.regularMaterial)
-                        .cornerRadius(12)
-                        .padding(.horizontal, 12)
-                        .padding(.top, 100.0)
-                        .listStyle(.plain)
-                        Spacer()
-                        
-                        Button(action: {
-                            print("Delete")
-                            modelContext.delete(game)
-                            dismiss.callAsFunction()
-                        }, label: {
-                            Label("Delete Game", systemImage: "trash.fill")
-                                .foregroundColor(.white)
-                                .frame(width: 350, height: 50)
-                                .background(Color("Pink"))
-                                .cornerRadius(12)
-                        })
-                        .padding(.top, 16)
                     }
+                    .background(.regularMaterial)
+                    .cornerRadius(12)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 100.0)
+                    .listStyle(.plain)
+                    Spacer()
+                    
+                    Button(action: {
+                        print("Delete")
+                        modelContext.delete(game)
+                        dismiss.callAsFunction()
+                    }, label: {
+                        Label("Delete Game", systemImage: "trash.fill")
+                            .foregroundColor(.white)
+                            .frame(width: 350, height: 50)
+                            .background(Color("Pink"))
+                            .cornerRadius(12)
+                    })
+                    .padding(.top, 16)
                 }
             }
         }

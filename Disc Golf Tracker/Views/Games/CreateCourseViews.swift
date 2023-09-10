@@ -162,15 +162,18 @@ struct BasketDetailRow: View {
     @State var basket: Basket
     var body: some View {
         VStack {
-            HStack {
-                Text(String("Hole \(basket.number)"))
-                    .font(.headline)
-                    .foregroundColor(Color("Pink"))
-                Spacer()
+            if let number = basket.number {
+                HStack {
+                    Text(String("Hole \(number)"))
+                        .font(.headline)
+                        .foregroundColor(Color("Pink"))
+                    Spacer()
+                }
             }
             HStack(spacing: 12) {
                 VStack(alignment: .leading){
                     TextField("Par", text: $basket.par, prompt: Text("Par"))
+                        .keyboardType(.numberPad)
                         .foregroundStyle(Color("Navy"))
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -186,6 +189,7 @@ struct BasketDetailRow: View {
                 Spacer()
                 VStack(alignment: .leading){
                     TextField("Disntance (Yards)", text: $basket.distance, prompt: Text("Distance"))
+                        .keyboardType(.numberPad)
                         .foregroundStyle(Color("Navy"))
                         .font(.title3)
                         .fontWeight(.semibold)
