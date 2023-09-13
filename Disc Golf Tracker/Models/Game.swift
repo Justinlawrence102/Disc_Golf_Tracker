@@ -10,9 +10,11 @@ import SwiftData
 import UIKit
 import SwiftUI
 import MapKit
+import GroupActivities
 
 @Model
 class Game {
+    
     @Relationship(deleteRule: .noAction)
     var course: Course?
     
@@ -25,6 +27,7 @@ class Game {
     var endDate: Date?
     var photo: Data?
     var currentHoleIndex: Int = 0
+    var isSharedGame: Bool = false
     
     @Transient
     var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion())
@@ -70,13 +73,14 @@ class Game {
         return nil
     }
     
-    func updateMapCamera(locationManager: LocationManager) {
+    func updateMapCamera(locationManager: LocationManager? = nil) {
         //    var cameraPosition: MapCameraPosition {
+//        currentHoleIndex = newIndex
         var coordinateRegion = MKCoordinateRegion()
         if let currentBasket = currentBasket {
             if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
                 coordinateRegion = getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
-            }else if let currentLocation = locationManager.lastLocation?.coordinate {
+            }else if let currentLocation = locationManager?.lastLocation?.coordinate {
                 coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 0.001), longitudeDelta: CLLocationDegrees(floatLiteral: 0.001)))
             }else {
                 coordinateRegion = course!.getInitailMapPosition()
@@ -115,10 +119,21 @@ class Game {
         
         return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+0.001), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+0.001)))
     }
+    
+    func updateFromShareplay(sharedGame: SharedGame) {
+        for playerScore in playerScores ?? [] {
+            if let scoreBasket = sharedGame.baskets.first(where: {$0.basketId == playerScore.basket?.uuid}) {
+                if let score = scoreBasket.playerScores.first(where: {$0.player.playerUuid == playerScore.player?.uuid}) {
+                    playerScore.score = score.score
+                }
+            }
+        }
+    }
 }
 
 @Model
 class PlayerScore {
+    
     @Relationship(deleteRule: .noAction)
     var player: Player?
         

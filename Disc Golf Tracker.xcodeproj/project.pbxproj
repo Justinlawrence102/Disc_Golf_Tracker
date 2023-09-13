@@ -21,6 +21,8 @@
 		98CCB4332A96C47E00354654 /* GameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB4322A96C47E00354654 /* GameSelectionView.swift */; };
 		98CCB4352A96C4E400354654 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB4342A96C4E400354654 /* PlayerListView.swift */; };
 		98DBF9512A9842160063F6AD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DBF9502A9842160063F6AD /* Course.swift */; };
+		98EB2A6E2AAE4E0A00FADD5F /* SharePlayActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB2A6D2AAE4E0A00FADD5F /* SharePlayActivity.swift */; };
+		98EB2A702AAE545B00FADD5F /* AcivitySharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB2A6F2AAE545B00FADD5F /* AcivitySharingViewController.swift */; };
 		98F0E9532A990E49007E0948 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0E9522A990E49007E0948 /* SampleData.swift */; };
 		98F96F332AA9532E00FA99A6 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F96F322AA9532E00FA99A6 /* ResultsView.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +45,8 @@
 		98CCB4322A96C47E00354654 /* GameSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSelectionView.swift; sourceTree = "<group>"; };
 		98CCB4342A96C4E400354654 /* PlayerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
 		98DBF9502A9842160063F6AD /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		98EB2A6D2AAE4E0A00FADD5F /* SharePlayActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayActivity.swift; sourceTree = "<group>"; };
+		98EB2A6F2AAE545B00FADD5F /* AcivitySharingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcivitySharingViewController.swift; sourceTree = "<group>"; };
 		98F0E9522A990E49007E0948 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		98F96F322AA9532E00FA99A6 /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +110,7 @@
 		98CCB41B2A96B3D400354654 /* Disc Golf Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				98EB2A6C2AAE4DF800FADD5F /* SharePlay */,
 				98A0E58D2A96DD4A00E78B93 /* Models */,
 				98CCB42E2A96C43500354654 /* Views */,
 				98CCB41C2A96B3D400354654 /* Disc_Golf_TrackerApp.swift */,
@@ -136,6 +141,15 @@
 				981E14B82A9E997E00786125 /* Players */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		98EB2A6C2AAE4DF800FADD5F /* SharePlay */ = {
+			isa = PBXGroup;
+			children = (
+				98EB2A6D2AAE4E0A00FADD5F /* SharePlayActivity.swift */,
+				98EB2A6F2AAE545B00FADD5F /* AcivitySharingViewController.swift */,
+			);
+			path = SharePlay;
 			sourceTree = "<group>";
 		};
 		98F96F312AA9531100FA99A6 /* Active Game */ = {
@@ -222,6 +236,8 @@
 				98DBF9512A9842160063F6AD /* Course.swift in Sources */,
 				98F0E9532A990E49007E0948 /* SampleData.swift in Sources */,
 				988A6A252AA14E3E00DFC73F /* CreatePlayerView.swift in Sources */,
+				98EB2A702AAE545B00FADD5F /* AcivitySharingViewController.swift in Sources */,
+				98EB2A6E2AAE4E0A00FADD5F /* SharePlayActivity.swift in Sources */,
 				98F96F332AA9532E00FA99A6 /* ResultsView.swift in Sources */,
 				98CCB4352A96C4E400354654 /* PlayerListView.swift in Sources */,
 				98CCB41F2A96B3D400354654 /* ContentView.swift in Sources */,
@@ -384,9 +400,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -423,9 +440,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

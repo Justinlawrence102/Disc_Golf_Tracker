@@ -12,13 +12,14 @@ import MapKit
 
 @Model
 class Course: Identifiable {
-    var id: UUID = UUID()
+    
+    var uuid: String = UUID().uuidString
     
 //    @Attribute(.unique)
     var name: String = ""
 
     @Relationship(deleteRule: .cascade)
-    var baskets: [Basket]? 
+    var baskets:  [Basket]? 
     
     var sortedBaskets: [Basket] {
         if let baskets = baskets {
@@ -27,7 +28,7 @@ class Course: Identifiable {
         return []
     }
     
-    @Relationship(inverse: \Game.course)
+    @Relationship(deleteRule: .cascade, inverse: \Game.course) //deleteRule: .cascade,
     var games: [Game]?
     
     @Attribute(.externalStorage)
@@ -36,7 +37,7 @@ class Course: Identifiable {
     var latitude: Double?
     var longitude: Double?
     var cityState: String?
-
+    var isSharedGame: Bool = false
 
     var lastPlayedString: String {
         let games = games?.sorted(by: {$0.startDate > $1.startDate})
@@ -101,6 +102,7 @@ class Course: Identifiable {
 
 @Model
 class Basket {
+    
     @Relationship(inverse: \Course.baskets)
     var course: Course?
     
@@ -126,6 +128,61 @@ class Basket {
             coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(basketLatitudes[i]), longitude: CLLocationDegrees(basketLongitudes[i])))
         }
         return coordinates
+    }
+    var highScore: [Any]? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        
+        let uuid = self.uuid
+        let scoresPredicate = #Predicate<PlayerScore> {
+            $0.basket?.uuid == uuid && $0.score != 0
+        }
+        do {
+            let container = try ModelContainer(for: Game.self)
+            let modelContext = ModelContext(container)
+            
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
+            let scores = try modelContext.fetch(descriptor)
+            if scores.isEmpty {return nil}
+            let sortedScores = scores.sorted(by: {$1.score > $0.score})
+            let topScore = sortedScores.first?.score
+            let scoreDate = sortedScores.first?.game?.startDate
+            if let player = sortedScores.first?.player {
+                return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date()), player]
+            }
+            return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date())]
+        }catch {
+            print("Error")
+            return nil
+        }
+    }
+    
+    var averageScore: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        
+        let uuid = self.uuid
+        let scoresPredicate = #Predicate<PlayerScore> {
+            $0.basket?.uuid == uuid && $0.score != 0
+        }
+        do {
+            let container = try ModelContainer(for: Game.self)
+            let modelContext = ModelContext(container)
+            
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
+            let scores = try modelContext.fetch(descriptor)
+            if scores.isEmpty {return nil}
+            var scoreSum = 0
+            for score in scores {
+                scoreSum += score.score
+            }
+            return String(format: "%.1f", Double(scoreSum)/Double(scores.count))
+        }catch {
+            print("Error")
+            return nil
+        }
     }
     
     var teeCoordinates: [CLLocationCoordinate2D] {
@@ -160,54 +217,6 @@ class Basket {
                 self.basketLatitudes.append(currentLocation.latitude)
                 self.basketLongitudes.append(currentLocation.longitude)
             }
-        }
-    }
-    func getHighScore(modelContext: ModelContext) -> [Any]? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium //.long
-        dateFormatter.timeStyle = .none
-        
-        let uuid = self.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.basket?.uuid == uuid && $0.score != 0
-        }
-        do {
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-            let scores = try modelContext.fetch(descriptor)
-            if scores.isEmpty {return nil}
-            let sortedScores = scores.sorted(by: {$1.score > $0.score})
-            let topScore = sortedScores.first?.score
-            let scoreDate = sortedScores.first?.game?.startDate
-            if let player = sortedScores.first?.player {
-                return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date()), player]
-            }
-            return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date())]
-        }catch {
-            print("Error")
-            return nil
-        }
-    }
-    func getAverageScore(modelContext: ModelContext) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium //.long
-        dateFormatter.timeStyle = .none
-        
-        let uuid = self.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.basket?.uuid == uuid && $0.score != 0
-        }
-        do {
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-            let scores = try modelContext.fetch(descriptor)
-            if scores.isEmpty {return nil}
-            var scoreSum = 0
-            for score in scores {
-                scoreSum += score.score
-            }
-            return String(format: "%.1f", Double(scoreSum)/Double(scores.count))
-        }catch {
-            print("Error")
-            return nil
         }
     }
 }

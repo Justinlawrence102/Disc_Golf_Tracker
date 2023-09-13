@@ -11,7 +11,8 @@ import SwiftData
 struct PlayerListView: View {
     @Environment(\.modelContext) private var modelContext
 
-    @Query private var players: [Player]
+    @Query(filter: #Predicate<Player> { !$0.isSharedGame}) private var players: [Player]
+//    @Query private var players: [Player]
 
     @State var selectedPlayer: Player?
     @State var selectedNewPlayer = true

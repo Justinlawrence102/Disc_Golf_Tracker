@@ -13,7 +13,7 @@ import MapKit
 struct Disc_Golf_TrackerApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Basket.self, Course.self, Player.self, Game.self
+            Game.self //Basket.self, Course.self, Player.self, 
         ])
         var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         //, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker")
@@ -27,12 +27,22 @@ struct Disc_Golf_TrackerApp: App {
         }
     }()
     @Environment(\.undoManager) var undoManager
+//    @Environment(\.modelContext) private var modelContext
+
     var locationManager = LocationManager()
+    var sharedActivityManager = SharedActivityManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(locationManager)
+                .environmentObject(sharedActivityManager)
                 .navigationBarColor(text: UIColor(named: "Pink")!)
+                .task {
+                    for await session in SharePlayActivity.sessions() {
+                        print("SharePlay exp started")
+                        sharedActivityManager.configureGroupSession(session) //, modelContext: modelContext
+                    }
+                }
         }
         .modelContainer(for: [
             Course.self,

@@ -88,7 +88,21 @@ struct ResultsView: View {
                     
                     Button(action: {
                         print("Delete")
-                        modelContext.delete(game)
+//                        modelContext.delete(game)
+                        let gameId = game.uuid
+                        do {
+                            if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
+                                let courseId = course.uuid
+                                try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+                                
+//                                try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.scores?.first?.game?.isSharedGame ?? false}, includeSubclasses: false)
+                                try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedGame}, includeSubclasses: false)
+                            }
+                            try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
+                        }catch {
+                            print("Could not delete!")
+                        }
+
                         dismiss.callAsFunction()
                     }, label: {
                         Label("Delete Game", systemImage: "trash.fill")

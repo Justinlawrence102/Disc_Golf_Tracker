@@ -11,7 +11,7 @@ import SwiftData
 struct SelectCourseView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-
+//    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
     @Query private var courses: [Course]
     
     @State var selectedItem: Course?
@@ -61,7 +61,13 @@ struct SelectCourseView: View {
                         Label("Edit", systemImage: "pencil")
                     }
                     Button {
-                        modelContext.delete(course)
+//                        modelContext.delete(course)
+                        let courseId = course.uuid
+                        do {
+                            try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+                        }catch {
+                            print("Could not delete!")
+                        }
                     } label: {
                         Label("Delete", systemImage: "trash")
                             .tint(.red)

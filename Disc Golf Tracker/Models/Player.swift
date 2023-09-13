@@ -11,12 +11,16 @@ import SwiftUI
 
 @Model
 final class Player {
+
+    var uuid: String = UUID().uuidString
+    
     var name: String = ""
     
     @Attribute(.externalStorage)
     var image: Data?
     var lastPlay: Date?
     var color: String = "C7F465"
+    var isSharedGame: Bool = false
     
     @Relationship(deleteRule: .cascade, inverse: \PlayerScore.player)
     var scores: [PlayerScore]?
