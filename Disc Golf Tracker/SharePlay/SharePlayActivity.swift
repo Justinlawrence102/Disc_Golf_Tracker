@@ -9,6 +9,7 @@ import Foundation
 import GroupActivities
 import SwiftUI
 import SwiftData
+import MapKit
 
 struct SharePlayActivity: GroupActivity {
     static let activityIdentifier = "com.justinLawrence.discGolf.shareScoreCard"
@@ -57,7 +58,7 @@ class SharedActivityManager: ObservableObject {
             let context = ModelContext(container)
             self.modelContext = context
         }catch {
-            
+            print("Could not configure: \(error)")
         }
 
         let task = Task {
@@ -73,7 +74,6 @@ class SharedActivityManager: ObservableObject {
         tasks.insert(task)
         session.join()
         self.session = session
-//        numActiveParticipants = session.activeParticipants.count
     }
     func addGameToSharedActivity(game: Game) {
         DispatchQueue.main.async{
@@ -143,6 +143,7 @@ class SharedActivityManager: ObservableObject {
     func createGame(context: ModelContext, model: SharedGame) -> Game {
         let course = Course(name: model.courseName)
         course.isSharedGame = true
+//        course.image = model.courseImage
         course.baskets = []
         context.insert(course)
         
@@ -167,6 +168,7 @@ class SharedActivityManager: ObservableObject {
         for player in model.players {
             let newPlayer = Player(name: player.name, color: player.color)
             newPlayer.uuid = player.playerUuid
+//            newPlayer.image = player.image
             newPlayer.isSharedGame = true
             context.insert(newPlayer)
             newPlayers.append(newPlayer)
@@ -191,6 +193,7 @@ struct SharedGame: Codable {
     var currentBasketIndex: Int
     var uuid: String = UUID().uuidString
     var courseName: String
+//    var courseImage: Data?
     
     var players: [SharedPlayer]
     
@@ -204,18 +207,20 @@ struct SharedGame: Codable {
                     playerScore.append(SharedPlayerScore(player: SharedPlayer(name: player.name, color: player.color, playerUuid: player.uuid), score: score.score))
                 }
             }
-            baskets.append(SharedBasket(number: basket.number ?? 0, par: basket.par, distance: basket.distance, basketId: basket.uuid, playerScores: playerScore))
+            let sharedBasket = SharedBasket(number: basket.number ?? 0, par: basket.par, distance: basket.distance, basketId: basket.uuid, playerScores: playerScore, basketsLatitudes: basket.basketLatitudes, basketsLongitudes: basket.basketLongitudes, teeLatitudes: basket.teeLatitudes, teeLongitudes: basket.teeLongitudes)
+            baskets.append(sharedBasket)
         }
         let uniquePlayers_ = (game.playerScores ?? []).map { $0.player }
         let uniquePlayers = Array(Set(uniquePlayers_))
         for player in uniquePlayers {
             if let player = player {
-                players.append(SharedPlayer(name: player.name, color: player.color, playerUuid: player.uuid))
+                players.append(SharedPlayer(name: player.name, color: player.color, playerUuid: player.uuid))//, image: player.image
             }
         }
         self.currentBasketIndex = game.currentHoleIndex
         self.uuid = game.uuid
         self.courseName = game.course?.name ?? "Shared Course"
+//        self.courseImage = game.course?.image
     }
 }
 
@@ -225,6 +230,10 @@ struct SharedBasket: Codable {
     var distance: String
     var basketId: String
     var playerScores: [SharedPlayerScore]
+    var basketsLatitudes: [Double]
+    var basketsLongitudes: [Double]
+    var teeLatitudes: [Double]
+    var teeLongitudes: [Double]
     
 }
 struct SharedPlayerScore: Codable {
@@ -236,4 +245,5 @@ struct SharedPlayer: Codable {
     var name: String
     var color: String
     var playerUuid: String = UUID().uuidString
+//    var image: Data?
 }

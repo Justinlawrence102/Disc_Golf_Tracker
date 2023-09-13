@@ -128,6 +128,14 @@ class Game {
                 }
             }
         }
+        for basket in course?.baskets ?? []{
+            if let sharedBasket = sharedGame.baskets.first(where: {$0.basketId == basket.uuid}) {
+                basket.basketLatitudes = sharedBasket.basketsLatitudes
+                basket.basketLongitudes = sharedBasket.basketsLongitudes
+                basket.teeLatitudes = sharedBasket.teeLatitudes
+                basket.teeLongitudes = sharedBasket.teeLongitudes
+            }
+        }
     }
 }
 
