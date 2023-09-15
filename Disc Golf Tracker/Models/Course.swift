@@ -122,6 +122,9 @@ class Basket {
     var teeLatitudes: [Double] = []
     var teeLongitudes: [Double] = []
     
+    @Transient
+    var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion())
+    
     var basketCoordinates: [CLLocationCoordinate2D] {
         var coordinates = [CLLocationCoordinate2D]()
         for i in 0..<basketLatitudes.count {
@@ -218,5 +221,17 @@ class Basket {
                 self.basketLongitudes.append(currentLocation.longitude)
             }
         }
+    }
+    func updateMapCamera(locationManager: LocationManager? = nil) {
+        var coordinateRegion = MKCoordinateRegion()
+        if !basketCoordinates.isEmpty || !teeCoordinates.isEmpty {
+            coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: basketCoordinates+teeCoordinates)
+        }else if let currentLocation = locationManager?.lastLocation?.coordinate {
+            coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 0.001), longitudeDelta: CLLocationDegrees(floatLiteral: 0.001)))
+        }else {
+            coordinateRegion = course!.getInitailMapPosition()
+            
+        }
+        cameraPosition = .region(coordinateRegion)
     }
 }

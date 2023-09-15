@@ -295,11 +295,11 @@ struct BasketPickerView: View {
                     basket in
                     if let number = basket.number {
                         Button(action: {
-                            withAnimation(.easeInOut, {
+                            withAnimation {
                                 game.currentHoleIndex = number - 1
                                 game.updateMapCamera(locationManager: locationManager)
                                 sharePlayManager.send(game)
-                            })
+                            }
                             showingScoreSheet = true
                         }, label: {
                             Text(String(number))
@@ -340,6 +340,7 @@ struct BasketPickerView: View {
 struct PlayerScoresListView: View {
     @Query var scores: [PlayerScore]
     var game: Game
+    @State private var isAnimateCountDown = false
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     @StateObject var groupStateObserver = GroupStateObserver()
     
@@ -364,7 +365,10 @@ struct PlayerScoresListView: View {
                             .foregroundStyle(Color("Navy"))
                         Spacer()
                         Button(action: {
-                            playerScore.score -= 1
+                            isAnimateCountDown = true
+                            withAnimation {
+                                playerScore.decrementScore()
+                            }
                             sharePlayManager.send(game)
                         }, label: {
                             Image(systemName: "minus.circle.fill")
@@ -378,12 +382,14 @@ struct PlayerScoresListView: View {
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)
                             .foregroundStyle(Color("Navy"))
+                            .contentTransition(.numericText(countsDown: isAnimateCountDown))
                         
                         Button(action: {
-                            if playerScore.score == 0, let currentBasket = game.currentBasket, let par = Int(currentBasket.par) {
-                                playerScore.score = par
-                            }else {
-                                playerScore.score += 1
+                            isAnimateCountDown = false
+                            withAnimation {
+                                if let currentBasket = game.currentBasket, let par = Int(currentBasket.par) {
+                                    playerScore.incrementScore(par: par)
+                                }
                             }
                             sharePlayManager.send(game)
                             print("Increment")

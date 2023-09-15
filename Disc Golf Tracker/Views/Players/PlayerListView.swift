@@ -80,25 +80,3 @@ struct PlayerListView: View {
     PlayerListView()
         .modelContainer(previewContainer)
 }
-
-struct PlayerProfileCircleView: View {
-    var player: Player
-    var size: CGFloat
-    var body: some View {
-        if let playerImage = player.image, let image = UIImage(data: playerImage) {
-            Image(uiImage: image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: size, height: size)
-                .background(player.getColor())
-                .cornerRadius(size/2)
-        }else {
-            Image(systemName: "figure.disc.sports")
-                .frame(width: size, height: size)
-                .background(player.getColor())
-                .cornerRadius(size/2)
-                .foregroundStyle(Color("Teal"))
-                .font(.title3)
-        }
-    }
-}

@@ -15,10 +15,8 @@ struct Disc_Golf_TrackerApp: App {
         let schema = Schema([
             Game.self //Basket.self, Course.self, Player.self, 
         ])
-        var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker"))
         //, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker")
-//        modelConfiguration.cloudKitContainerIdentifier = "iCloud.justinlawrence.discGolfTracker"
-//        let configuration = ModelConfiguration(cloudKitContainerIdentifier: "iCloud.justinlawrence.discGolfTracker")
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -44,13 +42,13 @@ struct Disc_Golf_TrackerApp: App {
                     }
                 }
         }
-        .modelContainer(for: [
-            Course.self,
-            Player.self,
-            Basket.self,
-            Game.self
-        ], isUndoEnabled: true)
-//        .modelContainer(sharedModelContainer)
+//        .modelContainer(for: [
+//            Course.self,
+//            Player.self,
+//            Basket.self,
+//            Game.self
+//        ], isUndoEnabled: true)
+        .modelContainer(sharedModelContainer)
     }
     
 //    init() {
@@ -66,29 +64,6 @@ struct Disc_Golf_TrackerApp: App {
 ////        .modelContainer(for: [Player.self, Course.self])
 //        .modelContainer(for: Player.self)
 //    }
-}
-
-extension UIColor{
-    convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-        let start = hex.index(hex.startIndex, offsetBy: 0)
-        let hexColor = String(hex[start...])
-        
-        if hexColor.count == 6 {
-            let scanner = Scanner(string: hexColor)
-            var hexNumber: UInt64 = 0
-            
-            if scanner.scanHexInt64(&hexNumber) {
-                r = CGFloat((hexNumber & 0xff0000) >> 16) / 255
-                g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
-                b = CGFloat((hexNumber & 0x0000ff)) / 255
-                a = 1.0
-                self.init(red: r, green: g, blue: b, alpha: a)
-                return
-            }
-        }
-        return nil
-    }
 }
 
 struct NavigationBarColor: ViewModifier {
@@ -111,15 +86,4 @@ extension View {
   func navigationBarColor(text: UIColor) -> some View {
     self.modifier(NavigationBarColor(tintColor: text))
   }
-}
-
-extension CLLocationCoordinate2D: Hashable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(latitude)
-        hasher.combine(longitude)
-    }
 }

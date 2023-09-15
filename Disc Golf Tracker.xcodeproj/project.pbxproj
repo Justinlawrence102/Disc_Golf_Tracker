@@ -7,10 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		981658A02AB2695A00F4E294 /* Disc_Golf_Tracker_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9816589F2AB2695A00F4E294 /* Disc_Golf_Tracker_WatchApp.swift */; };
+		981658A22AB2695A00F4E294 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981658A12AB2695A00F4E294 /* ContentView.swift */; };
+		981658A42AB2695B00F4E294 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 981658A32AB2695B00F4E294 /* Assets.xcassets */; };
+		981658A72AB2695B00F4E294 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 981658A62AB2695B00F4E294 /* Preview Assets.xcassets */; };
+		981658AA2AB2695B00F4E294 /* Disc Golf Tracker Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9816589D2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		981658AF2AB2698A00F4E294 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BE2A9EC3C500786125 /* Game.swift */; };
+		981658B02AB2698A00F4E294 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB4202A96B3D400354654 /* Player.swift */; };
+		981658B12AB2698A00F4E294 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DBF9502A9842160063F6AD /* Course.swift */; };
+		981658B22AB269B900F4E294 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0E9522A990E49007E0948 /* SampleData.swift */; };
+		981658B42AB26A6B00F4E294 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A262AA1588A00DFC73F /* LocationManager.swift */; };
+		981658B62AB26A7500F4E294 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981658B52AB26A7500F4E294 /* Extensions.swift */; };
+		981658B72AB26A7500F4E294 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981658B52AB26A7500F4E294 /* Extensions.swift */; };
+		981658B92AB26AC100F4E294 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981658B82AB26AC100F4E294 /* SharePlay.swift */; };
+		981658BA2AB26AC100F4E294 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981658B82AB26AC100F4E294 /* SharePlay.swift */; };
 		981E14BB2A9E999900786125 /* CreateCourseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BA2A9E999900786125 /* CreateCourseViews.swift */; };
 		981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */; };
 		981E14BF2A9EC3C500786125 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981E14BE2A9EC3C500786125 /* Game.swift */; };
 		9840FBB62AA53D380052CB63 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9840FBB52AA53D380052CB63 /* GameView.swift */; };
+		986D97312AB3D84900082E1E /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986D97302AB3D84900082E1E /* GameView.swift */; };
+		986D97332AB3D8FD00082E1E /* CreateGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986D97322AB3D8FD00082E1E /* CreateGameView.swift */; };
 		988A6A252AA14E3E00DFC73F /* CreatePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */; };
 		988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988A6A262AA1588A00DFC73F /* LocationManager.swift */; };
 		98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CCB41C2A96B3D400354654 /* Disc_Golf_TrackerApp.swift */; };
@@ -27,11 +43,45 @@
 		98F96F332AA9532E00FA99A6 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F96F322AA9532E00FA99A6 /* ResultsView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		981658A82AB2695B00F4E294 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98CCB4112A96B3D400354654 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9816589C2AB2695A00F4E294;
+			remoteInfo = "Disc Golf Tracker Watch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		981658AB2AB2695B00F4E294 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				981658AA2AB2695B00F4E294 /* Disc Golf Tracker Watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		9816589D2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Disc Golf Tracker Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9816589F2AB2695A00F4E294 /* Disc_Golf_Tracker_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disc_Golf_Tracker_WatchApp.swift; sourceTree = "<group>"; };
+		981658A12AB2695A00F4E294 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		981658A32AB2695B00F4E294 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		981658A62AB2695B00F4E294 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		981658B52AB26A7500F4E294 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		981658B82AB26AC100F4E294 /* SharePlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlay.swift; sourceTree = "<group>"; };
+		981658BB2AB26C2700F4E294 /* Disc Golf Tracker Watch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Disc Golf Tracker Watch Watch App.entitlements"; sourceTree = "<group>"; };
 		981E14BA2A9E999900786125 /* CreateCourseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCourseViews.swift; sourceTree = "<group>"; };
 		981E14BC2A9E9CBB00786125 /* SelectCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCourseView.swift; sourceTree = "<group>"; };
 		981E14BE2A9EC3C500786125 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		9840FBB52AA53D380052CB63 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		986D97302AB3D84900082E1E /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		986D97322AB3D8FD00082E1E /* CreateGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGameView.swift; sourceTree = "<group>"; };
 		988A6A242AA14E3E00DFC73F /* CreatePlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
 		988A6A262AA1588A00DFC73F /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		98CCB4192A96B3D400354654 /* Disc Golf Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Disc Golf Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +102,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9816589A2AB2695A00F4E294 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98CCB4162A96B3D400354654 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -62,6 +119,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9816589E2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				981658BB2AB26C2700F4E294 /* Disc Golf Tracker Watch Watch App.entitlements */,
+				9816589F2AB2695A00F4E294 /* Disc_Golf_Tracker_WatchApp.swift */,
+				981658A12AB2695A00F4E294 /* ContentView.swift */,
+				986D97322AB3D8FD00082E1E /* CreateGameView.swift */,
+				986D97302AB3D84900082E1E /* GameView.swift */,
+				981658A32AB2695B00F4E294 /* Assets.xcassets */,
+				981658A52AB2695B00F4E294 /* Preview Content */,
+			);
+			path = "Disc Golf Tracker Watch Watch App";
+			sourceTree = "<group>";
+		};
+		981658A52AB2695B00F4E294 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				981658A62AB2695B00F4E294 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		981658B32AB26A6100F4E294 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				988A6A262AA1588A00DFC73F /* LocationManager.swift */,
+				98F0E9522A990E49007E0948 /* SampleData.swift */,
+				981658B52AB26A7500F4E294 /* Extensions.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		981E14B82A9E997E00786125 /* Players */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +176,7 @@
 				98CCB4202A96B3D400354654 /* Player.swift */,
 				98DBF9502A9842160063F6AD /* Course.swift */,
 				981E14BE2A9EC3C500786125 /* Game.swift */,
+				981658B82AB26AC100F4E294 /* SharePlay.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -95,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				98CCB41B2A96B3D400354654 /* Disc Golf Tracker */,
+				9816589E2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App */,
 				98CCB41A2A96B3D400354654 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				98CCB4192A96B3D400354654 /* Disc Golf Tracker.app */,
+				9816589D2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,8 +211,7 @@
 				98CCB4242A96B3D600354654 /* Disc_Golf_Tracker.entitlements */,
 				98CCB4282A96B3D600354654 /* Info.plist */,
 				98CCB4252A96B3D600354654 /* Preview Content */,
-				98F0E9522A990E49007E0948 /* SampleData.swift */,
-				988A6A262AA1588A00DFC73F /* LocationManager.swift */,
+				981658B32AB26A6100F4E294 /* Utilities */,
 			);
 			path = "Disc Golf Tracker";
 			sourceTree = "<group>";
@@ -164,6 +255,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9816589C2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 981658AE2AB2695B00F4E294 /* Build configuration list for PBXNativeTarget "Disc Golf Tracker Watch Watch App" */;
+			buildPhases = (
+				981658992AB2695A00F4E294 /* Sources */,
+				9816589A2AB2695A00F4E294 /* Frameworks */,
+				9816589B2AB2695A00F4E294 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Disc Golf Tracker Watch Watch App";
+			productName = "Disc Golf Tracker Watch Watch App";
+			productReference = 9816589D2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		98CCB4182A96B3D400354654 /* Disc Golf Tracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98CCB42B2A96B3D600354654 /* Build configuration list for PBXNativeTarget "Disc Golf Tracker" */;
@@ -171,10 +279,12 @@
 				98CCB4152A96B3D400354654 /* Sources */,
 				98CCB4162A96B3D400354654 /* Frameworks */,
 				98CCB4172A96B3D400354654 /* Resources */,
+				981658AB2AB2695B00F4E294 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				981658A92AB2695B00F4E294 /* PBXTargetDependency */,
 			);
 			name = "Disc Golf Tracker";
 			productName = "Disc Golf Tracker";
@@ -191,6 +301,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					9816589C2AB2695A00F4E294 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					98CCB4182A96B3D400354654 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -210,11 +323,21 @@
 			projectRoot = "";
 			targets = (
 				98CCB4182A96B3D400354654 /* Disc Golf Tracker */,
+				9816589C2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9816589B2AB2695A00F4E294 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				981658A72AB2695B00F4E294 /* Preview Assets.xcassets in Resources */,
+				981658A42AB2695B00F4E294 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98CCB4172A96B3D400354654 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +350,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		981658992AB2695A00F4E294 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				981658B02AB2698A00F4E294 /* Player.swift in Sources */,
+				986D97332AB3D8FD00082E1E /* CreateGameView.swift in Sources */,
+				981658B22AB269B900F4E294 /* SampleData.swift in Sources */,
+				981658A22AB2695A00F4E294 /* ContentView.swift in Sources */,
+				981658B72AB26A7500F4E294 /* Extensions.swift in Sources */,
+				986D97312AB3D84900082E1E /* GameView.swift in Sources */,
+				981658B42AB26A6B00F4E294 /* LocationManager.swift in Sources */,
+				981658B12AB2698A00F4E294 /* Course.swift in Sources */,
+				981658BA2AB26AC100F4E294 /* SharePlay.swift in Sources */,
+				981658AF2AB2698A00F4E294 /* Game.swift in Sources */,
+				981658A02AB2695A00F4E294 /* Disc_Golf_Tracker_WatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98CCB4152A96B3D400354654 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +386,8 @@
 				988A6A272AA1588A00DFC73F /* LocationManager.swift in Sources */,
 				98CCB4212A96B3D400354654 /* Player.swift in Sources */,
 				98CCB41D2A96B3D400354654 /* Disc_Golf_TrackerApp.swift in Sources */,
+				981658B62AB26A7500F4E294 /* Extensions.swift in Sources */,
+				981658B92AB26AC100F4E294 /* SharePlay.swift in Sources */,
 				9840FBB62AA53D380052CB63 /* GameView.swift in Sources */,
 				981E14BD2A9E9CBB00786125 /* SelectCourseView.swift in Sources */,
 			);
@@ -252,7 +395,78 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		981658A92AB2695B00F4E294 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9816589C2AB2695A00F4E294 /* Disc Golf Tracker Watch Watch App */;
+			targetProxy = 981658A82AB2695B00F4E294 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		981658AC2AB2695B00F4E294 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Disc Golf Tracker Watch Watch App/Disc Golf Tracker Watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Disc Golf Tracker Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 28L3G462YX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Disc Golf Tracker Watch";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.justinLawrence.Disc-Golf-Tracking";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracking.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		981658AD2AB2695B00F4E294 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Disc Golf Tracker Watch Watch App/Disc Golf Tracker Watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Disc Golf Tracker Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 28L3G462YX;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Disc Golf Tracker Watch";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.justinLawrence.Disc-Golf-Tracking";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracking.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 		98CCB4292A96B3D600354654 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -370,6 +584,7 @@
 		98CCB42C2A96B3D600354654 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Disc Golf Tracker/Disc_Golf_Tracker.entitlements";
@@ -381,6 +596,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Disc Golf Tracker/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Disc Golf Tracker needs your location to determine the closest course";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -396,7 +612,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracking";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -410,6 +626,7 @@
 		98CCB42D2A96B3D600354654 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Disc Golf Tracker/Disc_Golf_Tracker.entitlements";
@@ -421,6 +638,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Disc Golf Tracker/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Disc Golf Tracker needs your location to determine the closest course";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -436,7 +654,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracker";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.justinLawrence.Disc-Golf-Tracking";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -450,6 +668,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		981658AE2AB2695B00F4E294 /* Build configuration list for PBXNativeTarget "Disc Golf Tracker Watch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				981658AC2AB2695B00F4E294 /* Debug */,
+				981658AD2AB2695B00F4E294 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		98CCB4142A96B3D400354654 /* Build configuration list for PBXProject "Disc Golf Tracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

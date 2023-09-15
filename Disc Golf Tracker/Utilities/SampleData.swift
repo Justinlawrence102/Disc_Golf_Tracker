@@ -93,6 +93,7 @@ let GamesPreviewContainer: ModelContainer = {
         
         let game = Game()
         game.course = sampleCourse
+        game.uuid = "1234"
         container.mainContext.insert(game)
         
         let player = Player(name: "Sample Player", color: "C7F465")
@@ -103,7 +104,7 @@ let GamesPreviewContainer: ModelContainer = {
         container.mainContext.insert(playerScore)
         
         let playerScore2 = PlayerScore(player: player, game: game, basket: basket2)
-        playerScore2.score = 3
+        playerScore2.score = 0
         container.mainContext.insert(playerScore2)
         
         let player2 = Player(name: "Sample Player2", color: "C70465")
@@ -113,7 +114,7 @@ let GamesPreviewContainer: ModelContainer = {
         playerScore3.score = 4
         container.mainContext.insert(playerScore3)
         let playerScore4 = PlayerScore(player: player2, game: game, basket: basket2)
-        playerScore4.score = 4
+        playerScore4.score = 0
         container.mainContext.insert(playerScore4)
         
 

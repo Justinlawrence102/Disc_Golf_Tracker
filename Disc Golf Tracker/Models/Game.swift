@@ -10,7 +10,7 @@ import SwiftData
 import UIKit
 import SwiftUI
 import MapKit
-import GroupActivities
+//import GroupActivities
 
 @Model
 class Game {
@@ -45,6 +45,10 @@ class Game {
         return dateFormatter.string(from: startDate)
 
     }
+    init(id: String) {
+        self.uuid = id
+        startDate = Date()
+    }
     init() {
         startDate = Date()
     }
@@ -73,51 +77,19 @@ class Game {
         return nil
     }
     
-    func updateMapCamera(locationManager: LocationManager? = nil) {
-        //    var cameraPosition: MapCameraPosition {
-//        currentHoleIndex = newIndex
+    func updateMapCamera(locationManager: LocationManager? = nil, zoom: Double = 0.001) {
         var coordinateRegion = MKCoordinateRegion()
         if let currentBasket = currentBasket {
             if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
+                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
             }else if let currentLocation = locationManager?.lastLocation?.coordinate {
-                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 0.001), longitudeDelta: CLLocationDegrees(floatLiteral: 0.001)))
+                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
             }else {
                 coordinateRegion = course!.getInitailMapPosition()
                 
             }
         }
         cameraPosition = .region(coordinateRegion)
-        //        return .region(coordinateRegion)
-        //    }
-    }
-    private func getCenterOfCoordiantes(coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion {
-        var latitude = 0.0
-        var longitude = 0.0
-        
-        var smallestLat = 1000.0
-        var largestLat = -1000.0
-        var smallestLong = 1000.0
-        var largestLong = -1000.0
-        for coordinate in coordinates {
-            latitude += coordinate.latitude
-            longitude += coordinate.longitude
-            if coordinate.latitude > largestLat {
-                largestLat = coordinate.latitude
-            }else if coordinate.latitude < smallestLat {
-                smallestLat = coordinate.latitude
-            }
-            
-            if coordinate.longitude > largestLong {
-                largestLong = coordinate.longitude
-            }else if coordinate.longitude < smallestLong {
-                smallestLong = coordinate.longitude
-            }
-        }
-        latitude = latitude/Double(coordinates.count)
-        longitude = longitude/Double(coordinates.count)
-        
-        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+0.001), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+0.001)))
     }
     
     func updateFromShareplay(sharedGame: SharedGame) {
@@ -136,6 +108,17 @@ class Game {
                 basket.teeLongitudes = sharedBasket.teeLongitudes
             }
         }
+    }
+    func getNextBasket()->Basket? {
+        if let baskets = course?.baskets, baskets.indices.contains(currentHoleIndex) {
+            let basket = baskets[currentHoleIndex]
+            currentHoleIndex += 1
+            print("Getting basket \(basket.number)")
+            return basket
+        }else {
+            print( "failed! \(currentHoleIndex)")
+        }
+        return nil
     }
 }
 
@@ -163,7 +146,19 @@ class PlayerScore {
             basket.playerScores?.append(self)
             self.basket = basket
     }
-    
+    func incrementScore(par: Int) {
+        if score == 0 {
+            score = par
+        }else {
+            score += 1
+        }
+    }
+    func decrementScore() {
+        
+        if score != 0 {
+            score -= 1
+        }
+    }
 //    func addPlayersToPlayerScore(player: Player) {
 //        do {
 //            let container =  try ModelContainer(for: Game.self)
