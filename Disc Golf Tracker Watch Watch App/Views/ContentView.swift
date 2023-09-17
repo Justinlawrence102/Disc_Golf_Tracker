@@ -12,11 +12,11 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var locationManager: LocationManager
 
-    @Query(filter: #Predicate<Game> { !$0.isSharedGame} ,sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+    @ObservedObject var stateManager = StateManager()
 
     
-    @State var showCreateGameSheet = false
-    @State var selectedGame: Game?
+    @Query(filter: #Predicate<Game> { !$0.isSharedGame} ,sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+
     
     var body: some View {
         if games.isEmpty {
@@ -27,17 +27,17 @@ struct ContentView: View {
                 Text("No Games found!")
                 Text("Last coodinates: \(locationManager.lastLocation?.coordinate.latitude ?? 0), \(locationManager.lastLocation?.coordinate.longitude ?? 0)")
                 Button(action: {
-                    showCreateGameSheet.toggle()
+                    stateManager.showCreateGameSheet.toggle()
                 }, label: {
                     Text("Start Game")
                 })
             }
-            .sheet(isPresented: $showCreateGameSheet) {
-                    SelectCourseView(showCreateGameSheet: $showCreateGameSheet, selectedGame: $selectedGame)
+            .sheet(isPresented: $stateManager.showCreateGameSheet) {
+                SelectCourseView()
             }
         }else {
             NavigationSplitView {
-                List(games, selection: $selectedGame) {
+                List(games, selection: $stateManager.selectedGame) {
                     game in
                     NavigationLink(value: game) {
                         VStack(alignment: .leading) {
@@ -85,25 +85,30 @@ struct ContentView: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button(action: {
-                            showCreateGameSheet.toggle()
+                            stateManager.showCreateGameSheet.toggle()
                         }, label: {
                             Image(systemName: "plus")
                         })
                     }
                 }
             } detail: {
-                if let game = selectedGame {
-                    BasketNavigationView(game: game)
+                if let game = stateManager.selectedGame {
+                    NavigationStack {
+                        TempBasketView(game: game, nextBasketNumber: 1)
+                            .environmentObject(stateManager)
+                    }
                 }else {
                     Text("Could not load game")
                 }
             }
-            .sheet(isPresented: $showCreateGameSheet) {
-                    SelectCourseView(showCreateGameSheet: $showCreateGameSheet, selectedGame: $selectedGame)
+            .sheet(isPresented: $stateManager.showCreateGameSheet) {
+                SelectCourseView()
+                    .environmentObject(stateManager)
+
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    selectedGame = games.first
+                    stateManager.selectedGame = games.first
                 }
             }
         }

@@ -10,8 +10,6 @@ import SwiftData
 
 struct SelectCourseView: View {
     @Query(sort: \Course.name) private var courses: [Course]
-    @Binding var showCreateGameSheet: Bool
-    @Binding var selectedGame: Game?
 
     var body: some View {
         NavigationStack {
@@ -30,7 +28,7 @@ struct SelectCourseView: View {
             List(courses) {
                 course in
                 NavigationLink(destination: {
-                    SelectPlayersView(selectedCourse: course, showCreateGameSheet: $showCreateGameSheet, selectedGame: $selectedGame)
+                    SelectPlayersView(selectedCourse: course)
                 }, label: {
                     VStack(alignment: .leading) {
                         Text(course.name)
@@ -50,10 +48,9 @@ struct SelectPlayersView: View {
     @Query(sort: \Player.name) private var players: [Player]
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var stateManager: StateManager
 
     var selectedCourse: Course
-    @Binding var showCreateGameSheet: Bool
-    @Binding var selectedGame: Game?
 
     var body: some View {
         List(players) {
@@ -80,8 +77,8 @@ struct SelectPlayersView: View {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
                     newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
-                    showCreateGameSheet = false
-                    selectedGame = newGame
+                    stateManager.showCreateGameSheet = false
+                    stateManager.selectedGame = newGame
                 }, label: {
                     Text("Start")
                         .foregroundStyle(Color("Lime"))

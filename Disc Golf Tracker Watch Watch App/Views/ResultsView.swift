@@ -19,8 +19,9 @@ import SwiftData
 
 struct ResultsView: View {
     private var scoreResults: [ResultScores] = []
-    @State var game: Game
-    
+    @State var game: Game?
+    @EnvironmentObject var stateManager: StateManager
+
     init(game: Game) {
         let gameId = game.uuid
         let scoresPredicate = #Predicate<PlayerScore> {
@@ -63,12 +64,24 @@ struct ResultsView: View {
                         .fontWeight(.semibold)
                         .fontDesign(.rounded)
                         .foregroundStyle(Color("Teal"))
-                    Text(score.getParDiff(game: game))
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .fontDesign(.rounded)
-                        .foregroundStyle(Color("Pink"))
+                    if let game = game {
+                        Text(score.getParDiff(game: game))
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(Color("Pink"))
+                    }
                 }
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button(action: {
+                    stateManager.selectedGame = nil
+                }, label: {
+                    Text("End")
+                        .foregroundStyle(Color("Lime"))
+                })
             }
         }
     }

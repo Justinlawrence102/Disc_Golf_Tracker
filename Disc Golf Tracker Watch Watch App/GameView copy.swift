@@ -10,6 +10,15 @@ import SwiftUI
 import SwiftData
 import MapKit
 
+struct TestPreview: View {
+        @Query private var games: [Game]
+        var game: Game! { games.first }
+        
+    var body: some View {
+        BasketDetailsTabView(game: game)
+    }
+}
+
 struct BasketNavigationView: View {
     @State var game: Game
     var body: some View {
@@ -78,17 +87,19 @@ struct BasketDetailsTabView: View {
     @State var game: Game
     @Query var scores: [PlayerScore]
         
-    init(game: Game) {
-        let currentBasket = game.currentBasket?.number
-        let gameUUID = game.uuid
-        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == currentBasket && $0.game?.uuid == gameUUID },
-                        sort: \PlayerScore.player?.name)
-        _game = .init(initialValue: game)
-    }
+//    init(game: Game) {
+//        let currentBasket = game.currentBasket?.number
+//        let gameUUID = game.uuid
+//        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == currentBasket && $0.game?.uuid == gameUUID },
+//                        sort: \PlayerScore.player?.name)
+//        _game = .init(initialValue: game)
+//        print("updated init")
+//    }
     
     var body: some View {
 //        TabView(selection: .constant(tabSection), content:  {
         TabView {
+            let _ = Self._printChanges()
             ZStack {
                 Map(position: $game.cameraPosition) {
                     if let basket = game.currentBasket {
@@ -189,6 +200,6 @@ struct BasketDetailsTabView: View {
 }
 
 #Preview {
-    ContentView()
+    TestPreview()
         .modelContainer(GamesPreviewContainer)
 }

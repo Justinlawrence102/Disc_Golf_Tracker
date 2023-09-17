@@ -92,6 +92,21 @@ class Game {
         cameraPosition = .region(coordinateRegion)
     }
     
+    func updateMapCamera(basketNumber: Int, locationManager: LocationManager? = nil, zoom: Double = 0.001) {
+        var coordinateRegion = MKCoordinateRegion()
+        if let currentBasket = course?.baskets?.first(where: {$0.number == basketNumber}) {
+            if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
+                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
+            }else if let currentLocation = locationManager?.lastLocation?.coordinate {
+                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
+            }else {
+                coordinateRegion = course!.getInitailMapPosition()
+                
+            }
+        }
+        cameraPosition = .region(coordinateRegion)
+    }
+    
     func updateFromShareplay(sharedGame: SharedGame) {
         for playerScore in playerScores ?? [] {
             if let scoreBasket = sharedGame.baskets.first(where: {$0.basketId == playerScore.basket?.uuid}) {
@@ -108,17 +123,6 @@ class Game {
                 basket.teeLongitudes = sharedBasket.teeLongitudes
             }
         }
-    }
-    func getNextBasket()->Basket? {
-        if let baskets = course?.baskets, baskets.indices.contains(currentHoleIndex) {
-            let basket = baskets[currentHoleIndex]
-            currentHoleIndex += 1
-            print("Getting basket \(basket.number)")
-            return basket
-        }else {
-            print( "failed! \(currentHoleIndex)")
-        }
-        return nil
     }
 }
 
