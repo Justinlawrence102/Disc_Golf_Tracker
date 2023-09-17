@@ -14,6 +14,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
     @Published var locationStatus: CLAuthorizationStatus?
     @Published var lastLocation: CLLocation?
+    var locationContinuation: CheckedContinuation<CLLocation?, Error>?
 
     override init() {
         super.init()
@@ -24,11 +25,23 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func askPermission() {
-        locationManager.requestWhenInUseAuthorization()
+        if locationManager.authorizationStatus == .notDetermined{
+            locationManager.requestWhenInUseAuthorization()
+        }
     }
     
     func requestLocation() {
-        locationManager.requestLocation()
+        if locationManager.authorizationStatus == .notDetermined{
+            askPermission()
+        }
+//        Task {
+//            let location = try await withCheckedThrowingContinuation { continuation in
+//                locationContinuation = continuation
+                locationManager.requestLocation()
+//            }
+//            self.lastLocation = location
+//        }
+//        locationManager.requestLocation()
     }
    
     

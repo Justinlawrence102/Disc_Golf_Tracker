@@ -75,17 +75,15 @@ struct SelectPlayersView: View {
             .buttonStyle(.plain)
         }
         .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button(action: {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
                     newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
                     showCreateGameSheet = false
                     selectedGame = newGame
-//                    dismiss.callAsFunction()
-//                    showCreateGameSheet.toggle()
                 }, label: {
-                    Text("Start Game")
+                    Text("Start")
                         .foregroundStyle(Color("Lime"))
                 })
             }

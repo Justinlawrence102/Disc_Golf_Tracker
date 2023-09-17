@@ -10,8 +10,10 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    
-    @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+    @EnvironmentObject var locationManager: LocationManager
+
+    @Query(filter: #Predicate<Game> { !$0.isSharedGame} ,sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+
     
     @State var showCreateGameSheet = false
     @State var selectedGame: Game?
@@ -23,6 +25,7 @@ struct ContentView: View {
                     .foregroundColor(Color("Lime"))
                     .font(.title)
                 Text("No Games found!")
+                Text("Last coodinates: \(locationManager.lastLocation?.coordinate.latitude ?? 0), \(locationManager.lastLocation?.coordinate.longitude ?? 0)")
                 Button(action: {
                     showCreateGameSheet.toggle()
                 }, label: {
@@ -98,7 +101,11 @@ struct ContentView: View {
             .sheet(isPresented: $showCreateGameSheet) {
                     SelectCourseView(showCreateGameSheet: $showCreateGameSheet, selectedGame: $selectedGame)
             }
-
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    selectedGame = games.first
+                }
+            }
         }
     }
 }

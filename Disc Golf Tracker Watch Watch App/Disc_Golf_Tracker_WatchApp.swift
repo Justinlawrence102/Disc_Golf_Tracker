@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct Disc_Golf_Tracker_Watch_Watch_AppApp: App {
+    @WKApplicationDelegateAdaptor var appDelegate: WatchAppDelegate
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Game.self
@@ -22,10 +24,21 @@ struct Disc_Golf_Tracker_Watch_Watch_AppApp: App {
         }
     }()
 
-    
+    var locationManager = LocationManager()
+    var isActive = NotificationCenter.default.publisher(for: .applicationIsActive)
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(locationManager)
+                .onReceive(isActive) {_ in
+                    print("Check location")
+                    Task {
+                        do {
+                            locationManager.requestLocation()
+                        }
+                    }
+                }
         }
         .modelContainer(sharedModelContainer)
     }

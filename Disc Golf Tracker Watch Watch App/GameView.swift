@@ -12,7 +12,6 @@ import MapKit
 
 struct BasketNavigationView: View {
     @State var game: Game
-    
     var body: some View {
         if let currentBasket = game.currentBasket {
             BasketDetailsTabView(game: game)
@@ -48,10 +47,12 @@ struct BasketNavigationView: View {
                     game.updateMapCamera(zoom: 0.0001)
                 }
         } else {
-            Text("Results")
+            ResultsView(game: game)
+                .navigationTitle("Results")
                 .toolbar {
                     ToolbarItemGroup(placement: .bottomBar) {
                         Button(action: {
+                            WKInterfaceDevice.current().play(.start)
                             if game.currentHoleIndex != 0 {
                                 game.currentHoleIndex -= 1
                             }
@@ -61,10 +62,7 @@ struct BasketNavigationView: View {
                                 .foregroundStyle(Color("Teal"))
                         })
                         
-                        Button(action: {
-                            game.currentHoleIndex += 1
-                            game.updateMapCamera()
-                        }, label: {
+                        Button(action: {}, label: {
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(Color("Teal"))
                         })
@@ -79,37 +77,57 @@ struct BasketNavigationView: View {
 struct BasketDetailsTabView: View {
     @State var game: Game
     @Query var scores: [PlayerScore]
-    
+        
     init(game: Game) {
         let currentBasket = game.currentBasket?.number
         let gameUUID = game.uuid
         _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == currentBasket && $0.game?.uuid == gameUUID },
                         sort: \PlayerScore.player?.name)
-        
         _game = .init(initialValue: game)
     }
     
     var body: some View {
+//        TabView(selection: .constant(tabSection), content:  {
         TabView {
-            Map(position: $game.cameraPosition) {
-                if let basket = game.currentBasket {
-                    ForEach(basket.teeCoordinates, id: \.self) {
-                        teeCoordinate in
-                        Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
-                            .tint(Color("Teal"))
+            ZStack {
+                Map(position: $game.cameraPosition) {
+                    if let basket = game.currentBasket {
+                        ForEach(basket.teeCoordinates, id: \.self) {
+                            teeCoordinate in
+                            Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
+                                .tint(Color("Teal"))
+                        }
+                        ForEach(basket.basketCoordinates, id: \.self) {
+                            basketCoordinate in
+                            Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
+                                .tint(Color("Pink"))
+                        }
+                        UserAnnotation()
                     }
-                    ForEach(basket.basketCoordinates, id: \.self) {
-                        basketCoordinate in
-                        Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
-                            .tint(Color("Pink"))
+                }
+                .mapStyle(.standard(pointsOfInterest: .excludingAll))
+                .moveDisabled(true)
+                .scrollDisabled(true)
+                .disabled(true)
+                .toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        VStack {
+                            if let currentBasket = game.currentBasket {
+                                Text("Par \(currentBasket.par)")
+                                    .foregroundStyle(Color("Pink"))
+                                    .font(.body)
+                                Text("\(currentBasket.distance) Yds")
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
                     }
-                    UserAnnotation()
                 }
             }
-            .mapStyle(.standard(pointsOfInterest: .excludingAll))
-            .moveDisabled(true)
-            .scrollDisabled(true)
-            .disabled(true)
+            .tag(1)
             List(scores) { playerScore in
                 HStack {
                     Text(playerScore.player?.name ?? "N/A")
@@ -155,11 +173,14 @@ struct BasketDetailsTabView: View {
                     .buttonStyle(.plain)
                 }
             }
+            .tag(2)
             .containerBackground(for: .tabView, alignment: .center) {
                 ZStack {
-                    Map()
+                    Map(position: $game.cameraPosition)
+                        .mapStyle(.standard(pointsOfInterest: .excludingAll))
+
                     Rectangle()
-                        .foregroundStyle(.thinMaterial)
+                        .foregroundStyle(.ultraThinMaterial)
                 }
             }
         }
