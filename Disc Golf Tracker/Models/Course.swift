@@ -222,12 +222,12 @@ class Basket {
             }
         }
     }
-    func updateMapCamera(locationManager: LocationManager? = nil) {
+    func updateMapCamera(locationManager: LocationManager? = nil, zoom: Double = 0.001) {
         var coordinateRegion = MKCoordinateRegion()
         if !basketCoordinates.isEmpty || !teeCoordinates.isEmpty {
             coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: basketCoordinates+teeCoordinates)
         }else if let currentLocation = locationManager?.lastLocation?.coordinate {
-            coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 0.001), longitudeDelta: CLLocationDegrees(floatLiteral: 0.001)))
+            coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
         }else {
             coordinateRegion = course!.getInitailMapPosition()
             

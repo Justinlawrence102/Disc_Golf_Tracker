@@ -16,7 +16,6 @@ struct GameSelectionView: View {
     @EnvironmentObject var sharePlayManager: SharedActivityManager
 
     @State private var showCreateNewGame = false
-    @State private var showSettingsPage = false
     
     @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
     
@@ -116,45 +115,10 @@ struct GameSelectionView: View {
                         Label("New Game", systemImage: "plus")
                     }
                 }
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        showSettingsPage.toggle()
-                    }) {
-                        Label("Settings", systemImage: "gearshape.fill")
-                    }
-                }
             }
             .sheet(isPresented: $showCreateNewGame, content: {
                 SelectCourseView()
                     .presentationDetents([.medium])
-            })
-            .sheet(isPresented: $showSettingsPage, content: {
-                VStack{
-                    Image("AppIcon")
-                        .resizable()
-                        .frame(width: 90, height: 90)
-                        .background(Color("Lime"))
-                        .cornerRadius(12)
-                    Text("Disc Golf Tracker")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color("Pink"))
-                    Text("Version 1.0")
-                        .font(.caption)
-                        .foregroundStyle(Color("Navy"))
-                    Spacer()
-                    Button(action: {
-                        let locationManager = LocationManager()
-                        locationManager.askPermission()
-                        
-                    }, label: {
-                        Label("Location", systemImage: "location.fill")
-                    })
-                    .frame(width: 350, height: 50)
-                    .background(Color("Teal"))
-                    .foregroundStyle(Color.white)
-                    .cornerRadius(50)
-                }.padding(40)
             })
         }
         .tint(Color("Teal"))

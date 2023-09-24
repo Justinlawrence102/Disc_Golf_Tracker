@@ -124,6 +124,37 @@ class Game {
             }
         }
     }
+    func getResults(limit3: Bool = false) -> [ResultScores] {
+        var scoreResults: [ResultScores] = []
+        let gameId = self.uuid
+        let scoresPredicate = #Predicate<PlayerScore> {
+            $0.game?.uuid == gameId
+        }
+        do {
+            let container = try ModelContainer(for: Game.self)
+            let context = ModelContext(container)
+            
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
+            let scores = try context.fetch(descriptor)
+            var prevName = ""
+            for score in scores {
+                if let player = score.player, prevName != player.name {
+                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color))
+                    prevName = player.name
+                }else if scoreResults.indices.contains(scoreResults.count-1){
+                    scoreResults[scoreResults.count-1].score += score.score
+                }
+            }
+            scoreResults.sort(by: {$1.score > $0.score})
+            if limit3 {
+                scoreResults = Array(scoreResults.prefix(3))
+            }
+            return scoreResults
+        }catch {
+            print("Could not create results")
+        }
+        return []
+    }
 }
 
 @Model
@@ -156,6 +187,7 @@ class PlayerScore {
         }else {
             score += 1
         }
+        print("Increment in here?")
     }
     func decrementScore() {
         

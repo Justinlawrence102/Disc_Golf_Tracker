@@ -107,7 +107,7 @@ class SharedActivityManager: ObservableObject {
             if self.gameModel?.uuid != model.uuid { //self.gameModel?.uuid
                 print("IN DIFFERENT GAME, NAVIGATE/MAKE NEW IF NEEDED!")
                 if let context = self.modelContext {
-                    let newGame = self.createGame(context: context, model: model)
+                    _ = self.createGame(context: context, model: model)
                     //                    self.gameModel = newGame
                     //                    self.isDeepLinkingToGame = true
                     self.gameSelectionPickerStatus = 1
@@ -129,10 +129,8 @@ class SharedActivityManager: ObservableObject {
         if let session = session, session.state == .joined {
             Task {
                 do {
-                    if let game = gameModel {
-                        let sharedGame = SharedGame(game: model)
-                        try await messenger?.send(sharedGame)
-                    }
+                    let sharedGame = SharedGame(game: model)
+                    try await messenger?.send(sharedGame)
                     //                messenger.info
                 }catch {
                     print("Failed sending data: \(error)")

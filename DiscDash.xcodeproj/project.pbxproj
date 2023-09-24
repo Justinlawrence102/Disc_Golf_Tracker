@@ -1,0 +1,931 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */; };
+		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
+		98D3EC462ABF06E100ADC565 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC452ABF06E100ADC565 /* Item.swift */; };
+		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
+		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
+		98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC542ABF075C00ADC565 /* SharePlay.swift */; };
+		98D3EC592ABF075C00ADC565 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC552ABF075C00ADC565 /* Player.swift */; };
+		98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC562ABF075C00ADC565 /* Course.swift */; };
+		98D3EC5B2ABF075C00ADC565 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC572ABF075C00ADC565 /* Game.swift */; };
+		98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC5D2ABF077200ADC565 /* AcivitySharingViewController.swift */; };
+		98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC5E2ABF077200ADC565 /* SharePlayActivity.swift */; };
+		98D3EC642ABF077F00ADC565 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC622ABF077F00ADC565 /* LocationManager.swift */; };
+		98D3EC652ABF077F00ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
+		98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC682ABF079A00ADC565 /* ResultsView.swift */; };
+		98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC692ABF079A00ADC565 /* GameView.swift */; };
+		98D3EC702ABF07A800ADC565 /* GameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */; };
+		98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */; };
+		98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */; };
+		98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC742ABF07B200ADC565 /* PlayerListView.swift */; };
+		98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */; };
+		98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
+		98D3EC822ABF092900ADC565 /* DiskDash_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */; };
+		98D3EC862ABF092A00ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC852ABF092A00ADC565 /* Assets.xcassets */; };
+		98D3EC892ABF092A00ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */; };
+		98D3EC8C2ABF092A00ADC565 /* DiskDash Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		98D3EC952ABF09C400ADC565 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC932ABF09C400ADC565 /* StateManager.swift */; };
+		98D3EC962ABF09C400ADC565 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC942ABF09C400ADC565 /* WatchAppDelegate.swift */; };
+		98D3EC9C2ABF09D100ADC565 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC982ABF09D100ADC565 /* ResultsView.swift */; };
+		98D3EC9D2ABF09D100ADC565 /* CreateGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC992ABF09D100ADC565 /* CreateGameView.swift */; };
+		98D3EC9E2ABF09D100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC9A2ABF09D100ADC565 /* ContentView.swift */; };
+		98D3EC9F2ABF09D100ADC565 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC9B2ABF09D100ADC565 /* GameView.swift */; };
+		98D3ECA02ABF09D900ADC565 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC562ABF075C00ADC565 /* Course.swift */; };
+		98D3ECA12ABF09DB00ADC565 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC572ABF075C00ADC565 /* Game.swift */; };
+		98D3ECA22ABF09DE00ADC565 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC552ABF075C00ADC565 /* Player.swift */; };
+		98D3ECA32ABF09EE00ADC565 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC542ABF075C00ADC565 /* SharePlay.swift */; };
+		98D3ECA42ABF09F100ADC565 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC622ABF077F00ADC565 /* LocationManager.swift */; };
+		98D3ECA52ABF09F400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
+		98D3ECA62ABF09F700ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
+		98D3ECAE2ABF0CB700ADC565 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98D3ECAD2ABF0CB700ADC565 /* WidgetKit.framework */; };
+		98D3ECB02ABF0CB700ADC565 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98D3ECAF2ABF0CB700ADC565 /* SwiftUI.framework */; };
+		98D3ECB32ABF0CB700ADC565 /* DiscDashComplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */; };
+		98D3ECB52ABF0CB700ADC565 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */; };
+		98D3ECB72ABF0CB900ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */; };
+		98D3ECBB2ABF0CB900ADC565 /* DiscDashComplicationsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		98D3ECC02ABF0D3D00ADC565 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC562ABF075C00ADC565 /* Course.swift */; };
+		98D3ECC12ABF0D4000ADC565 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC572ABF075C00ADC565 /* Game.swift */; };
+		98D3ECC22ABF0D4200ADC565 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC552ABF075C00ADC565 /* Player.swift */; };
+		98D3ECC32ABF0D4400ADC565 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC542ABF075C00ADC565 /* SharePlay.swift */; };
+		98D3ECC42ABF0D4700ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
+		98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC622ABF077F00ADC565 /* LocationManager.swift */; };
+		98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		98D3EC8A2ABF092A00ADC565 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98D3EC362ABF06E100ADC565 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98D3EC7E2ABF092900ADC565;
+			remoteInfo = "DiskDash Watch Watch App";
+		};
+		98D3ECB92ABF0CB900ADC565 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98D3EC362ABF06E100ADC565 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98D3ECAA2ABF0CB700ADC565;
+			remoteInfo = DiscDashComplicationsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		98D3EC902ABF092A00ADC565 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				98D3EC8C2ABF092A00ADC565 /* DiskDash Watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3ECBF2ABF0CB900ADC565 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				98D3ECBB2ABF0CB900ADC565 /* DiscDashComplicationsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		98D3EC3E2ABF06E100ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashApp.swift; sourceTree = "<group>"; };
+		98D3EC432ABF06E100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		98D3EC452ABF06E100ADC565 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDash.entitlements; sourceTree = "<group>"; };
+		98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		98D3EC4D2ABF06E200ADC565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98D3EC542ABF075C00ADC565 /* SharePlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharePlay.swift; sourceTree = "<group>"; };
+		98D3EC552ABF075C00ADC565 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		98D3EC562ABF075C00ADC565 /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		98D3EC572ABF075C00ADC565 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		98D3EC5D2ABF077200ADC565 /* AcivitySharingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcivitySharingViewController.swift; sourceTree = "<group>"; };
+		98D3EC5E2ABF077200ADC565 /* SharePlayActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharePlayActivity.swift; sourceTree = "<group>"; };
+		98D3EC622ABF077F00ADC565 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		98D3EC632ABF077F00ADC565 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		98D3EC682ABF079A00ADC565 /* ResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		98D3EC692ABF079A00ADC565 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelectionView.swift; sourceTree = "<group>"; };
+		98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCourseView.swift; sourceTree = "<group>"; };
+		98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCourseViews.swift; sourceTree = "<group>"; };
+		98D3EC742ABF07B200ADC565 /* PlayerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
+		98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
+		98D3EC792ABF085400ADC565 /* SharedViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
+		98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DiskDash Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDash_WatchApp.swift; sourceTree = "<group>"; };
+		98D3EC852ABF092A00ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		98D3EC912ABF093700ADC565 /* DiskDash Watch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DiskDash Watch Watch App.entitlements"; sourceTree = "<group>"; };
+		98D3EC932ABF09C400ADC565 /* StateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
+		98D3EC942ABF09C400ADC565 /* WatchAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchAppDelegate.swift; sourceTree = "<group>"; };
+		98D3EC982ABF09D100ADC565 /* ResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
+		98D3EC992ABF09D100ADC565 /* CreateGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGameView.swift; sourceTree = "<group>"; };
+		98D3EC9A2ABF09D100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		98D3EC9B2ABF09D100ADC565 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DiscDashComplicationsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3ECAD2ABF0CB700ADC565 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		98D3ECAF2ABF0CB700ADC565 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashComplications.swift; sourceTree = "<group>"; };
+		98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		98D3ECB82ABF0CB900ADC565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDashComplicationsExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		98D3EC3B2ABF06E100ADC565 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3EC7C2ABF092900ADC565 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3ECA82ABF0CB700ADC565 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3ECB02ABF0CB700ADC565 /* SwiftUI.framework in Frameworks */,
+				98D3ECAE2ABF0CB700ADC565 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		98D3EC352ABF06E100ADC565 = {
+			isa = PBXGroup;
+			children = (
+				98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */,
+				98D3EC792ABF085400ADC565 /* SharedViews.swift */,
+				98D3EC402ABF06E100ADC565 /* Disc Golf Tracker */,
+				98D3EC802ABF092900ADC565 /* Disc Golf Tracker Watch Watch App */,
+				98D3ECB12ABF0CB700ADC565 /* Disc Golf Tracker Watch Complication */,
+				98D3ECAC2ABF0CB700ADC565 /* Frameworks */,
+				98D3EC3F2ABF06E100ADC565 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		98D3EC3F2ABF06E100ADC565 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC3E2ABF06E100ADC565 /* DiscDash.app */,
+				98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */,
+				98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		98D3EC402ABF06E100ADC565 /* Disc Golf Tracker */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC662ABF078500ADC565 /* Views */,
+				98D3EC612ABF077700ADC565 /* Utilities */,
+				98D3EC5C2ABF076900ADC565 /* SharePlay */,
+				98D3EC532ABF074A00ADC565 /* Models */,
+				98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */,
+				98D3EC432ABF06E100ADC565 /* ContentView.swift */,
+				98D3EC452ABF06E100ADC565 /* Item.swift */,
+				98D3EC472ABF06E200ADC565 /* Assets.xcassets */,
+				98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */,
+				98D3EC4D2ABF06E200ADC565 /* Info.plist */,
+				98D3EC4A2ABF06E200ADC565 /* Preview Content */,
+			);
+			path = "Disc Golf Tracker";
+			sourceTree = "<group>";
+		};
+		98D3EC4A2ABF06E200ADC565 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		98D3EC532ABF074A00ADC565 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC562ABF075C00ADC565 /* Course.swift */,
+				98D3EC572ABF075C00ADC565 /* Game.swift */,
+				98D3EC552ABF075C00ADC565 /* Player.swift */,
+				98D3EC542ABF075C00ADC565 /* SharePlay.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		98D3EC5C2ABF076900ADC565 /* SharePlay */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC5D2ABF077200ADC565 /* AcivitySharingViewController.swift */,
+				98D3EC5E2ABF077200ADC565 /* SharePlayActivity.swift */,
+			);
+			path = SharePlay;
+			sourceTree = "<group>";
+		};
+		98D3EC612ABF077700ADC565 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC622ABF077F00ADC565 /* LocationManager.swift */,
+				98D3EC632ABF077F00ADC565 /* SampleData.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		98D3EC662ABF078500ADC565 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC732ABF07AB00ADC565 /* Players */,
+				98D3EC6C2ABF07A000ADC565 /* Games */,
+				98D3EC672ABF078E00ADC565 /* Active Game */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		98D3EC672ABF078E00ADC565 /* Active Game */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC692ABF079A00ADC565 /* GameView.swift */,
+				98D3EC682ABF079A00ADC565 /* ResultsView.swift */,
+			);
+			path = "Active Game";
+			sourceTree = "<group>";
+		};
+		98D3EC6C2ABF07A000ADC565 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */,
+				98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */,
+				98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		98D3EC732ABF07AB00ADC565 /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */,
+				98D3EC742ABF07B200ADC565 /* PlayerListView.swift */,
+			);
+			path = Players;
+			sourceTree = "<group>";
+		};
+		98D3EC802ABF092900ADC565 /* Disc Golf Tracker Watch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC972ABF09CA00ADC565 /* Views */,
+				98D3EC922ABF09BA00ADC565 /* Utilities */,
+				98D3EC912ABF093700ADC565 /* DiskDash Watch Watch App.entitlements */,
+				98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */,
+				98D3EC852ABF092A00ADC565 /* Assets.xcassets */,
+				98D3EC872ABF092A00ADC565 /* Preview Content */,
+			);
+			path = "Disc Golf Tracker Watch Watch App";
+			sourceTree = "<group>";
+		};
+		98D3EC872ABF092A00ADC565 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		98D3EC922ABF09BA00ADC565 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC932ABF09C400ADC565 /* StateManager.swift */,
+				98D3EC942ABF09C400ADC565 /* WatchAppDelegate.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		98D3EC972ABF09CA00ADC565 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				98D3EC9A2ABF09D100ADC565 /* ContentView.swift */,
+				98D3EC992ABF09D100ADC565 /* CreateGameView.swift */,
+				98D3EC9B2ABF09D100ADC565 /* GameView.swift */,
+				98D3EC982ABF09D100ADC565 /* ResultsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		98D3ECAC2ABF0CB700ADC565 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98D3ECAD2ABF0CB700ADC565 /* WidgetKit.framework */,
+				98D3ECAF2ABF0CB700ADC565 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		98D3ECB12ABF0CB700ADC565 /* Disc Golf Tracker Watch Complication */ = {
+			isa = PBXGroup;
+			children = (
+				98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */,
+				98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */,
+				98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */,
+				98D3ECB82ABF0CB900ADC565 /* Info.plist */,
+			);
+			path = "Disc Golf Tracker Watch Complication";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		98D3EC3D2ABF06E100ADC565 /* DiscDash */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "DiscDash" */;
+			buildPhases = (
+				98D3EC3A2ABF06E100ADC565 /* Sources */,
+				98D3EC3B2ABF06E100ADC565 /* Frameworks */,
+				98D3EC3C2ABF06E100ADC565 /* Resources */,
+				98D3EC902ABF092A00ADC565 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98D3EC8B2ABF092A00ADC565 /* PBXTargetDependency */,
+			);
+			name = DiscDash;
+			productName = DiscDash;
+			productReference = 98D3EC3E2ABF06E100ADC565 /* DiscDash.app */;
+			productType = "com.apple.product-type.application";
+		};
+		98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "DiskDash Watch Watch App" */;
+			buildPhases = (
+				98D3EC7B2ABF092900ADC565 /* Sources */,
+				98D3EC7C2ABF092900ADC565 /* Frameworks */,
+				98D3EC7D2ABF092900ADC565 /* Resources */,
+				98D3ECBF2ABF0CB900ADC565 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98D3ECBA2ABF0CB900ADC565 /* PBXTargetDependency */,
+			);
+			name = "DiskDash Watch Watch App";
+			productName = "DiskDash Watch Watch App";
+			productReference = 98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98D3ECBC2ABF0CB900ADC565 /* Build configuration list for PBXNativeTarget "DiscDashComplicationsExtension" */;
+			buildPhases = (
+				98D3ECA72ABF0CB700ADC565 /* Sources */,
+				98D3ECA82ABF0CB700ADC565 /* Frameworks */,
+				98D3ECA92ABF0CB700ADC565 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DiscDashComplicationsExtension;
+			productName = DiscDashComplicationsExtension;
+			productReference = 98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98D3EC362ABF06E100ADC565 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					98D3EC3D2ABF06E100ADC565 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					98D3EC7E2ABF092900ADC565 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					98D3ECAA2ABF0CB700ADC565 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "DiscDash" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 98D3EC352ABF06E100ADC565;
+			productRefGroup = 98D3EC3F2ABF06E100ADC565 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				98D3EC3D2ABF06E100ADC565 /* DiscDash */,
+				98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */,
+				98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		98D3EC3C2ABF06E100ADC565 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */,
+				98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3EC7D2ABF092900ADC565 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3EC892ABF092A00ADC565 /* Preview Assets.xcassets in Resources */,
+				98D3EC862ABF092A00ADC565 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3ECA92ABF0CB700ADC565 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3ECB72ABF0CB900ADC565 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		98D3EC3A2ABF06E100ADC565 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */,
+				98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */,
+				98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */,
+				98D3EC702ABF07A800ADC565 /* GameSelectionView.swift in Sources */,
+				98D3EC642ABF077F00ADC565 /* LocationManager.swift in Sources */,
+				98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */,
+				98D3EC5B2ABF075C00ADC565 /* Game.swift in Sources */,
+				98D3EC462ABF06E100ADC565 /* Item.swift in Sources */,
+				98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */,
+				98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */,
+				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
+				98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */,
+				98D3EC592ABF075C00ADC565 /* Player.swift in Sources */,
+				98D3EC652ABF077F00ADC565 /* SampleData.swift in Sources */,
+				98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */,
+				98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */,
+				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
+				98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */,
+				98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3EC7B2ABF092900ADC565 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3ECA22ABF09DE00ADC565 /* Player.swift in Sources */,
+				98D3ECA52ABF09F400ADC565 /* SampleData.swift in Sources */,
+				98D3ECA02ABF09D900ADC565 /* Course.swift in Sources */,
+				98D3ECA12ABF09DB00ADC565 /* Game.swift in Sources */,
+				98D3ECA32ABF09EE00ADC565 /* SharePlay.swift in Sources */,
+				98D3EC9D2ABF09D100ADC565 /* CreateGameView.swift in Sources */,
+				98D3EC962ABF09C400ADC565 /* WatchAppDelegate.swift in Sources */,
+				98D3EC9E2ABF09D100ADC565 /* ContentView.swift in Sources */,
+				98D3EC952ABF09C400ADC565 /* StateManager.swift in Sources */,
+				98D3ECA62ABF09F700ADC565 /* SharedViews.swift in Sources */,
+				98D3EC9C2ABF09D100ADC565 /* ResultsView.swift in Sources */,
+				98D3EC9F2ABF09D100ADC565 /* GameView.swift in Sources */,
+				98D3EC822ABF092900ADC565 /* DiskDash_WatchApp.swift in Sources */,
+				98D3ECA42ABF09F100ADC565 /* LocationManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98D3ECA72ABF0CB700ADC565 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D3ECC02ABF0D3D00ADC565 /* Course.swift in Sources */,
+				98D3ECB32ABF0CB700ADC565 /* DiscDashComplications.swift in Sources */,
+				98D3ECB52ABF0CB700ADC565 /* AppIntent.swift in Sources */,
+				98D3ECC32ABF0D4400ADC565 /* SharePlay.swift in Sources */,
+				98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */,
+				98D3ECC22ABF0D4200ADC565 /* Player.swift in Sources */,
+				98D3ECC42ABF0D4700ADC565 /* SharedViews.swift in Sources */,
+				98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */,
+				98D3ECC12ABF0D4000ADC565 /* Game.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		98D3EC8B2ABF092A00ADC565 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */;
+			targetProxy = 98D3EC8A2ABF092A00ADC565 /* PBXContainerItemProxy */;
+		};
+		98D3ECBA2ABF0CB900ADC565 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */;
+			targetProxy = 98D3ECB92ABF0CB900ADC565 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		98D3EC4E2ABF06E200ADC565 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		98D3EC4F2ABF06E200ADC565 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		98D3EC512ABF06E200ADC565 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiscDash/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		98D3EC522ABF06E200ADC565 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiscDash/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		98D3EC8E2ABF092A00ADC565 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DiskDash Watch";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		98D3EC8F2ABF092A00ADC565 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "DiskDash Watch";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		98D3ECBD2ABF0CB900ADC565 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DiscDashComplicationsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiscDashComplications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DiscDashComplications;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp.DiscDashComplications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		98D3ECBE2ABF0CB900ADC565 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = DiscDashComplicationsExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y48L6965QA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiscDashComplications/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DiscDashComplications;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp.DiscDashComplications;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "DiscDash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98D3EC4E2ABF06E200ADC565 /* Debug */,
+				98D3EC4F2ABF06E200ADC565 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "DiscDash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98D3EC512ABF06E200ADC565 /* Debug */,
+				98D3EC522ABF06E200ADC565 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "DiskDash Watch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98D3EC8E2ABF092A00ADC565 /* Debug */,
+				98D3EC8F2ABF092A00ADC565 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98D3ECBC2ABF0CB900ADC565 /* Build configuration list for PBXNativeTarget "DiscDashComplicationsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98D3ECBD2ABF0CB900ADC565 /* Debug */,
+				98D3ECBE2ABF0CB900ADC565 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98D3EC362ABF06E100ADC565 /* Project object */;
+}

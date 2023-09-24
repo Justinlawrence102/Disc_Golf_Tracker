@@ -23,30 +23,7 @@ struct ResultsView: View {
     @EnvironmentObject var stateManager: StateManager
 
     init(game: Game) {
-        let gameId = game.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.game?.uuid == gameId
-        }
-        do {
-            let container = try ModelContainer(for: Game.self)
-            let context = ModelContext(container)
-            
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
-            let scores = try context.fetch(descriptor)
-            var prevName = ""
-            for score in scores {
-                if let player = score.player, prevName != player.name {
-                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color))
-                    prevName = player.name
-                }else if scoreResults.indices.contains(scoreResults.count-1){
-                    scoreResults[scoreResults.count-1].score += score.score
-                }
-            }
-            scoreResults.sort(by: {$1.score > $0.score})
-            
-        }catch {
-            print("Error")
-        }
+        scoreResults = game.getResults()
         _game = .init(initialValue: game)
     }
     
@@ -79,7 +56,7 @@ struct ResultsView: View {
                 Button(action: {
                     stateManager.selectedGame = nil
                 }, label: {
-                    Text("End")
+                    Image(systemName: "list.bullet")
                         .foregroundStyle(Color("Lime"))
                 })
             }

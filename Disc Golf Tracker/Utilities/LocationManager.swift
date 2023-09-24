@@ -20,7 +20,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestLocation()
+//        locationManager.requestLocation()
 //        locationManager.startUpdatingLocation()
     }
     

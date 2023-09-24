@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct SelectCourseView: View {
     @Query(sort: \Course.name) private var courses: [Course]
@@ -79,6 +80,7 @@ struct SelectPlayersView: View {
                     newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
                     stateManager.showCreateGameSheet = false
                     stateManager.selectedGame = newGame
+                    WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
                 }, label: {
                     Text("Start")
                         .foregroundStyle(Color("Lime"))

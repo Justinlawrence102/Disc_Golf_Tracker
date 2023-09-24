@@ -11,12 +11,12 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var locationManager: LocationManager
-
+    
     @ObservedObject var stateManager = StateManager()
-
+    
     
     @Query(filter: #Predicate<Game> { !$0.isSharedGame} ,sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
-
+    
     
     var body: some View {
         if games.isEmpty {
@@ -25,7 +25,6 @@ struct ContentView: View {
                     .foregroundColor(Color("Lime"))
                     .font(.title)
                 Text("No Games found!")
-                Text("Last coodinates: \(locationManager.lastLocation?.coordinate.latitude ?? 0), \(locationManager.lastLocation?.coordinate.longitude ?? 0)")
                 Button(action: {
                     stateManager.showCreateGameSheet.toggle()
                 }, label: {
@@ -36,7 +35,7 @@ struct ContentView: View {
                 SelectCourseView()
             }
         }else {
-            NavigationSplitView {
+            NavigationStack {
                 List(games, selection: $stateManager.selectedGame) {
                     game in
                     NavigationLink(value: game) {
@@ -91,20 +90,15 @@ struct ContentView: View {
                         })
                     }
                 }
-            } detail: {
-                if let game = stateManager.selectedGame {
-                    NavigationStack {
-                        TempBasketView(game: game, nextBasketNumber: 1)
-                            .environmentObject(stateManager)
-                    }
-                }else {
-                    Text("Could not load game")
+                .navigationDestination(item: $stateManager.selectedGame) { game in
+                    GoToNextBasketView(game: game, nextBasketNumber: 1)
+                        .environmentObject(stateManager)
                 }
             }
             .sheet(isPresented: $stateManager.showCreateGameSheet) {
                 SelectCourseView()
                     .environmentObject(stateManager)
-
+                
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

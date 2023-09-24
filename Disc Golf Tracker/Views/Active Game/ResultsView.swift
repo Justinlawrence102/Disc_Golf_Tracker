@@ -19,28 +19,8 @@ struct ResultsView: View {
     private var scoreResults: [ResultScores] = []
     @State var game: Game
     
-    init(game: Game, context: ModelContext) {
-        let gameId = game.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.game?.uuid == gameId
-        }
-        do {
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
-            let scores = try context.fetch(descriptor)
-            var prevName = ""
-            for score in scores {
-                if let player = score.player, prevName != player.name {
-                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color))
-                    prevName = player.name
-                }else if scoreResults.indices.contains(scoreResults.count-1){
-                    scoreResults[scoreResults.count-1].score += score.score
-                }
-            }
-            scoreResults.sort(by: {$1.score > $0.score})
-            
-        }catch {
-            print("Error")
-        }
+    init(game: Game) {
+        scoreResults = game.getResults()
         _game = .init(initialValue: game)
     }
     var body: some View {
@@ -76,7 +56,9 @@ struct ResultsView: View {
                                         .foregroundStyle(Color("Pink"))
                                 }
                             }
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, 6)
+                            Divider()
                         }
                     }
                     .background(.regularMaterial)

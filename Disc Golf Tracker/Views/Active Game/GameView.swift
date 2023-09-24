@@ -171,7 +171,7 @@ struct GameView: View {
                         .frame(height: 360)
                 }
             }else {
-                ResultsView(game: game, context: modelContext)
+                ResultsView(game: game)
             }
             
             VStack {
@@ -267,15 +267,19 @@ struct CurrentBasketInfoView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color("Teal"))
-            Text("Par \(basket.par)")
-                .font(.body)
-                .foregroundStyle(Color("Pink"))
-            HStack(spacing: 4.0) {
-                Image(systemName: "location.fill")
-                Text("\(basket.distance) Yards")
+            if basket.par != "" {
+                Text("Par \(basket.par)")
+                    .font(.body)
+                    .foregroundStyle(Color("Pink"))
             }
-            .font(.subheadline)
-            .foregroundStyle(Color("Navy"))
+            if basket.distance != "" {
+                HStack(spacing: 4.0) {
+                    Image(systemName: "location.fill")
+                    Text("\(basket.distance) Yards")
+                }
+                .font(.subheadline)
+                .foregroundStyle(Color("Navy"))
+            }
         }
     }
 }
@@ -389,6 +393,8 @@ struct PlayerScoresListView: View {
                             withAnimation {
                                 if let currentBasket = game.currentBasket, let par = Int(currentBasket.par) {
                                     playerScore.incrementScore(par: par)
+                                }else {
+                                    playerScore.score += 1
                                 }
                             }
                             sharePlayManager.send(game)
@@ -415,6 +421,7 @@ struct PlayerScoresListView: View {
         }
     }
 }
+
 //#Preview {
 //    GameView()
 //        .modelContainer(GamesPreviewContainer)
