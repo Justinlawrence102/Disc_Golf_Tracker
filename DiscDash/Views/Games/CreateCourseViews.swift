@@ -83,13 +83,6 @@ struct CreateCourseDetailsView: View {
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink {
                         CreateCourseBasketListView(course: course, isNewCourse: isNewCourse)
-                            .onAppear() {
-                                if isNewCourse {
-                                    modelContext.insert(course)
-                                    course.baskets = []
-                                    course.games = []
-                                }
-                            }
                     }label: {
                         HStack {
                             Text("Next")

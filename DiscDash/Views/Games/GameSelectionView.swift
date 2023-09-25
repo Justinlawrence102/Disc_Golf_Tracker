@@ -31,7 +31,7 @@ struct GameSelectionView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Picker("What is your favorite color?", selection: $sharePlayManager.gameSelectionPickerStatus) {
+                Picker("Game Type", selection: $sharePlayManager.gameSelectionPickerStatus) {
                     Text("My Games").tag(0)
                     Text("Shared Games").tag(1)
                 }

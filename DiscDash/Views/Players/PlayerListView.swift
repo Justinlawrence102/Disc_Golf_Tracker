@@ -52,7 +52,8 @@ struct PlayerListView: View {
                 }
             }
             .navigationDestination(for: Player.self) { player in
-                Text("Details")
+//                PlayerDetailsView()
+                PlayerDetailsView(player: player)
                     .navigationTitle(player.name)
                     .navigationBarTitleDisplayMode(.inline)
                 

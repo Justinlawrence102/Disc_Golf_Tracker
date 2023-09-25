@@ -12,7 +12,7 @@ import SwiftData
 struct DiscDashApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Game.self //Basket.self, Course.self, Player.self,
+            Game.self
         ])
         var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, cloudKitDatabase: .private("iCloud.justinlawrence.disc-dash"))
         //, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker")
@@ -61,6 +61,9 @@ struct NavigationBarColor: ViewModifier {
                    
     UINavigationBar.appearance().standardAppearance = coloredAppearance
     UINavigationBar.appearance().tintColor = tintColor
+      
+    UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(named: "Teal")
+    UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
   }
 
   func body(content: Content) -> some View {

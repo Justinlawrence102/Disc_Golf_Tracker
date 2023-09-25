@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
 		98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */; };
 		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
 		98D3EC462ABF06E100ADC565 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC452ABF06E100ADC565 /* Item.swift */; };
@@ -103,6 +104,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashApp.swift; sourceTree = "<group>"; };
 		98D3EC432ABF06E100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -180,9 +182,9 @@
 			children = (
 				98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */,
 				98D3EC792ABF085400ADC565 /* SharedViews.swift */,
-				98D3EC402ABF06E100ADC565 /* Disc Golf Tracker */,
-				98D3EC802ABF092900ADC565 /* Disc Golf Tracker Watch Watch App */,
-				98D3ECB12ABF0CB700ADC565 /* Disc Golf Tracker Watch Complication */,
+				98D3EC402ABF06E100ADC565 /* DiscDash */,
+				98D3EC802ABF092900ADC565 /* DiskDash Watch Watch App */,
+				98D3ECB12ABF0CB700ADC565 /* DiscDashComplications */,
 				98D3ECAC2ABF0CB700ADC565 /* Frameworks */,
 				98D3EC3F2ABF06E100ADC565 /* Products */,
 			);
@@ -198,7 +200,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		98D3EC402ABF06E100ADC565 /* Disc Golf Tracker */ = {
+		98D3EC402ABF06E100ADC565 /* DiscDash */ = {
 			isa = PBXGroup;
 			children = (
 				98D3EC662ABF078500ADC565 /* Views */,
@@ -213,7 +215,7 @@
 				98D3EC4D2ABF06E200ADC565 /* Info.plist */,
 				98D3EC4A2ABF06E200ADC565 /* Preview Content */,
 			);
-			path = "Disc Golf Tracker";
+			path = DiscDash;
 			sourceTree = "<group>";
 		};
 		98D3EC4A2ABF06E200ADC565 /* Preview Content */ = {
@@ -287,11 +289,12 @@
 			children = (
 				98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */,
 				98D3EC742ABF07B200ADC565 /* PlayerListView.swift */,
+				9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */,
 			);
 			path = Players;
 			sourceTree = "<group>";
 		};
-		98D3EC802ABF092900ADC565 /* Disc Golf Tracker Watch Watch App */ = {
+		98D3EC802ABF092900ADC565 /* DiskDash Watch Watch App */ = {
 			isa = PBXGroup;
 			children = (
 				98D3EC972ABF09CA00ADC565 /* Views */,
@@ -301,7 +304,7 @@
 				98D3EC852ABF092A00ADC565 /* Assets.xcassets */,
 				98D3EC872ABF092A00ADC565 /* Preview Content */,
 			);
-			path = "Disc Golf Tracker Watch Watch App";
+			path = "DiskDash Watch Watch App";
 			sourceTree = "<group>";
 		};
 		98D3EC872ABF092A00ADC565 /* Preview Content */ = {
@@ -341,7 +344,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		98D3ECB12ABF0CB700ADC565 /* Disc Golf Tracker Watch Complication */ = {
+		98D3ECB12ABF0CB700ADC565 /* DiscDashComplications */ = {
 			isa = PBXGroup;
 			children = (
 				98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */,
@@ -349,7 +352,7 @@
 				98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */,
 				98D3ECB82ABF0CB900ADC565 /* Info.plist */,
 			);
-			path = "Disc Golf Tracker Watch Complication";
+			path = DiscDashComplications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,6 +488,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */,
 				98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */,
 				98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */,
 				98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */,

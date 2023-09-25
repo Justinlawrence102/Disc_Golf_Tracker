@@ -87,8 +87,12 @@ struct SelectCourseView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
+                        let newCourse = Course()
+                        modelContext.insert(newCourse)
+                        newCourse.baskets = []
+                        newCourse.games = []
                         isCreatingNewCourse = true
-                        selectedItem = Course()
+                        selectedItem = newCourse
                     }, label: {
                         Image(systemName: "plus")
                     })
@@ -140,7 +144,7 @@ struct SelectPlayerView: View {
                 Button(action: {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
-                    newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
+                    newGame.createGame(course: selectedCourse, players: selectedPlayers)
                     print("Start Game!")
                 }, label: {
                     Text("Start Game")
