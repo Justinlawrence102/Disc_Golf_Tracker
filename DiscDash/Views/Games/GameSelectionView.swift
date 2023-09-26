@@ -98,7 +98,7 @@ struct GameSelectionView: View {
             }
             .navigationDestination(for: Game.self) { game in
                 GameView(game: game)
-                //                GameView()
+//                GameView()
             }
             .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {
                 if let game = sharePlayManager.gameModel {

@@ -155,7 +155,7 @@ struct BasketDetailsTabView: View {
         .tabViewStyle(.verticalPage)
         .onAppear {
             print("Appear?")
-            currentBasket.updateMapCamera(zoom: 0.0001)
+            currentBasket.updateMapCamera(zoom: 0.0005)
             WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
         }
         .navigationTitle("Hole \(currentBasket.number ?? -1)")
@@ -184,8 +184,13 @@ struct BasketMapView: View {
             if includeMarkers {
                 ForEach(basket.teeCoordinates, id: \.self) {
                     teeCoordinate in
-                    Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
+                    Marker("", systemImage: "\(basket.number ?? 0).square.fill", coordinate: teeCoordinate)
                         .tint(Color("Teal"))
+                    ForEach(basket.basketCoordinates, id: \.self) {
+                        basketCoordiante in
+                        MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
+                            .stroke(Color("LightPink"), style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                    }
                 }
                 ForEach(basket.basketCoordinates, id: \.self) {
                     basketCoordinate in

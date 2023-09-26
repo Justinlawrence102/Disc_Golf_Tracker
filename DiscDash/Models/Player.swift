@@ -66,7 +66,7 @@ final class Player {
         return 0
     }
     
-    var numCoursesPlayed: Int {
+    var coursesPlayed: [Course] {
         do {
             let container = try ModelContainer(for: Game.self)
             let context = ModelContext(container)
@@ -77,13 +77,13 @@ final class Player {
             
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
             let scores = try context.fetch(descriptor)
-            let flattedByCourse = scores.map({$0.game?.course?.uuid})
+            let flattedByCourse = scores.map({$0.game?.course ?? Course()})
             let unique = Array(Set(flattedByCourse))
-            return unique.count
+            return unique
         }catch {
             print("Error getting baskets played")
         }
-        return 0
+        return []
     }
     
     var numThrows: Int {

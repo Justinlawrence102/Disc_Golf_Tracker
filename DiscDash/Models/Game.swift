@@ -88,7 +88,7 @@ class Game {
         var coordinateRegion = MKCoordinateRegion()
         if let currentBasket = currentBasket {
             if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
+                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates, zoom: zoom)
             }else if let currentLocation = locationManager?.lastLocation?.coordinate {
                 coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
             }else {
@@ -103,7 +103,7 @@ class Game {
         var coordinateRegion = MKCoordinateRegion()
         if let currentBasket = course?.baskets?.first(where: {$0.number == basketNumber}) {
             if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates)
+                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates, zoom: zoom)
             }else if let currentLocation = locationManager?.lastLocation?.coordinate {
                 coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
             }else {

@@ -68,14 +68,14 @@ extension CLLocationCoordinate2D: Hashable {
 }
 
 class Utilities {
-    func getCenterOfCoordiantes(coordinates: [CLLocationCoordinate2D]) -> MKCoordinateRegion {
+    func getCenterOfCoordiantes(coordinates: [CLLocationCoordinate2D], zoom: Double) -> MKCoordinateRegion {
         var latitude = 0.0
         var longitude = 0.0
         
-        var smallestLat = 1000.0
-        var largestLat = -1000.0
-        var smallestLong = 1000.0
-        var largestLong = -1000.0
+        var smallestLat = coordinates.first?.latitude ?? 1000.0
+        var largestLat = coordinates.first?.latitude ?? -1000.0
+        var smallestLong = coordinates.first?.longitude ?? 1000.0
+        var largestLong = coordinates.first?.longitude ?? -1000.0
         for coordinate in coordinates {
             latitude += coordinate.latitude
             longitude += coordinate.longitude
@@ -94,6 +94,6 @@ class Utilities {
         latitude = latitude/Double(coordinates.count)
         longitude = longitude/Double(coordinates.count)
         
-        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+0.001), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+0.001)))
+        return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+zoom), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+zoom)))
     }
 }

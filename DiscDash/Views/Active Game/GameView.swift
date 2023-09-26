@@ -28,25 +28,71 @@ struct GameView: View {
     @State var sheetIsUp = true //this is used for the animation of the hole, par, distance popover
     @State var isActivitySharingSheetPresented = false
     @StateObject var groupStateObserver = GroupStateObserver()
-    
+    @State private var showFullMapToggle = false
+
+    var sortedBasketsList: [Basket] {
+      return (game.course?.baskets ?? []).sorted(by: {$1.number ?? 0 > $0.number ?? 0})
+    }
+
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {
                 VStack(spacing: -0.0) {
-                    //                    Map {
-                    Map(position: $game.cameraPosition) {
-                        ForEach(basket.teeCoordinates, id: \.self) {
-                            teeCoordinate in
-                            Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
-                                .tint(Color("Teal"))
+//                    Map {
+                     Map(position: $game.cameraPosition) {
+//                    Map(position: $position) {
+                        if showFullMapToggle {
+                            ForEach(sortedBasketsList) {
+                                hole in
+                                ForEach(hole.teeCoordinates, id: \.self) {
+                                    teeCoordinate in
+                                    Marker("", systemImage: "\(hole.number ?? 1).square.fill", coordinate: teeCoordinate)
+                                        .tint(Color("Teal"))
+                                    ForEach(hole.basketCoordinates, id: \.self) {
+                                        basketCoordiante in
+                                        if let currentNumber = basket.number, let holeHumber = hole.number {
+                                            if currentNumber == holeHumber {
+                                                MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
+                                                    .stroke(Color("LightPink"), style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                                            } else {
+                                                MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
+                                                    .stroke(.tertiary, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                                            }
+                                        }
+                                    }
+                                }
+                                ForEach(hole.basketCoordinates, id: \.self) {
+                                    basketCoordinate in
+                                    Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
+                                        .tint(Color("Pink"))
+                                }
+                                if let index = sortedBasketsList.firstIndex(of: hole), sortedBasketsList.indices.contains(index+1){
+                                    if let currentBasket = hole.basketCoordinates.first, let nextTee = sortedBasketsList[index+1].teeCoordinates.first {
+                                        MapPolyline(points: [MKMapPoint(currentBasket), MKMapPoint(nextTee)])
+                                            .stroke(.secondary, style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 5]))
+                                    }
+                                }
+                            }
+                        }else {
+                            ForEach(basket.teeCoordinates, id: \.self) {
+                                teeCoordinate in
+                                Marker("", systemImage: "\(basket.number ?? 1).square.fill", coordinate: teeCoordinate)
+                                    .tint(Color("Teal"))
+                                ForEach(basket.basketCoordinates, id: \.self) {
+                                    basketCoordiante in
+                                    MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
+                                        .stroke(Color("LightPink"), style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                                }
+                            }
+                            ForEach(basket.basketCoordinates, id: \.self) {
+                                basketCoordinate in
+                                Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
+                                    .tint(Color("Pink"))
+                            }
                         }
-                        ForEach(basket.basketCoordinates, id: \.self) {
-                            basketCoordinate in
-                            Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
-                                .tint(Color("Pink"))
-                        }
+                    
                         UserAnnotation()
                     }
                     VStack(spacing: -90.0) {
@@ -165,8 +211,26 @@ struct GameView: View {
                                 .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
                         }
                         Spacer()
+                        Button {
+                            showFullMapToggle.toggle()
+                            withAnimation {
+                                if showFullMapToggle {
+                                    game.updateMapCamera(locationManager: locationManager, zoom: 0.0025)
+                                }else {
+                                    game.updateMapCamera(locationManager: locationManager)
+                                }
+                            }
+                            print("Toggle map")
+                        } label: {
+                            Image(systemName: "map.fill")
+                                .frame(width: 50, height: 50)
+                                .background(.regularMaterial)
+                                .background(showFullMapToggle ? Color("Teal") : .clear)
+                                .cornerRadius(25)
+                        }
+
                     }
-                    .padding(.leading, 8.0)
+                    .padding(.horizontal, 8.0)
                     Spacer()
                         .frame(height: 360)
                 }
@@ -423,8 +487,14 @@ struct PlayerScoresListView: View {
 }
 
 //#Preview {
-//    GameView()
-//        .modelContainer(GamesPreviewContainer)
+//    MainActor.assumeIsolated {
+//        return  NavigationStack {
+//            GameView()
+//                .environmentObject(LocationManager())
+//                .environmentObject(SharedActivityManager())
+//                .modelContainer(GamesPreviewContainer)
+//        }
+//    }
 //}
 
 

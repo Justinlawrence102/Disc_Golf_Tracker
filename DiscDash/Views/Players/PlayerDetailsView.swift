@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import Charts
+import MapKit
 
 struct PlayerDetailsView: View {
     @Namespace private var animation
@@ -30,7 +31,7 @@ struct PlayerDetailsView: View {
             if profileViewState == 1 {
                 Rectangle()
                     .foregroundStyle(.thinMaterial)
-                    .cornerRadius(12)
+                    .cornerRadius(24)
                     .padding()
                     .matchedGeometryEffect(id: "PlayerProfileBackground", in: animation)
             }else if profileViewState > 1 {
@@ -51,8 +52,20 @@ struct PlayerDetailsView: View {
                     .tag(1)
                 TopRoundsPerCourse(player: player)
                     .tag(2)
-                Text("Map")
-                    .tag(3)
+                Map() {
+                    ForEach(player.coursesPlayed, id: \.self) {
+                        courses in
+                        if let coordinate = courses.coordinate {
+                            Marker("", systemImage: "flag.circle.fill", coordinate: coordinate)
+                        }
+//                        Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
+//                            .tint(Color("Teal"))
+                    }
+                }
+                .disabled(true)
+                .cornerRadius(28)
+                .padding(.top, 120)
+                .tag(3)
             }
             .tabViewStyle(.page)
             .padding(.all)
@@ -72,7 +85,7 @@ struct PlayerDetailsView: View {
                          .padding([.top, .leading, .bottom], 12)
                             .matchedGeometryEffect(id: "PlayerProfilePhoto", in: animation)
                         VStack(alignment: .leading) {
-                            Text("\(player.numCoursesPlayed) Courses Played")
+                            Text("\(player.coursesPlayed.count) Courses Played")
                                 .font(.headline)
                                 .foregroundStyle(Color("Pink"))
                             Text(profileViewState == 1 ? "Stats" : profileViewState == 2 ? "Best Scores" : "Countries")
@@ -222,7 +235,7 @@ struct TopRoundsPerCourse: View {
         VStack {
             ScrollView {
                 Spacer()
-                    .frame(height: 140)
+                    .frame(height: 120)
                 ForEach(player.TopScorePerCourse) {
                     topScore in
                     HStack {

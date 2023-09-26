@@ -39,6 +39,13 @@ class Course: Identifiable {
     var cityState: String?
     var isSharedGame: Bool = false
 
+    var coordinate: CLLocationCoordinate2D? {
+        if let latitude = latitude, let longitude = longitude {
+            return CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+        }
+        return nil
+    }
+    
     var lastPlayedString: String {
         let games = games?.sorted(by: {$0.startDate > $1.startDate})
         if let mostRecentGame = games?.first?.formattedStartDate {
@@ -225,7 +232,7 @@ class Basket {
     func updateMapCamera(locationManager: LocationManager? = nil, zoom: Double = 0.001) {
         var coordinateRegion = MKCoordinateRegion()
         if !basketCoordinates.isEmpty || !teeCoordinates.isEmpty {
-            coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: basketCoordinates+teeCoordinates)
+            coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: basketCoordinates+teeCoordinates, zoom: zoom)
         }else if let currentLocation = locationManager?.lastLocation?.coordinate {
             coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
         }else {
