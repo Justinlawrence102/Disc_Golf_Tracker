@@ -24,8 +24,7 @@ struct Provider: TimelineProvider {
         var currentGame: Game?
         let nextUpdate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())
         do {
-            let container = try ModelContainer(for: Game.self)
-            let modelContext = ModelContext(container)
+            let modelContext = ModelContext(PersistantData.container)
             
             let date = Date()
             let cal = Calendar.current

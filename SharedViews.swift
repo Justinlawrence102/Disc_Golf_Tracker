@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import MapKit
+import SwiftData
 
 struct PlayerProfileCircleView: View {
     var player: Player
@@ -97,3 +98,13 @@ class Utilities {
         return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: largestLat-smallestLat+zoom), longitudeDelta: CLLocationDegrees(floatLiteral: largestLong-smallestLong+zoom)))
     }
 }
+
+class PersistantData {
+     static let schema = SwiftData.Schema([
+         Game.self
+     ])
+//    ,
+//    Course.self,
+//    Player.self
+     static let container = try! ModelContainer(for: schema)
+ }

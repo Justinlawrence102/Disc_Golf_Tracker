@@ -21,10 +21,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("Players", systemImage: "person.3.fill")
                 }
-            Text("Stats")
-                .tabItem {
-                    Label("Stats", systemImage: "chart.bar.fill")
-                }
+//            Text("Stats")
+//                .tabItem {
+//                    Label("Stats", systemImage: "chart.bar.fill")
+//                }
         }
         .tint(Color("Pink"))
     }

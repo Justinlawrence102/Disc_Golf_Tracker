@@ -77,7 +77,7 @@ struct SelectPlayersView: View {
                 Button(action: {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
-                    newGame.createGame(course: selectedCourse, players: selectedPlayers)
+                    newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
                     stateManager.showCreateGameSheet = false
                     stateManager.selectedGame = newGame
                     WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")

@@ -144,7 +144,8 @@ struct SelectPlayerView: View {
                 Button(action: {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
-                    newGame.createGame(course: selectedCourse, players: selectedPlayers)
+//                    modelContext.insert(newGame)
+                    newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
                     print("Start Game!")
                 }, label: {
                     Text("Start Game")

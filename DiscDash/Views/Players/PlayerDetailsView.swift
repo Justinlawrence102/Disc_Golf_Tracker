@@ -15,12 +15,15 @@ struct PlayerDetailsView: View {
     
 //    @Query private var players: [Player]
 //    var player: Player! { players.first }
-    var player: Player
+    @State var player: Player
+    @State var playerStats: PlayerStats
     
     @State private var selectedTabView = 0
     @State private var profileViewState = 0
+    @State private var selectedFilter: Int = 0
     init(player: Player) {
 //    init() {
+        playerStats = PlayerStats(player: player)
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor(named: "Teal")
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black.withAlphaComponent(0.2)
         self.player = player
@@ -46,20 +49,20 @@ struct PlayerDetailsView: View {
                 }
             }
             TabView(selection: $selectedTabView) {
-                BasketsOverview(player: player)
-                    .tag(0)
-                StatsOverview(player: player)
+                BasketsOverview(playerStats: playerStats)
+                .tag(0)
+                StatsOverview(playerStats: playerStats)
                     .tag(1)
-                TopRoundsPerCourse(player: player)
+                TopRoundsPerCourse(playerStats: playerStats)
                     .tag(2)
                 Map() {
-                    ForEach(player.coursesPlayed, id: \.self) {
+                    ForEach(playerStats.coursesPlayed, id: \.self) {
                         courses in
                         if let coordinate = courses.coordinate {
                             Marker("", systemImage: "flag.circle.fill", coordinate: coordinate)
                         }
-//                        Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
-//                            .tint(Color("Teal"))
+                        //                        Marker("", systemImage: "star.square.fill", coordinate: teeCoordinate)
+                        //                            .tint(Color("Teal"))
                     }
                 }
                 .disabled(true)
@@ -85,7 +88,7 @@ struct PlayerDetailsView: View {
                          .padding([.top, .leading, .bottom], 12)
                             .matchedGeometryEffect(id: "PlayerProfilePhoto", in: animation)
                         VStack(alignment: .leading) {
-                            Text("\(player.coursesPlayed.count) Courses Played")
+                            Text("\(playerStats.coursesPlayed.count) Courses Played")
                                 .font(.headline)
                                 .foregroundStyle(Color("Pink"))
                             Text(profileViewState == 1 ? "Stats" : profileViewState == 2 ? "Best Scores" : "Countries")
@@ -107,25 +110,59 @@ struct PlayerDetailsView: View {
             }
         }
         .toolbar {
-            Button(action: {
-                print("Change Fiter")
-            }) {
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Picker(selection: $selectedFilter, label: Text("Sorting options")) {
+                        Label("Lifetime", systemImage: "chart.bar.fill")
+                            .tag(0)
+                        
+                        Label("Today", systemImage: "calendar")
+                            .tag(1)
+                        
+                        Label("Last 30 Days", systemImage: "calendar")
+                            .tag(2)
+                        
+                        Label("This Year", systemImage: "calendar")
+                            .tag(3)
+                    }.onChange(of: selectedFilter){
+                        switch selectedFilter {
+                        case 0:
+                            playerStats.statFilter = .lifetime
+                        case 1:
+                            playerStats.statFilter = .today
+                        case 2:
+                            playerStats.statFilter = .lastMonth
+                        case 3:
+                            playerStats.statFilter = .thisYear
+                        default:
+                            playerStats.statFilter = .lifetime
+                        }
+                        playerStats.reloadFilter()
+                    }
+                }
+            label: {
                 Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
             }
+            }
+//            Button(action: {
+//                print("Change Fiter")
+//            }) {
+//                Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
+//            }
         }
     }
 }
 
 struct BasketsOverview: View {
-    var player: Player
+    @State var playerStats: PlayerStats
     var body: some View {
         VStack {
             ScrollView {
                 VStack {
-                    Text("\(player.numBasketsPlayed) Baskets Played")
+                    Text("\(playerStats.numBasketsPlayed) Baskets Played")
                         .font(.headline)
                         .foregroundStyle(Color("Pink"))
-                    ForEach(player.scoreBreakdown) {
+                    ForEach(playerStats.scoreBreakdown) {
                         score in
                         HStack {
                             Circle()
@@ -149,7 +186,7 @@ struct BasketsOverview: View {
                 .padding(.horizontal)
                 .padding(.top, 140)
                 
-                Chart(player.scoreBreakdown, id: \.diffFromPar) { element in
+                Chart(playerStats.scoreBreakdown, id: \.diffFromPar) { element in
                     SectorMark(
                         angle: .value("Count", element.number),
                         innerRadius: .ratio(0.6),
@@ -169,13 +206,13 @@ struct BasketsOverview: View {
 }
 
 struct StatsOverview: View {
-    var player: Player
+    @State var playerStats: PlayerStats
 
     var body: some View {
         VStack(spacing: -40.0) {
             HStack {
                 VStack {
-                    Text("\(player.numGamesPlayed)")
+                    Text("\(playerStats.numGamesPlayed)")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .fontDesign(.rounded)
@@ -191,7 +228,7 @@ struct StatsOverview: View {
             HStack {
                 Spacer()
                 VStack {
-                    Text("\(player.numBasketsPlayed)")
+                    Text("\(playerStats.numBasketsPlayed)")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .fontDesign(.rounded)
@@ -206,7 +243,7 @@ struct StatsOverview: View {
             }
             HStack {
                 VStack {
-                    Text("\(player.numThrows)")
+                    Text("\(playerStats.numThrows)")
                         .font(.largeTitle)
                         .fontWeight(.semibold)
                         .fontDesign(.rounded)
@@ -229,14 +266,14 @@ struct StatsOverview: View {
 }
 
 struct TopRoundsPerCourse: View {
-    var player: Player
-    
+    @State var playerStats: PlayerStats
+
     var body: some View {
         VStack {
             ScrollView {
                 Spacer()
                     .frame(height: 120)
-                ForEach(player.TopScorePerCourse) {
+                ForEach(playerStats.TopScoresPerCourse) {
                     topScore in
                     HStack {
                         if let courseImage = topScore.image, let image = UIImage(data: courseImage) {

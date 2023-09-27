@@ -28,9 +28,6 @@ class Course: Identifiable {
         return []
     }
     
-    @Relationship(deleteRule: .cascade, inverse: \Game.course) //deleteRule: .cascade,
-    var games: [Game]?
-    
     @Attribute(.externalStorage)
     var image: Data?
     
@@ -38,7 +35,10 @@ class Course: Identifiable {
     var longitude: Double?
     var cityState: String?
     var isSharedGame: Bool = false
-
+    
+    @Relationship(deleteRule: .cascade, inverse: \Game.course) //deleteRule: .cascade,
+    var games: [Game]?
+    
     var coordinate: CLLocationCoordinate2D? {
         if let latitude = latitude, let longitude = longitude {
             return CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
@@ -149,8 +149,7 @@ class Basket {
             $0.basket?.uuid == uuid && $0.score != 0
         }
         do {
-            let container = try ModelContainer(for: Game.self)
-            let modelContext = ModelContext(container)
+            let modelContext = ModelContext(PersistantData.container)
             
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
             let scores = try modelContext.fetch(descriptor)
@@ -178,8 +177,7 @@ class Basket {
             $0.basket?.uuid == uuid && $0.score != 0
         }
         do {
-            let container = try ModelContainer(for: Game.self)
-            let modelContext = ModelContext(container)
+            let modelContext = ModelContext(PersistantData.container)
             
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
             let scores = try modelContext.fetch(descriptor)

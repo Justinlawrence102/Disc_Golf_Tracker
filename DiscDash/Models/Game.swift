@@ -53,26 +53,21 @@ class Game {
         startDate = Date()
     }
     
-    func createGame(course: Course, players: [Player]) {
-        do {
-            let container = try ModelContainer(for: Game.self)
-            let modelContext = ModelContext(container)
-            
-            modelContext.insert(self)
-            self.startDate = Date()
-            self.playerScores = []
-            
-            self.course = course
-            course.games?.append(self)
+    func createGame(course: Course, players: [Player], modelContext: ModelContext) {
+//        let modelContext = ModelContext(PersistantData.container)
         
-            for player in players {
-                for basket in self.course?.baskets ?? [] {
-                    let playerScore = PlayerScore(player: player, game: self, basket: basket)
-                    modelContext.insert(playerScore)
-                }
+        modelContext.insert(self)
+        self.startDate = Date()
+        self.playerScores = []
+
+        course.games?.append(self)
+        self.course = course
+        
+        for player in players {
+            for basket in self.course?.baskets ?? [] {
+                let playerScore = PlayerScore(player: player, game: self, basket: basket)
+                modelContext.insert(playerScore)
             }
-        }catch {
-            
         }
     }
     func getImage()->UIImage? {
@@ -143,8 +138,7 @@ class Game {
             }
         }
         do {
-            let container = try ModelContainer(for: Game.self)
-            let context = ModelContext(container)
+            let context = ModelContext(PersistantData.container)
             
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
             let scores = try context.fetch(descriptor)

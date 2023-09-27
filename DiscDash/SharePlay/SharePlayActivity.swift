@@ -53,13 +53,9 @@ class SharedActivityManager: ObservableObject {
     func configureGroupSession(_ session: GroupSession<SharePlayActivity>) { //, modelContext: ModelContext
         let messenger = GroupSessionMessenger(session: session)
         self.messenger = messenger
-        do {
-            let container = try ModelContainer(for: Game.self)
-            let context = ModelContext(container)
-            self.modelContext = context
-        }catch {
-            print("Could not configure: \(error)")
-        }
+        let context = ModelContext(PersistantData.container)
+        self.modelContext = context
+        
         
         let task = Task {
             for await (sharePlayModel, _) in messenger.messages(of: SharedGame.self) {
