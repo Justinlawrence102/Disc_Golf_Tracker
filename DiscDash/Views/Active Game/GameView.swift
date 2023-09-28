@@ -9,10 +9,12 @@ import SwiftUI
 import SwiftData
 import MapKit
 import GroupActivities
+import TipKit
 
 struct GameView: View {
     @Environment(\.modelContext) private var modelContext
     @Namespace private var animation
+    @Namespace private var mapScope
 
 //    @Query private var games: [Game]
 //    var game: Game! { games.first }
@@ -30,6 +32,8 @@ struct GameView: View {
     @StateObject var groupStateObserver = GroupStateObserver()
     @State private var showFullMapToggle = false
 
+    @State var scrollPosition = 0
+    
     var sortedBasketsList: [Basket] {
       return (game.course?.baskets ?? []).sorted(by: {$1.number ?? 0 > $0.number ?? 0})
     }
@@ -41,7 +45,9 @@ struct GameView: View {
             if let basket = game.currentBasket {
                 VStack(spacing: -0.0) {
 //                    Map {
-                     Map(position: $game.cameraPosition) {
+                    
+                    Map(position: $game.cameraPosition, scope: mapScope) {
+//                    Map(scope: mapScope) {
 //                    Map(position: $position) {
                         if showFullMapToggle {
                             ForEach(sortedBasketsList) {
@@ -95,6 +101,17 @@ struct GameView: View {
                     
                         UserAnnotation()
                     }
+                    .overlay(alignment: .bottomTrailing) {
+                        VStack {
+                            MapCompass(scope: mapScope)
+                                .mapControlVisibility(.automatic)
+                            Spacer()
+                                .frame(height: 110)
+                        }
+                        .padding(.trailing, 8)
+                    }
+                    .mapControlVisibility(.hidden)
+                    .mapScope(mapScope)
                     VStack(spacing: -90.0) {
                         Rectangle()
                             .padding(.top, -45.0)
@@ -162,6 +179,7 @@ struct GameView: View {
                             .padding(.horizontal, 12)
                             HStack{
                                 Button(action: {
+                                    AddBasketAndTeeTip.hasAddedALocation = true
                                     if basket.teeCoordinates.isEmpty {
                                         basket.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
                                     }else {
@@ -179,6 +197,7 @@ struct GameView: View {
                                 Spacer()
                                 Button(action: {
                                     print("Save Basket")
+                                    AddBasketAndTeeTip.hasAddedALocation = true
                                     if basket.basketCoordinates.isEmpty {
                                         basket.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
                                     }else {
@@ -202,7 +221,7 @@ struct GameView: View {
                 }
                 VStack() {
                     Spacer()
-                    HStack {
+                    HStack(alignment: .bottom) {
                         if sheetIsUp {
                             CurrentBasketInfoView(basket: basket, alignment: .leading)
                                 .padding(8)
@@ -213,33 +232,32 @@ struct GameView: View {
                         Spacer()
                         Button {
                             showFullMapToggle.toggle()
-                            withAnimation {
-                                if showFullMapToggle {
-                                    game.updateMapCamera(locationManager: locationManager, zoom: 0.0025)
-                                }else {
-                                    game.updateMapCamera(locationManager: locationManager)
-                                }
-                            }
                             print("Toggle map")
                         } label: {
                             Image(systemName: "map.fill")
-                                .frame(width: 50, height: 50)
+                                .frame(width: 45, height: 45)
                                 .background(.regularMaterial)
                                 .background(showFullMapToggle ? Color("Teal") : .clear)
-                                .cornerRadius(25)
+                                .cornerRadius(22.5)
                         }
-
+                        
                     }
-                    .padding(.horizontal, 8.0)
+                    TipView(AddBasketAndTeeTip())
                     Spacer()
                         .frame(height: 360)
                 }
+                .padding(.horizontal, 8.0)
             }else {
                 ResultsView(game: game)
+                    .onAppear {
+                        if game.endDate == nil {
+                            game.endDate = Date()
+                        }
+                    }
             }
             
             VStack {
-                BasketPickerView(game: game, showingScoreSheet: $showingScoreSheet)
+                BasketPickerView(game: game, showingScoreSheet: $showingScoreSheet, scrollPosition: $scrollPosition)
                 Spacer()
             }
         }
@@ -313,6 +331,13 @@ struct GameView: View {
         .onChange(of: game.currentHoleIndex) {
             game.updateMapCamera(locationManager: locationManager)
         }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                withAnimation {
+                    scrollPosition = game.currentHoleIndex+1
+                }
+            }
+        }
 //        .task {
 //            for await session in SharePlayActivity.sessions() {
 //                game.configureGroupSession(session)
@@ -355,54 +380,64 @@ struct BasketPickerView: View {
     var game: Game
     
     @Binding var showingScoreSheet: Bool
-
+    @Binding var scrollPosition: Int
     var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(game.course?.sortedBaskets ?? []) {
-                    basket in
-                    if let number = basket.number {
-                        Button(action: {
-                            withAnimation {
-                                game.currentHoleIndex = number - 1
-                                game.updateMapCamera(locationManager: locationManager)
-                                sharePlayManager.send(game)
-                            }
-                            showingScoreSheet = true
-                        }, label: {
-                            Text(String(number))
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .fontDesign(.rounded)
-                                .foregroundStyle(game.currentHoleIndex + 1 == number ? Color.white : Color("Navy"))
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 35)
-                                .background(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime"))
-                                .cornerRadius(12)
-                        })
+        ScrollViewReader { sp in
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(game.course?.sortedBaskets ?? []) {
+                        basket in
+                        if let number = basket.number {
+                            Button(action: {
+                                Task {
+                                    await AddBasketAndTeeTip.selectedABasket.donate()
+                                }
+                                withAnimation {
+                                    game.currentHoleIndex = number - 1
+                                    game.updateMapCamera(locationManager: locationManager)
+                                    sharePlayManager.send(game)
+                                }
+                                showingScoreSheet = true
+                            }, label: {
+                                Text(String(number))
+                                    .font(.title2)
+                                    .fontWeight(.semibold)
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(game.currentHoleIndex + 1 == number ? Color.white : Color("Navy"))
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 35)
+                                    .background(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime"))
+                                    .cornerRadius(12)
+                            })
+                            .id(basket.number)
+                        }
                     }
+                    Button(action: {
+                        game.currentHoleIndex = game.course?.baskets?.count ?? 0
+                        showingScoreSheet = false
+                        sharePlayManager.send(game)
+                    }, label: {
+                        Text("Results")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .fontDesign(.rounded)
+                            .foregroundStyle(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color.white : Color("Navy"))
+                            .padding(8)
+                            .background(game.currentHoleIndex == game.course?.baskets?.count ? Color("Teal") : Color(uiColor: .systemBackground))
+                            .cornerRadius(12)
+                    })
+                    .id((game.course?.baskets?.count ?? 99)+1)
                 }
-                Button(action: {
-                    game.currentHoleIndex = game.course?.baskets?.count ?? 0
-                    showingScoreSheet = false
-                    sharePlayManager.send(game)
-                }, label: {
-                    Text("Results")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .fontDesign(.rounded)
-                        .foregroundStyle(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color.white : Color("Navy"))
-                        .padding(8)
-                        .background(game.currentHoleIndex == game.course?.baskets?.count ? Color("Teal") : Color(uiColor: .systemBackground))
-                        .cornerRadius(12)
-                })
             }
+            .onChange(of: scrollPosition) {
+                sp.scrollTo(scrollPosition)
+            }
+            .padding(8)
+            .background(.regularMaterial)
+    //                .shadow(radius: 12)
+            .cornerRadius(12)
+            .padding(12)
         }
-        .padding(8)
-        .background(.regularMaterial)
-//                .shadow(radius: 12)
-        .cornerRadius(12)
-        .padding(12)
     }
 }
 struct PlayerScoresListView: View {

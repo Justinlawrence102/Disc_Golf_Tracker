@@ -18,6 +18,9 @@ struct SelectCourseView: View {
     @State private var isCreatingNewCourse = true
     @EnvironmentObject var locationManager: LocationManager
 
+    @State var courseToDelete: Course?
+    @State var showDeleteCourseAlert = false
+    
     var body: some View {
         NavigationStack {
             List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) > $0.getDistance(locationManager: locationManager)})) { course in
@@ -61,13 +64,8 @@ struct SelectCourseView: View {
                         Label("Edit", systemImage: "pencil")
                     }
                     Button {
-//                        modelContext.delete(course)
-                        let courseId = course.uuid
-                        do {
-                            try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-                        }catch {
-                            print("Could not delete!")
-                        }
+                        courseToDelete = course
+                        showDeleteCourseAlert.toggle()
                     } label: {
                         Label("Delete", systemImage: "trash")
                             .tint(.red)
@@ -83,6 +81,20 @@ struct SelectCourseView: View {
                     .navigationTitle("Select Players")
                     .navigationBarTitleDisplayMode(.inline)
                 
+            }
+            .alert("Delete Course", isPresented: $showDeleteCourseAlert) {
+                Button("Delete", role: .destructive) {
+                    if let courseId = courseToDelete?.uuid {
+                        do {
+                            try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+                        }catch {
+                            print("Could not delete!")
+                        }
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text("Are you sure you want to delete \(courseToDelete?.name ?? "this course")? Every game at this course will also be deleted")
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

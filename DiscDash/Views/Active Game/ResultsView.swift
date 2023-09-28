@@ -18,7 +18,8 @@ struct ResultsView: View {
     //        private let playerScores: [ResultScores] = []
     private var scoreResults: [ResultScores] = []
     @State var game: Game
-    
+    @State var showDeleteGameAlert = false
+
     init(game: Game) {
         scoreResults = game.getResults()
         _game = .init(initialValue: game)
@@ -66,26 +67,20 @@ struct ResultsView: View {
                     .padding(.horizontal, 12)
                     .padding(.top, 100.0)
                     .listStyle(.plain)
+                    if let duration = game.gameDuration {
+                        HStack {
+                            Spacer()
+                            Text(duration)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.trailing)
+                        }
+                    }
                     Spacer()
                     
                     Button(action: {
                         print("Delete")
-//                        modelContext.delete(game)
-                        let gameId = game.uuid
-                        do {
-                            if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
-                                let courseId = course.uuid
-                                try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-                                
-//                                try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.scores?.first?.game?.isSharedGame ?? false}, includeSubclasses: false)
-                                try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedGame}, includeSubclasses: false)
-                            }
-                            try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
-                        }catch {
-                            print("Could not delete!")
-                        }
-
-                        dismiss.callAsFunction()
+                        showDeleteGameAlert.toggle()
                     }, label: {
                         Label("Delete Game", systemImage: "trash.fill")
                             .foregroundColor(.white)
@@ -96,6 +91,25 @@ struct ResultsView: View {
                     .padding(.top, 16)
                 }
             }
+        }
+        .alert("Delete Game", isPresented: $showDeleteGameAlert) {
+            Button("Delete", role: .destructive) {
+                let gameId = game.uuid
+                do {
+                    if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
+                        let courseId = course.uuid
+                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedGame}, includeSubclasses: false)
+                    }
+                    try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
+                    dismiss.callAsFunction()
+                }catch {
+                    print("Could not delete!")
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        }message: {
+            Text("Are you sure you want to delete this game from \(game.formattedStartDate)?")
         }
     }
 }

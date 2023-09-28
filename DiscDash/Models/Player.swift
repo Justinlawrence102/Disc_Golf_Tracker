@@ -83,9 +83,9 @@ struct TopRoundCourse: Identifiable {
         case .today:
             return Calendar.current.startOfDay(for: Date())
         case .lastMonth:
-            return Calendar.current.date(byAdding: .month, value: 1, to: Date())!
+            return Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         case .thisYear:
-            return Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+            return Calendar.current.date(byAdding: .year, value: -1, to: Date())!
         default:
             return Date.distantPast
         }

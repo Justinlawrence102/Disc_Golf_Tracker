@@ -10,19 +10,21 @@ import SwiftData
 
 struct PlayerListView: View {
     @Environment(\.modelContext) private var modelContext
-
     @Query(filter: #Predicate<Player> { !$0.isSharedGame}) private var players: [Player]
-//    @Query private var players: [Player]
-
+    //    @Query private var players: [Player]
+    
     @State var selectedPlayer: Player?
     @State var selectedNewPlayer = true
+    
+    @State var playerToDelete: Player?
+    @State var showDeletePlayerAlert = false
     var body: some View {
         NavigationStack { //NavigationSplitView
             List(players, id: \.self) { player in
                 ZStack {
                     NavigationLink(value: player) {
                         HStack {
-                                PlayerProfileCircleView(player: player, size: 50)
+                            PlayerProfileCircleView(player: player, size: 50)
                             VStack(alignment: .leading) {
                                 Text(player.name)
                                     .font(.headline)
@@ -44,7 +46,11 @@ struct PlayerListView: View {
                     }
                     
                     Button {
-                        modelContext.delete(player)
+                        //                        modelContext.delete(player)
+                        //                        selectedPlayer
+                        playerToDelete = player
+                        showDeletePlayerAlert = true
+                        //                        showDeleteAlert.toggle()
                     } label: {
                         Label("Delete", systemImage: "trash")
                             .tint(.red)
@@ -52,7 +58,7 @@ struct PlayerListView: View {
                 }
             }
             .navigationDestination(for: Player.self) { player in
-//                PlayerDetailsView()
+                //                PlayerDetailsView()
                 PlayerDetailsView(player: player)
                     .navigationTitle(player.name)
                     .navigationBarTitleDisplayMode(.inline)
@@ -73,6 +79,16 @@ struct PlayerListView: View {
             CreatePlayerView(player: item, isNewPerson: selectedNewPlayer)
                 .presentationDetents([.medium])
                 .interactiveDismissDisabled()
+        }
+        .alert("Delete Player", isPresented: $showDeletePlayerAlert) {
+            Button("Delete", role: .destructive) {
+                if let player = playerToDelete {
+                    modelContext.delete(player)
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        }message: {
+            Text("Are you sure you want to delete \(playerToDelete?.name ?? "this player")?")
         }
     }
 }

@@ -10,7 +10,6 @@
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
 		98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */; };
 		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
-		98D3EC462ABF06E100ADC565 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC452ABF06E100ADC565 /* Item.swift */; };
 		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
 		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
 		98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC542ABF075C00ADC565 /* SharePlay.swift */; };
@@ -59,6 +58,8 @@
 		98D3ECC42ABF0D4700ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
 		98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC622ABF077F00ADC565 /* LocationManager.swift */; };
 		98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
+		98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */; };
+		98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,7 +109,6 @@
 		98D3EC3E2ABF06E100ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashApp.swift; sourceTree = "<group>"; };
 		98D3EC432ABF06E100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		98D3EC452ABF06E100ADC565 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDash.entitlements; sourceTree = "<group>"; };
 		98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -148,6 +148,8 @@
 		98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3ECB82ABF0CB900ADC565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDashComplicationsExtension.entitlements; sourceTree = "<group>"; };
+		98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBasketAndTeeTip.swift; sourceTree = "<group>"; };
+		98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNContactVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,7 +211,6 @@
 				98D3EC532ABF074A00ADC565 /* Models */,
 				98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */,
 				98D3EC432ABF06E100ADC565 /* ContentView.swift */,
-				98D3EC452ABF06E100ADC565 /* Item.swift */,
 				98D3EC472ABF06E200ADC565 /* Assets.xcassets */,
 				98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */,
 				98D3EC4D2ABF06E200ADC565 /* Info.plist */,
@@ -269,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				98D3EC692ABF079A00ADC565 /* GameView.swift */,
+				98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */,
 				98D3EC682ABF079A00ADC565 /* ResultsView.swift */,
 			);
 			path = "Active Game";
@@ -290,6 +292,7 @@
 				98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */,
 				98D3EC742ABF07B200ADC565 /* PlayerListView.swift */,
 				9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */,
+				98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */,
 			);
 			path = Players;
 			sourceTree = "<group>";
@@ -496,11 +499,11 @@
 				98D3EC642ABF077F00ADC565 /* LocationManager.swift in Sources */,
 				98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */,
 				98D3EC5B2ABF075C00ADC565 /* Game.swift in Sources */,
-				98D3EC462ABF06E100ADC565 /* Item.swift in Sources */,
 				98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */,
 				98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */,
 				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
 				98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */,
+				98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */,
 				98D3EC592ABF075C00ADC565 /* Player.swift in Sources */,
 				98D3EC652ABF077F00ADC565 /* SampleData.swift in Sources */,
 				98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */,
@@ -508,6 +511,7 @@
 				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
 				98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */,
 				98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */,
+				98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 @main
 struct DiscDashApp: App {
@@ -15,7 +16,6 @@ struct DiscDashApp: App {
             Game.self
         ])
         var modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false, cloudKitDatabase: .private("iCloud.justinlawrence.disc-dash"))
-        //, cloudKitDatabase: .private("iCloud.justinlawrence.discGolfTracker")
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -31,6 +31,12 @@ struct DiscDashApp: App {
             ContentView()
                 .environmentObject(locationManager)
                 .environmentObject(sharedActivityManager)
+                .task {
+//                    Tips.showAllTipsForTesting()
+//                    try? Tips.resetDatastore()
+                    try? await Tips.configure()
+                    
+                }
                 .onAppear {
                     locationManager.requestLocation()
                 }

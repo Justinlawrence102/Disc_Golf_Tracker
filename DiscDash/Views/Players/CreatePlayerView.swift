@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 import PhotosUI
 import SwiftData
+import Contacts
 
 struct CreatePlayerView: View {
     @Environment(\.modelContext) private var playerContext
     @Environment(\.dismiss) private var dismiss
     @State var player: Player
-    
+    @State var showContactsSheet = false
+    @State var selectedContact = CNContact()
     var isNewPerson: Bool
 
     var playerColors: [String] = [ "C7F465", "FE6B6B", "4ECDC4", "58636D", "059EDF", "F2F2F7", "FF003D", "FF9900", "FDD608", "00AE26", "0906A7", "6507AE" ]
@@ -120,36 +122,11 @@ struct CreatePlayerView: View {
                             })
                             Button(action: {
                                 print("Tapped Contacts")
+                                showContactsSheet.toggle()
                             }, label: {
                                 Image(systemName: "person.crop.circle.fill")
                                     .frame(width: 75, height: 75)
                                     .background(Color("Teal"))
-                                    .cornerRadius(37.5)
-                                    .tint(.white)
-                                    .font(.title)
-                            })
-                            Button(action: {
-                                if let img = UIImage(named: "Boy") {
-                                    player.image = img.pngData()!
-                                }
-                            }, label: {
-                                Image("Boy")
-                                    .resizable()
-                                    .frame(width: 75, height: 75)
-                                    .background(Color(UIColor.secondarySystemBackground))
-                                    .cornerRadius(37.5)
-                                    .tint(.white)
-                                    .font(.title)
-                            })
-                            Button(action: {
-                                if let img = UIImage(named: "Girl") {
-                                    player.image = img.pngData()!
-                                }
-                            }, label: {
-                                Image("Girl")
-                                    .resizable()
-                                    .frame(width: 75, height: 75)
-                                    .background(Color(UIColor.secondarySystemBackground))
                                     .cornerRadius(37.5)
                                     .tint(.white)
                                     .font(.title)
@@ -187,6 +164,16 @@ struct CreatePlayerView: View {
                 .padding([.leading, .bottom, .trailing], 12.0)
             }
             .padding(.top, 40)
+        }
+        .sheet(isPresented: $showContactsSheet) {
+            EmbeddedContactPicker(contact: $selectedContact)
+//            CNContactViewControllerRepresentable(contact: $selectedContact)
+                .edgesIgnoringSafeArea(.all)
+        }
+        .onChange(of: selectedContact) {
+            if let image = selectedContact.thumbnailImageData {
+                player.image = image
+            }
         }
     }
 }

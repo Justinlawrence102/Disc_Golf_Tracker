@@ -21,6 +21,7 @@ struct PlayerDetailsView: View {
     @State private var selectedTabView = 0
     @State private var profileViewState = 0
     @State private var selectedFilter: Int = 0
+    @State private var showEditPlayerSheet = false
     init(player: Player) {
 //    init() {
         playerStats = PlayerStats(player: player)
@@ -51,6 +52,16 @@ struct PlayerDetailsView: View {
             TabView(selection: $selectedTabView) {
                 BasketsOverview(playerStats: playerStats)
                 .tag(0)
+                .overlay(alignment: .topTrailing) {
+                    Button(action: {
+                        showEditPlayerSheet.toggle()
+                    }, label: {
+                        Text("Edit")
+                            .font(.headline)
+                            .foregroundStyle(Color("Teal"))
+                            .padding(12)
+                    })
+                }
                 StatsOverview(playerStats: playerStats)
                     .tag(1)
                 TopRoundsPerCourse(playerStats: playerStats)
@@ -140,15 +151,13 @@ struct PlayerDetailsView: View {
                         playerStats.reloadFilter()
                     }
                 }
-            label: {
-                Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
+                label: {
+                    Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
+                }
             }
-            }
-//            Button(action: {
-//                print("Change Fiter")
-//            }) {
-//                Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
-//            }
+        }
+        .sheet(isPresented: $showEditPlayerSheet) {
+            CreatePlayerView(player: player, isNewPerson: false)
         }
     }
 }

@@ -25,6 +25,11 @@ struct GoToNextBasketView: View {
         }else {
             ResultsView(game: game)
                 .navigationTitle("Results")
+                .onAppear {
+                    if game.endDate == nil {
+                        game.endDate = Date()
+                    }
+                }
 //                .environmentObject(stateManager)
         }
 

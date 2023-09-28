@@ -45,6 +45,15 @@ class Game {
         return dateFormatter.string(from: startDate)
 
     }
+    var gameDuration: String? {
+        if let endDate = endDate {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day, .hour, .minute]
+            formatter.unitsStyle = .short
+            return formatter.string(from: startDate, to: endDate)
+        }
+        return nil
+    }
     init(id: String) {
         self.uuid = id
         startDate = Date()
