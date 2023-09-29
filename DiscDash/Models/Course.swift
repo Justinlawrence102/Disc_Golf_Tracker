@@ -79,7 +79,7 @@ class Course: Identifiable {
         return MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 29, longitude: -82), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: 20), longitudeDelta: CLLocationDegrees(floatLiteral: 20)))
     }
     
-    func getDistance(locationManager: LocationManager) ->Double {
+    func getDistance(locationManager: LocationManager) ->Double? {
         if let userClLocation = locationManager.lastLocation?.coordinate, let latitude = latitude, let longitude = longitude {
             let userCoordinates = CLLocation(latitude: userClLocation.latitude, longitude: userClLocation.longitude)
             let courseCoordinates = CLLocation(latitude: latitude, longitude: longitude)
@@ -87,7 +87,7 @@ class Course: Identifiable {
             let distanceKiloMeters = (userCoordinates.distance(from: courseCoordinates))/1000
             return distanceKiloMeters*0.6213712
         }
-        return 0
+        return nil
     }
     
     func lookUpCurrentLocation() {
@@ -238,5 +238,88 @@ class Basket {
             
         }
         cameraPosition = .region(coordinateRegion)
+    }
+}
+
+class ImprtedCoursesResponse: Decodable {
+    var courses: [ImportedCourses] = []
+    
+    enum CodingKeys: String, CodingKey {
+        case courses = "courses"
+    }
+}
+
+class ImportedCourses: Decodable, Identifiable {
+    var uuid: String
+    var name: String
+    var city: String
+    var state: String
+    var numHoles: Int
+    var latitude: Double
+    var longitude: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case uuid = "uuid"
+        case name = "name"
+        case city = "city"
+        case state = "state"
+        case numHoles = "numHoles"
+        case latitude = "latitude"
+        case longitude = "longitude"
+    }
+    
+    init(uuid: String, name: String, city: String, state: String, numHoles: Int, latitude: Double, longitude: Double) {
+        self.uuid = uuid
+        self.name = name
+        self.city = city
+        self.state = state
+        self.numHoles = numHoles
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
+    func getDistance(locationManager: LocationManager) ->Double? {
+        if let userClLocation = locationManager.lastLocation?.coordinate {
+            let userCoordinates = CLLocation(latitude: userClLocation.latitude, longitude: userClLocation.longitude)
+            let courseCoordinates = CLLocation(latitude: latitude, longitude: longitude)
+
+            let distanceKiloMeters = (userCoordinates.distance(from: courseCoordinates))/1000
+            return distanceKiloMeters*0.6213712
+        }
+        return nil
+    }
+    
+    func saveNewCourse()->Course {
+        let context = ModelContext(PersistantData.container)
+
+        let coursesPredicate = #Predicate<Course> {
+            $0.uuid == uuid
+        }
+        do {
+            let modelContext = ModelContext(PersistantData.container)
+            
+            let descriptor = FetchDescriptor<Course>(predicate: coursesPredicate)
+            let courses = try modelContext.fetch(descriptor)
+            if !courses.isEmpty {
+                return courses[0]
+            }
+        }catch {
+            print("Error")
+        }
+    
+        let newCourse = Course(name: name)
+        newCourse.uuid = uuid
+        newCourse.latitude = latitude
+        newCourse.longitude = longitude
+        newCourse.lookUpCurrentLocation()
+        context.insert(newCourse)
+        newCourse.baskets = []
+        for i in 0..<numHoles {
+            let basket = Basket(number: i+1, course: newCourse)
+            context.insert(basket)
+        }
+        newCourse.games = []
+        
+        return newCourse
     }
 }

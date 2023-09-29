@@ -67,8 +67,9 @@ struct GameSelectionView: View {
                                 }
                                 HStack(alignment: .bottom) {
                                     VStack(alignment: .leading) {
-                                        Text(game.course?.name ?? "NONE")
+                                        Text(game.course?.name ?? "")
                                             .font(.headline)
+                                            .lineLimit(2)
                                         Text(game.formattedStartDate)
                                             .font(.subheadline)
                                     }

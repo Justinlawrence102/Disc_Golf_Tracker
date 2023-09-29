@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9805405F2AC65397006541BF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9805405E2AC65397006541BF /* data.json */; };
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
 		98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */; };
 		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
@@ -60,6 +61,7 @@
 		98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
 		98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */; };
 		98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */; };
+		98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9805405E2AC65397006541BF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = scripts/data.json; sourceTree = SOURCE_ROOT; };
 		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashApp.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 		98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDashComplicationsExtension.entitlements; sourceTree = "<group>"; };
 		98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBasketAndTeeTip.swift; sourceTree = "<group>"; };
 		98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNContactVC.swift; sourceTree = "<group>"; };
+		98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCourseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +256,7 @@
 			children = (
 				98D3EC622ABF077F00ADC565 /* LocationManager.swift */,
 				98D3EC632ABF077F00ADC565 /* SampleData.swift */,
+				9805405E2AC65397006541BF /* data.json */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -282,6 +287,7 @@
 				98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */,
 				98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */,
 				98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */,
+				98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */,
 			);
 			path = Games;
 			sourceTree = "<group>";
@@ -463,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */,
+				9805405F2AC65397006541BF /* data.json in Resources */,
 				98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +509,7 @@
 				98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */,
 				98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */,
 				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
+				98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */,
 				98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */,
 				98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */,
 				98D3EC592ABF075C00ADC565 /* Player.swift in Sources */,

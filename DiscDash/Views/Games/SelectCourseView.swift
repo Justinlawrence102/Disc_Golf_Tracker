@@ -20,10 +20,11 @@ struct SelectCourseView: View {
 
     @State var courseToDelete: Course?
     @State var showDeleteCourseAlert = false
+    @State var showSearchCoursesSheet = false
     
     var body: some View {
         NavigationStack {
-            List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) > $0.getDistance(locationManager: locationManager)})) { course in
+            List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) ?? 0 > $0.getDistance(locationManager: locationManager) ?? 0})) { course in
                 NavigationLink(value: course) {
                     HStack {
                         if let courseImage = course.image, let image = UIImage(data: courseImage) {
@@ -42,6 +43,7 @@ struct SelectCourseView: View {
                         }
                         VStack(alignment: .leading) {
                             Text(String(course.name))
+                                .lineLimit(2)
                                 .font(.headline)
                                 .foregroundStyle(Color("Navy"))
                             Text(course.lastPlayedString)
@@ -49,7 +51,9 @@ struct SelectCourseView: View {
                                 .foregroundStyle(Color("Navy"))
                             HStack(spacing: 0.0) {
                                 Image(systemName: "location.fill")
-                                Text("\(String(format: "%.1f", course.getDistance(locationManager: locationManager))) mi away")
+                                if let distance = course.getDistance(locationManager: locationManager){
+                                    Text("\(String(format: "%.1f", distance)) mi away")
+                                }
                             }
                             .font(.caption)
                             .foregroundStyle(Color("Teal"))
@@ -98,16 +102,25 @@ struct SelectCourseView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        let newCourse = Course()
-                        modelContext.insert(newCourse)
-                        newCourse.baskets = []
-                        newCourse.games = []
-                        isCreatingNewCourse = true
-                        selectedItem = newCourse
-                    }, label: {
-                        Image(systemName: "plus")
-                    })
+                    Menu {
+                        Button(action: {
+                            showSearchCoursesSheet.toggle()
+                        }, label: {
+                            Label("Search", systemImage: "magnifyingglass")
+                        })
+                        Button(action: {
+                            let newCourse = Course()
+                            modelContext.insert(newCourse)
+                            newCourse.baskets = []
+                            newCourse.games = []
+                            isCreatingNewCourse = true
+                            selectedItem = newCourse
+                        }, label: {
+                            Label("Custom Course", systemImage: "plus")
+                        })
+                    }label: {
+                        Label("Add", systemImage: "plus")
+                    }
                 }
                 ToolbarItem(placement: .cancellationAction, content: {
                     Button(action: {
@@ -120,6 +133,13 @@ struct SelectCourseView: View {
         }
         .sheet(item: $selectedItem) { item in
             CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse)
+        }
+        .sheet(isPresented: $showSearchCoursesSheet) {
+            NavigationStack {
+                SearchCourseView(showSearchCoursesSheet: $showSearchCoursesSheet, selectedItem: $selectedItem)
+                    .navigationTitle("Search")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }
@@ -167,7 +187,13 @@ struct SelectPlayerView: View {
         
     }
 }
+
 #Preview {
-    SelectPlayerView(selectedCourse: Course(name: "Test"))
-        .modelContainer(previewContainer)
+    MainActor.assumeIsolated {
+        return  NavigationStack {
+            SelectCourseView()
+                .environmentObject(LocationManager())
+                .modelContainer(previewContainer)
+        }
+    }
 }
