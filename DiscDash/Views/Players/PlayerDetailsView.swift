@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 import Charts
 import MapKit
+import TipKit
 
 struct PlayerDetailsView: View {
     @Namespace private var animation
@@ -52,16 +53,6 @@ struct PlayerDetailsView: View {
             TabView(selection: $selectedTabView) {
                 BasketsOverview(playerStats: playerStats)
                 .tag(0)
-                .overlay(alignment: .topTrailing) {
-                    Button(action: {
-                        showEditPlayerSheet.toggle()
-                    }, label: {
-                        Text("Edit")
-                            .font(.headline)
-                            .foregroundStyle(Color("Teal"))
-                            .padding(12)
-                    })
-                }
                 StatsOverview(playerStats: playerStats)
                     .tag(1)
                 TopRoundsPerCourse(playerStats: playerStats)
@@ -123,41 +114,78 @@ struct PlayerDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
-                    Picker(selection: $selectedFilter, label: Text("Sorting options")) {
-                        Label("Lifetime", systemImage: "chart.bar.fill")
-                            .tag(0)
-                        
-                        Label("Today", systemImage: "calendar")
-                            .tag(1)
-                        
-                        Label("Last 30 Days", systemImage: "calendar")
-                            .tag(2)
-                        
-                        Label("This Year", systemImage: "calendar")
-                            .tag(3)
-                    }.onChange(of: selectedFilter){
-                        switch selectedFilter {
-                        case 0:
-                            playerStats.statFilter = .lifetime
-                        case 1:
-                            playerStats.statFilter = .today
-                        case 2:
-                            playerStats.statFilter = .lastMonth
-                        case 3:
-                            playerStats.statFilter = .thisYear
-                        default:
-                            playerStats.statFilter = .lifetime
+                    Button(action: {
+                        showEditPlayerSheet.toggle()
+                    }) {
+                        Label("Edit", systemImage: "pencil")
+                            .foregroundColor(.red)
+                    }
+                    if let image = player.image, let playerImage = UIImage(data: image) {
+                        ShareLink(item: player, preview: SharePreview(player.name, image: Image(uiImage: playerImage))){
+                            Label("Share", systemImage: "square.and.arrow.up")
                         }
-                        playerStats.reloadFilter()
+                    }else {
+                        ShareLink(item: player, preview: SharePreview(player.name)) {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                    }
+                    Section(header: Text("Filter")) {
+                        
+                        Picker(selection: $selectedFilter, label: Text("Sorting options")) {
+                            Label("Lifetime", systemImage: "chart.bar.fill")
+                                .tag(0)
+                            
+                            Label("Today", systemImage: "calendar")
+                                .tag(1)
+                            
+                            Label("Last 30 Days", systemImage: "calendar")
+                                .tag(2)
+                            
+                            Label("This Year", systemImage: "calendar")
+                                .tag(3)
+                        }.onChange(of: selectedFilter){
+                            switch selectedFilter {
+                            case 0:
+                                playerStats.statFilter = .lifetime
+                            case 1:
+                                playerStats.statFilter = .today
+                            case 2:
+                                playerStats.statFilter = .lastMonth
+                            case 3:
+                                playerStats.statFilter = .thisYear
+                            default:
+                                playerStats.statFilter = .lifetime
+                            }
+                            playerStats.reloadFilter()
+                        }
                     }
                 }
                 label: {
-                    Label("Filter", systemImage: "line.3.horizontal.decrease.circle.fill")
+                    Label("Info", systemImage: "ellipsis.circle")
                 }
+//                .popoverTip(SharePlayerTip())
             }
         }
         .sheet(isPresented: $showEditPlayerSheet) {
             CreatePlayerView(player: player, isNewPerson: false)
+        }
+        .overlay(alignment: .bottom) {
+            if player.isSharedPlayer {
+                Button {
+                    player.isSharedPlayer = false
+                    print("test")
+                } label: {
+                    HStack {
+                        Image(systemName: "square.and.arrow.down")
+                        Text("Save Shared Player")
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: 350, height: 50)
+                    .background(Color("Teal"))
+                    .cornerRadius(25)
+                    .padding(.bottom, 65)
+                }
+            }
         }
     }
 }
@@ -345,7 +373,37 @@ struct TopRoundsPerCourse: View {
     }
 }
 
-//#Preview {
-//    PlayerDetailsView()
-//        .modelContainer(GamesPreviewContainer)
-//}
+#Preview {
+    PlayerDetailsView(player: Player(name: "test", color: "343232"))
+        .modelContainer(GamesPreviewContainer)
+}
+
+struct SharePlayerTip: Tip {
+    
+    var title: Text {
+        Text("Share Player and Change Filter")
+            .foregroundStyle(Color("Teal"))
+    }
+    
+    var message: Text? {
+        Text("Share your Player with friends and filter your stats by day, month, or year")
+    }
+    var image: Image? {
+        Image(systemName: "square.and.arrow.up")
+    }
+    
+}
+
+struct SearchTip: Tip {
+    var title: Text {
+        Text("Add a new game")
+    }
+    
+    var message: Text? {
+        Text("Search for new games to play via IGDB.")
+    }
+    
+    var asset: Image? {
+        Image(systemName: "magnifyingglass")
+    }
+}

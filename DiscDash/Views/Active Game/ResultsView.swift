@@ -98,8 +98,8 @@ struct ResultsView: View {
                 do {
                     if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
                         let courseId = course.uuid
-                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedGame}, includeSubclasses: false)
+//                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedPlayer}, includeSubclasses: false)
                     }
                     try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
                     dismiss.callAsFunction()

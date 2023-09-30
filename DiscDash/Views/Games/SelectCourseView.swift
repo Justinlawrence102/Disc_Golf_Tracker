@@ -11,8 +11,8 @@ import SwiftData
 struct SelectCourseView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
-//    @Query private var courses: [Course]
+//    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
+    @Query private var courses: [Course]
     
     @State var selectedItem: Course?
     @State private var isCreatingNewCourse = true
@@ -148,7 +148,8 @@ struct SelectPlayerView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @Query private var players: [Player]
+    @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}) private var players: [Player]
+    
     var selectedCourse: Course
     
     var body: some View {

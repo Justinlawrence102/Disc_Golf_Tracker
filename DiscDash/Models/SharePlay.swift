@@ -11,7 +11,10 @@ struct SharedGame: Codable {
     var baskets: [SharedBasket]
     var currentBasketIndex: Int
     var uuid: String = UUID().uuidString
+    var courseId: String
     var courseName: String
+    var courseLatitude: Double?
+    var courseLongitude: Double?
 //    var courseImage: Data?
     
     var players: [SharedPlayer]
@@ -39,6 +42,9 @@ struct SharedGame: Codable {
         self.currentBasketIndex = game.currentHoleIndex
         self.uuid = game.uuid
         self.courseName = game.course?.name ?? "Shared Course"
+        self.courseId = game.course?.uuid ?? UUID().uuidString
+        self.courseLatitude = game.course?.latitude
+        self.courseLongitude = game.course?.longitude
 //        self.courseImage = game.course?.image
     }
 }

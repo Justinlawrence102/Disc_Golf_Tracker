@@ -123,6 +123,9 @@ class Game {
             if let scoreBasket = sharedGame.baskets.first(where: {$0.basketId == playerScore.basket?.uuid}) {
                 if let score = scoreBasket.playerScores.first(where: {$0.player.playerUuid == playerScore.player?.uuid}) {
                     playerScore.score = score.score
+                    if playerScore.basket?.number == 2 && playerScore.player?.name == "Karen" {
+                        print("New Score \(score.score)")
+                    }
                 }
             }
         }

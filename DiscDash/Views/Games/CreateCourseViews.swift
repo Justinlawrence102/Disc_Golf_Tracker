@@ -24,6 +24,7 @@ struct CreateCourseDetailsView: View {
             Form {
                 TextField("Name", text: $course.name, prompt: Text("Course Name"))
                     .foregroundStyle(Color("Navy"))
+                    .textInputAutocapitalization(.words)
                 
                 ZStack {
                     //when the map is added, the nav title becomes black for some reason?

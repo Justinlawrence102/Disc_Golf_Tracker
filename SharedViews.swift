@@ -101,7 +101,7 @@ class Utilities {
 
 class PersistantData {
      static let schema = SwiftData.Schema([
-         Game.self
+        Game.self, Player.self
      ])
 //    ,
 //    Course.self,

@@ -8,10 +8,11 @@
 import Foundation
 import SwiftData
 import SwiftUI
+import UniformTypeIdentifiers
 
 @Model
-final class Player {
-
+final class Player: Codable {
+    
     var uuid: String = UUID().uuidString
     
     var name: String = ""
@@ -20,7 +21,7 @@ final class Player {
     var image: Data?
     var lastPlay: Date?
     var color: String = "C7F465"
-    var isSharedGame: Bool = false
+    var isSharedPlayer: Bool = false
     
     @Relationship(deleteRule: .cascade, inverse: \PlayerScore.player)
     var scores: [PlayerScore]?
@@ -28,6 +29,26 @@ final class Player {
 //    @Transient update doesn't propagate to view, so .ephemeral seems to be working instead https://developer.apple.com/forums/thread/731651
     
     @Attribute(.ephemeral) var isSelected: Bool = false
+    
+    enum CodingKeys: CodingKey {
+        case uuid, name, color, image
+    }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        uuid = try container.decode(String.self, forKey: .uuid)
+        name = try container.decode(String.self, forKey: .name)
+        color = try container.decode(String.self, forKey: .color)
+        image = try container.decode(Data.self, forKey: .image)
+
+
+    }
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(color, forKey: .color)
+        try container.encode(uuid, forKey: .uuid)
+        try container.encode(name, forKey: .name)
+        try container.encode(image, forKey: .image)
+    }
     
     init() {
         name = ""
@@ -47,7 +68,26 @@ final class Player {
         return Color(UIColor(hex: color) ?? UIColor(named: "Pink")!)
     }
 }
-
+extension Player: Transferable {
+    static  var transferRepresentation: some TransferRepresentation {
+        CodableRepresentation(contentType: .player)
+    }
+//    static  var transferRepresentation: some TransferRepresentation {
+//        CodableRepresentation(contentType: .commaSeparatedText) {
+//            archive in
+//            try archive.convertToCSV()
+//        } importing { data in
+//            try Player(c)
+//        }
+//    }
+}
+extension UTType {
+    static var player: UTType =
+    {
+        UTType(exportedAs: "com.justinlawrence.player")
+    }()
+}
+    
 struct ScoreBreakdown: Identifiable {
     var id = UUID()
     var diffFromPar: Int

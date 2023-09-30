@@ -10,7 +10,7 @@ import SwiftData
 
 struct PlayerListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(filter: #Predicate<Player> { !$0.isSharedGame}) private var players: [Player]
+    @Query(sort: [SortDescriptor(\Player.name)]) private var players: [Player]
     //    @Query private var players: [Player]
     
     @State var selectedPlayer: Player?
@@ -34,6 +34,20 @@ struct PlayerListView: View {
                                 }
                             }
                             .foregroundStyle(Color("Navy"))
+                        }
+                    }
+                    .overlay(alignment: .bottomTrailing){
+                        if player.isSharedPlayer {
+                            HStack(spacing: 3) {
+                                Image(systemName: "shareplay")
+                                Text("Shared")
+                            }
+                            .foregroundStyle(.white)
+                            .font(.caption2)
+                            .padding(2)
+                            .padding(.horizontal, 4)
+                            .background(Color("Teal"))
+                            .cornerRadius(12)
                         }
                     }
                 }

@@ -75,6 +75,7 @@ struct CreatePlayerView: View {
                            "Name",
                            text: $player.name
                        )
+                    .textInputAutocapitalization(.words)
                     .multilineTextAlignment(.center)
                     .padding()
                     .background(Color(UIColor.secondarySystemBackground))

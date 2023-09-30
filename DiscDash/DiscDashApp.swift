@@ -11,6 +11,8 @@ import TipKit
 
 @main
 struct DiscDashApp: App {
+    @UIApplicationDelegateAdaptor var delegate: FSAppDelegate
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Game.self
@@ -34,7 +36,10 @@ struct DiscDashApp: App {
                 .task {
 //                    Tips.showAllTipsForTesting()
 //                    try? Tips.resetDatastore()
-                    try? await Tips.configure()
+                    try?  Tips.configure([
+                        .displayFrequency(.immediate),
+                        .datastoreLocation(.applicationDefault)
+                    ])
                     
                 }
                 .onAppear {

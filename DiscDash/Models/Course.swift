@@ -13,6 +13,7 @@ import MapKit
 @Model
 class Course: Identifiable {
     
+//    @Attribute(.unique)
     var uuid: String = UUID().uuidString
     
 //    @Attribute(.unique)
@@ -38,6 +39,7 @@ class Course: Identifiable {
     
     @Relationship(deleteRule: .cascade, inverse: \Game.course) //deleteRule: .cascade,
     var games: [Game]?
+    
     
     var coordinate: CLLocationCoordinate2D? {
         if let latitude = latitude, let longitude = longitude {
@@ -206,6 +208,7 @@ class Basket {
         par = ""
         distance = ""
         self.course = course
+        self.uuid = course.uuid+"_=\(number)"
     }
     
     func saveTeeLocation(holeNumber: Int, locationManager: LocationManager) {
@@ -291,13 +294,12 @@ class ImportedCourses: Decodable, Identifiable {
     
     func saveNewCourse()->Course {
         let context = ModelContext(PersistantData.container)
-
-        let coursesPredicate = #Predicate<Course> {
-            $0.uuid == uuid
-        }
+        
         do {
             let modelContext = ModelContext(PersistantData.container)
-            
+            let coursesPredicate = #Predicate<Course> {
+                $0.uuid == uuid
+            }
             let descriptor = FetchDescriptor<Course>(predicate: coursesPredicate)
             let courses = try modelContext.fetch(descriptor)
             if !courses.isEmpty {
