@@ -18,12 +18,13 @@ import SwiftUI
 import SwiftData
 
 struct ResultsView: View {
+    @Environment(\.modelContext) private var modelContext
     private var scoreResults: [ResultScores] = []
     @State var game: Game?
     @EnvironmentObject var stateManager: StateManager
 
     init(game: Game) {
-        scoreResults = game.getResults()
+        scoreResults = game.getResults(context: modelContext)
         _game = .init(initialValue: game)
     }
     

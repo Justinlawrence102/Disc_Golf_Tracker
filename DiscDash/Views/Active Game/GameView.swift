@@ -131,7 +131,7 @@ struct GameView: View {
                             }
                             
                             HStack(alignment: .top, spacing: 12.0) {
-                                if let highScore = basket.highScore {
+                                if let highScore = basket.getHighScore(modelContext: modelContext) {
                                     VStack(alignment: .leading, spacing: 0.0) {
                                         HStack {
                                             if highScore.indices.contains(2), let player = highScore[2] as? Player {
@@ -156,7 +156,7 @@ struct GameView: View {
                                     .background(.thickMaterial)
                                     .cornerRadius(12)
                                 }
-                                if let averageScore = basket.averageScore {
+                                if let averageScore = basket.getAverageScore(modelContext: modelContext) {
                                     VStack(alignment: .leading, spacing: 0.0) {
                                         HStack {
                                             Text(averageScore)
@@ -271,7 +271,7 @@ struct GameView: View {
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                if groupStateObserver.isEligibleForGroupSession {
+                if groupStateObserver.isEligibleForGroupSession && sharePlayManager.gameModel?.uuid == game.uuid {
                     Button(action: {
                         sharePlayManager.startSharing(game: game)
                     }) {
@@ -508,7 +508,7 @@ struct PlayerScoresListView: View {
                 }
             }
             .listStyle(.plain)
-            if let session = sharePlayManager.session, groupStateObserver.isEligibleForGroupSession {
+            if let session = sharePlayManager.session, groupStateObserver.isEligibleForGroupSession && sharePlayManager.gameModel?.uuid == game.uuid {
                 Spacer()
 
                 HStack {

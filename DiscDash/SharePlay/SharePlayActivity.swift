@@ -55,7 +55,7 @@ class SharedActivityManager: ObservableObject {
         self.messenger = messenger
         let context = ModelContext(PersistantData.container)
         self.modelContext = context
-        
+        self.gameModel = nil //reset game model
         
         let task = Task {
             for await (sharePlayModel, _) in messenger.messages(of: SharedGame.self) {
@@ -73,7 +73,9 @@ class SharedActivityManager: ObservableObject {
     }
     func addGameToSharedActivity(game: Game) {
         DispatchQueue.main.async{
-            self.gameModel = game
+            if self.gameModel == nil {
+                self.gameModel = game
+            }
         }
     }
     func handle(_ model: SharedGame) {
@@ -126,7 +128,11 @@ class SharedActivityManager: ObservableObject {
             Task {
                 do {
                     let sharedGame = SharedGame(game: model)
-                    try await messenger?.send(sharedGame)
+                    if sharedGame.uuid == self.gameModel?.uuid {
+                        try await messenger?.send(sharedGame)
+                    }else {
+                        print("You're looking at the wrong game!")
+                    }
                     //                messenger.info
                 }catch {
                     print("Failed sending data: \(error)")
@@ -135,8 +141,19 @@ class SharedActivityManager: ObservableObject {
         }
     }
     func createGame(context: ModelContext, model: SharedGame) -> Game? {
-        //check if you already have the course
         do {
+            //check if you already have the game
+            let gamePredicate = #Predicate<Game> {
+                $0.uuid == model.uuid
+            }
+            let gameDescriptor = FetchDescriptor<Game>(predicate: gamePredicate)
+            let testGame = try context.fetch(gameDescriptor)
+            if !testGame.isEmpty {
+                self.gameModel = testGame.first!
+                return testGame.first!
+            }
+            
+            //check if you already have the course
             let coursePredicate = #Predicate<Course> {
                 $0.uuid == model.courseId
             }
@@ -204,7 +221,6 @@ class SharedActivityManager: ObservableObject {
                     let playerScore = PlayerScore(player: player_, game: newGame, basket: basket_)
                     let sharedBasket = model.baskets.first(where: {$0.basketId == basket_.uuid})
                     if let score = sharedBasket?.playerScores.first(where: {$0.player.playerUuid == player_.uuid}) {
-                        print("Found Score: \(score.score)")
                         playerScore.score = score.score
                     }
                     context.insert(playerScore)

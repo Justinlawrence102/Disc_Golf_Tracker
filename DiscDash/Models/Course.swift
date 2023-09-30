@@ -37,7 +37,7 @@ class Course: Identifiable {
     var cityState: String?
     var isSharedGame: Bool = false
     
-    @Relationship(deleteRule: .cascade, inverse: \Game.course) //deleteRule: .cascade,
+    @Relationship(deleteRule: .cascade) // inverse: \Game.course deleteRule: .cascade,
     var games: [Game]?
     
     
@@ -141,59 +141,6 @@ class Basket {
         }
         return coordinates
     }
-    var highScore: [Any]? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium //.long
-        dateFormatter.timeStyle = .none
-        
-        let uuid = self.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.basket?.uuid == uuid && $0.score != 0
-        }
-        do {
-            let modelContext = ModelContext(PersistantData.container)
-            
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-            let scores = try modelContext.fetch(descriptor)
-            if scores.isEmpty {return nil}
-            let sortedScores = scores.sorted(by: {$1.score > $0.score})
-            let topScore = sortedScores.first?.score
-            let scoreDate = sortedScores.first?.game?.startDate
-            if let player = sortedScores.first?.player {
-                return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date()), player]
-            }
-            return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date())]
-        }catch {
-            print("Error")
-            return nil
-        }
-    }
-    
-    var averageScore: String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium //.long
-        dateFormatter.timeStyle = .none
-        
-        let uuid = self.uuid
-        let scoresPredicate = #Predicate<PlayerScore> {
-            $0.basket?.uuid == uuid && $0.score != 0
-        }
-        do {
-            let modelContext = ModelContext(PersistantData.container)
-            
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-            let scores = try modelContext.fetch(descriptor)
-            if scores.isEmpty {return nil}
-            var scoreSum = 0
-            for score in scores {
-                scoreSum += score.score
-            }
-            return String(format: "%.1f", Double(scoreSum)/Double(scores.count))
-        }catch {
-            print("Error")
-            return nil
-        }
-    }
     
     var teeCoordinates: [CLLocationCoordinate2D] {
         var coordinates = [CLLocationCoordinate2D]()
@@ -211,6 +158,54 @@ class Basket {
         self.uuid = course.uuid+"_=\(number)"
     }
     
+    func getHighScore(modelContext: ModelContext) -> [Any]? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        
+        let uuid = self.uuid
+        let scoresPredicate = #Predicate<PlayerScore> {
+            $0.basket?.uuid == uuid && $0.score != 0
+        }
+        do {            
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
+            let scores = try modelContext.fetch(descriptor)
+            if scores.isEmpty {return nil}
+            let sortedScores = scores.sorted(by: {$1.score > $0.score})
+            let topScore = sortedScores.first?.score
+            let scoreDate = sortedScores.first?.game?.startDate
+            if let player = sortedScores.first?.player {
+                return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date()), player]
+            }
+            return [String(topScore ?? 0), dateFormatter.string(from: scoreDate ?? Date())]
+        }catch {
+            print("Error")
+            return nil
+        }
+    }
+    func getAverageScore(modelContext: ModelContext) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        
+        let uuid = self.uuid
+        let scoresPredicate = #Predicate<PlayerScore> {
+            $0.basket?.uuid == uuid && $0.score != 0
+        }
+        do {
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
+            let scores = try modelContext.fetch(descriptor)
+            if scores.isEmpty {return nil}
+            var scoreSum = 0
+            for score in scores {
+                scoreSum += score.score
+            }
+            return String(format: "%.1f", Double(scoreSum)/Double(scores.count))
+        }catch {
+            print("Error")
+            return nil
+        }
+    }
     func saveTeeLocation(holeNumber: Int, locationManager: LocationManager) {
         locationManager.requestLocation()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -292,11 +287,9 @@ class ImportedCourses: Decodable, Identifiable {
         return nil
     }
     
-    func saveNewCourse()->Course {
-        let context = ModelContext(PersistantData.container)
+    func saveNewCourse(modelContext: ModelContext)->Course {
         
         do {
-            let modelContext = ModelContext(PersistantData.container)
             let coursesPredicate = #Predicate<Course> {
                 $0.uuid == uuid
             }
@@ -314,11 +307,11 @@ class ImportedCourses: Decodable, Identifiable {
         newCourse.latitude = latitude
         newCourse.longitude = longitude
         newCourse.lookUpCurrentLocation()
-        context.insert(newCourse)
+        modelContext.insert(newCourse)
         newCourse.baskets = []
         for i in 0..<numHoles {
             let basket = Basket(number: i+1, course: newCourse)
-            context.insert(basket)
+            modelContext.insert(basket)
         }
         newCourse.games = []
         

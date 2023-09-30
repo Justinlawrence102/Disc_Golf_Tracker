@@ -13,7 +13,8 @@ import TipKit
 
 struct PlayerDetailsView: View {
     @Namespace private var animation
-    
+    @Environment(\.modelContext) private var modelContext
+
 //    @Query private var players: [Player]
 //    var player: Player! { players.first }
     @State var player: Player
@@ -111,6 +112,9 @@ struct PlayerDetailsView: View {
                 Spacer()
             }
         }
+        .onAppear{
+            playerStats.reloadFilter(modelContext: modelContext)
+        }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
@@ -156,7 +160,7 @@ struct PlayerDetailsView: View {
                             default:
                                 playerStats.statFilter = .lifetime
                             }
-                            playerStats.reloadFilter()
+                            playerStats.reloadFilter(modelContext: modelContext)
                         }
                     }
                 }

@@ -16,12 +16,11 @@ struct ResultsView: View {
     //    var game: Game! { games.first }
     
     //        private let playerScores: [ResultScores] = []
-    private var scoreResults: [ResultScores] = []
+    @State private var scoreResults: [ResultScores] = []
     @State var game: Game
     @State var showDeleteGameAlert = false
 
     init(game: Game) {
-        scoreResults = game.getResults()
         _game = .init(initialValue: game)
     }
     var body: some View {
@@ -91,6 +90,9 @@ struct ResultsView: View {
                     .padding(.top, 16)
                 }
             }
+        }
+        .onAppear {
+            scoreResults = game.getResults(context: modelContext)
         }
         .alert("Delete Game", isPresented: $showDeleteGameAlert) {
             Button("Delete", role: .destructive) {

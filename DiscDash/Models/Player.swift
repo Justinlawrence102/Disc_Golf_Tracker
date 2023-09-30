@@ -147,18 +147,17 @@ struct TopRoundCourse: Identifiable {
     
     init(player: Player) {
         self.player = player
-        reloadFilter()
+//        reloadFilter()
     }
     
-    func reloadFilter() {
+    func reloadFilter(modelContext: ModelContext) {
         do {
-            let context = ModelContext(PersistantData.container)
             let playerID = player.uuid
             let scoresPredicate = #Predicate<PlayerScore> {
                 $0.player?.uuid == playerID
             }
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-            var scores = try context.fetch(descriptor)
+            var scores = try modelContext.fetch(descriptor)
             scores = scores.filter({$0.game?.startDate ?? Date() > startDateFilter && $0.game?.startDate ?? Date() <= endDateFilter})
             
             numBasketsPlayed = scores.count
@@ -185,11 +184,11 @@ struct TopRoundCourse: Identifiable {
             var previousCourseUUID = ""
             for game in allGames {
                 if game.course?.uuid != previousCourseUUID{
-                    if let gameResult = game.getResults(forPlayer: player.uuid).first {
+                    if let gameResult = game.getResults(forPlayer: player.uuid, context: modelContext).first {
                         topGames.append(TopRoundCourse(courseName: game.course?.name ?? "", date: game.startDate, score: gameResult.score, image: game.course?.image))
                     }
                     previousCourseUUID = game.course?.uuid ?? ""
-                }else if topGames.indices.contains(topGames.count-1), let gameResult = game.getResults(forPlayer: player.uuid).first, gameResult.score < topGames[topGames.count-1].score  {
+                }else if topGames.indices.contains(topGames.count-1), let gameResult = game.getResults(forPlayer: player.uuid, context: modelContext).first, gameResult.score < topGames[topGames.count-1].score  {
                     topGames[topGames.count-1].score = gameResult.score
                 }
             }

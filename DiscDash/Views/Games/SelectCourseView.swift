@@ -148,7 +148,7 @@ struct SelectPlayerView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}) private var players: [Player]
+    @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}, sort: \Player.name) private var players: [Player]
     
     var selectedCourse: Course
     

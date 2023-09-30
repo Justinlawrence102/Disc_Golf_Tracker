@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SearchCourseView: View {
+    @Environment(\.modelContext) private var modelContext
     @State var coursesStorage = [ImportedCourses]()
 
     @State var courses = [ImportedCourses]()
@@ -42,7 +43,7 @@ struct SearchCourseView: View {
             .contentShape(Rectangle())
             .onTapGesture {
                 showSearchCoursesSheet = false
-                selectedItem = course.saveNewCourse()
+                selectedItem = course.saveNewCourse(modelContext: modelContext)
                 print("Tapped")
             }
         }

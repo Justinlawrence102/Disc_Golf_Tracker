@@ -15,7 +15,7 @@ import MapKit
 @Model
 class Game {
     
-    @Relationship(deleteRule: .noAction)
+    @Relationship(deleteRule: .noAction, inverse: \Course.games)
     var course: Course?
     
     @Relationship(deleteRule: .cascade)
@@ -63,12 +63,10 @@ class Game {
     }
     
     func createGame(course: Course, players: [Player], modelContext: ModelContext) {
-//        let modelContext = ModelContext(PersistantData.container)
-        
         modelContext.insert(self)
         self.startDate = Date()
         self.playerScores = []
-
+        
         course.games?.append(self)
         self.course = course
         
@@ -138,7 +136,7 @@ class Game {
             }
         }
     }
-    func getResults(limit3: Bool = false, forPlayer: String? = nil) -> [ResultScores] {
+    func getResults(limit3: Bool = false, forPlayer: String? = nil, context: ModelContext? = nil) -> [ResultScores] {
         var scoreResults: [ResultScores] = []
         let gameId = self.uuid
         var scoresPredicate = #Predicate<PlayerScore> {
@@ -150,10 +148,17 @@ class Game {
             }
         }
         do {
-            let context = ModelContext(PersistantData.container)
-            
+            var scores = [PlayerScore]()
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
-            let scores = try context.fetch(descriptor)
+
+            if context == nil {
+                let tempContext = ModelContext(PersistantData.container)
+                scores = try tempContext.fetch(descriptor)
+            }else {
+                scores = try context!.fetch(descriptor)
+            }
+//            let context = ModelContext(PersistantData.container)
+            
             var prevName = ""
             for score in scores {
                 if let player = score.player, prevName != player.name {
