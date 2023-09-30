@@ -84,7 +84,7 @@ extension Player: Transferable {
 extension UTType {
     static var player: UTType =
     {
-        UTType(exportedAs: "com.justinlawrence.player")
+        UTType(exportedAs: "com.justinlawrence.discDash.player")
     }()
 }
     
