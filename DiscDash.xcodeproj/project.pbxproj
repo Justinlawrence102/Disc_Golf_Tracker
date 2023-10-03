@@ -730,6 +730,7 @@
 				INFOPLIST_FILE = DiscDash/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DiskDash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -774,6 +775,7 @@
 				INFOPLIST_FILE = DiscDash/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DiskDash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

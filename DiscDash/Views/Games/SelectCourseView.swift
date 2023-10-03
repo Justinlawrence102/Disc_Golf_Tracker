@@ -90,11 +90,7 @@ struct SelectCourseView: View {
             .alert("Delete Course", isPresented: $showDeleteCourseAlert) {
                 Button("Delete", role: .destructive) {
                     if let courseId = courseToDelete?.uuid {
-                        do {
-                            try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-                        }catch {
-                            print("Could not delete!")
-                        }
+                        deleteCourse(courseId: courseId)
                     }
                 }
                 Button("Cancel", role: .cancel) { }
@@ -141,6 +137,14 @@ struct SelectCourseView: View {
                     .navigationTitle("Search")
                     .navigationBarTitleDisplayMode(.inline)
             }
+        }
+    }
+    
+    func deleteCourse(courseId: String) {
+        do {
+            try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+        }catch {
+            print("Delete failed")
         }
     }
 }
