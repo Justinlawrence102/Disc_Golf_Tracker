@@ -6,11 +6,11 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>player-file-icon.icns</string>
+			<string>player-file-icon</string>
 			<key>CFBundleTypeName</key>
 			<string>Player</string>
 			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
@@ -18,7 +18,7 @@
 				<string>com.justinlawrence.discDash.player</string>
 			</array>
 			<key>NSDocumentClass</key>
-			<string>Player</string>
+			<string></string>
 		</dict>
 	</array>
 	<key>CFBundleURLTypes</key>
@@ -35,9 +35,12 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
+				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>DiscDash Player</string>
+			<key>UTTypeIconFiles</key>
+			<string>player-file-icon</string>
 			<key>UTTypeIcons</key>
 			<dict/>
 			<key>UTTypeIdentifier</key>

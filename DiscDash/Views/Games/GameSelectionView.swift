@@ -21,51 +21,63 @@ struct GameSelectionView: View {
 
     var body: some View {
         NavigationStack {
-            List(games, id: \.self) { game in
-                ZStack {
-                    NavigationLink(value: game) { EmptyView() }.opacity(0.0)
-                    VStack {
-                        if let image = game.getImage() {
-                            Image(uiImage: image)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(height: 80)
-                        }else {
-                            Image(systemName: "figure.disc.sports")
-                                .frame(height: 80)
-                                .foregroundStyle(Color("Teal"))
-                                .font(.title)
-                        }
-                        HStack(alignment: .bottom) {
-                            VStack(alignment: .leading) {
-                                Text(game.course?.name ?? "")
-                                    .font(.headline)
-                                    .lineLimit(2)
-                                Text(game.formattedStartDate)
-                                    .font(.subheadline)
-                            }
+            ZStack {
+                if games.isEmpty {
+                    VStack{
+                        Image(systemName: "figure.disc.sports")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color("Teal"))
+                        Text("Tap the Plus to create a new game")
                             .foregroundStyle(Color("Navy"))
-                            Spacer()
-                            if let cityState = game.course?.cityState {
-                                HStack(spacing: 2.0) {
-                                    Image(systemName: "location.fill")
-                                    Text(cityState)
-                                }
-                                .font(.caption)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(Color("Teal"))
-                                .shadow(radius: 3)
-                            }
-                        }
-                        .padding(8.0)
-                        .background(.thinMaterial)
                     }
-                    .background(Color("Lime"))
-                    .cornerRadius(12)
+                }else {
+                    List(games, id: \.self) { game in
+                        ZStack {
+                            NavigationLink(value: game) { EmptyView() }.opacity(0.0)
+                            VStack {
+                                if let image = game.getImage() {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(height: 80)
+                                }else {
+                                    Image(systemName: "figure.disc.sports")
+                                        .frame(height: 80)
+                                        .foregroundStyle(Color("Teal"))
+                                        .font(.title)
+                                }
+                                HStack(alignment: .bottom) {
+                                    VStack(alignment: .leading) {
+                                        Text(game.course?.name ?? "")
+                                            .font(.headline)
+                                            .lineLimit(2)
+                                        Text(game.formattedStartDate)
+                                            .font(.subheadline)
+                                    }
+                                    .foregroundStyle(Color("Navy"))
+                                    Spacer()
+                                    if let cityState = game.course?.cityState {
+                                        HStack(spacing: 2.0) {
+                                            Image(systemName: "location.fill")
+                                            Text(cityState)
+                                        }
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .foregroundStyle(Color("Teal"))
+                                        .shadow(radius: 3)
+                                    }
+                                }
+                                .padding(8.0)
+                                .background(.thinMaterial)
+                            }
+                            .background(Color("Lime"))
+                            .cornerRadius(12)
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                    .listStyle(.plain)
                 }
-                .listRowSeparator(.hidden)
             }
-            .listStyle(.plain)
             .navigationDestination(for: Game.self) { game in
                 GameView(game: game)
                 //                GameView()
@@ -87,7 +99,7 @@ struct GameSelectionView: View {
                 }
             }
             .sheet(isPresented: $showCreateNewGame, content: {
-                SelectCourseView()
+                SelectCourseView(showCreateNewGameSheet: $showCreateNewGame)
                     .presentationDetents([.medium])
             })
         }

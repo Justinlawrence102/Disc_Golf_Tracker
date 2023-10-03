@@ -13,10 +13,11 @@ import MapKit
 
 struct CreateCourseDetailsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) var dismiss
 
     @State var course = Course()
-    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedPhotoItem: PhotosPickerItem?
+    @Binding var selectedItem: Course?
+    
     var isNewCourse = false
     
     var body: some View {
@@ -44,7 +45,7 @@ struct CreateCourseDetailsView: View {
                         .font(.title)
                 }
                 VStack {
-                    PhotosPicker(selection: $selectedItem, matching: .images) {
+                    PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
                         HStack {
                             Text("Photo")
                                 .foregroundStyle(Color("Navy"))
@@ -58,9 +59,9 @@ struct CreateCourseDetailsView: View {
                             })
                         }
                     }
-                    .onChange(of: selectedItem, initial: false, {
+                    .onChange(of: selectedPhotoItem, initial: false, {
                         Task {
-                            if let data = try? await selectedItem?.loadTransferable(type: Data.self) {
+                            if let data = try? await selectedPhotoItem?.loadTransferable(type: Data.self) {
                                 if let uiImage = UIImage(data: data) {
                                     if let compressedData = uiImage.jpegData(compressionQuality: 0) {
                                         course.image = compressedData
@@ -83,7 +84,7 @@ struct CreateCourseDetailsView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     NavigationLink {
-                        CreateCourseBasketListView(course: course, isNewCourse: isNewCourse)
+                        CreateCourseBasketListView(selectedItem: $selectedItem, course: course, isNewCourse: isNewCourse)
                     }label: {
                         HStack {
                             Text("Next")
@@ -93,7 +94,7 @@ struct CreateCourseDetailsView: View {
                 }
                 ToolbarItem(placement: .cancellationAction, content: {
                     Button(action: {
-                        dismiss.callAsFunction()
+                        selectedItem = nil
                     }, label: {
                         Text("Cancel")
                     })
@@ -106,7 +107,7 @@ struct CreateCourseDetailsView: View {
 
 struct CreateCourseBasketListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) var dismiss
+    @Binding var selectedItem: Course?
 
     @State var course = Course()
     var isNewCourse: Bool
@@ -141,7 +142,7 @@ struct CreateCourseBasketListView: View {
                     do {
                         try modelContext.save()
                     }catch {print("Could not save")}
-                    dismiss.callAsFunction()
+                    selectedItem = nil
                 }, label: {
                     Text(isNewCourse ? "Save" : "Update")
                 })
@@ -202,9 +203,9 @@ struct BasketDetailRow: View {
     }
 }
 
-#Preview {
-//    let course = Course(name: "Sample")
-//    CreateCourseDetailsView(course: course)
-    CreateCourseDetailsView()
-        .modelContainer(CoursePreviewContainer)
-}
+//#Preview {
+////    let course = Course(name: "Sample")
+////    CreateCourseDetailsView(course: course)
+//    CreateCourseDetailsView()
+//        .modelContainer(CoursePreviewContainer)
+//}

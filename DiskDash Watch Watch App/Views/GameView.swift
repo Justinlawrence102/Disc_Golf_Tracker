@@ -21,6 +21,8 @@ struct GoToNextBasketView: View {
             BasketDetailsTabView(game: game, nextBasketNumber: nextBasketNumber)
                 .onAppear {
                     game.currentHoleIndex = nextBasketNumber - 1
+                    WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
+                    print("Up here on appear")
                 }
         }else {
             ResultsView(game: game)
@@ -161,7 +163,6 @@ struct BasketDetailsTabView: View {
         .onAppear {
             print("Appear?")
             currentBasket.updateMapCamera(zoom: 0.0005)
-            WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
         }
         .navigationTitle("Hole \(currentBasket.number ?? -1)")
         .toolbar {

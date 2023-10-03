@@ -13,7 +13,8 @@ struct SelectCourseView: View {
     @Environment(\.dismiss) var dismiss
 //    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
     @Query private var courses: [Course]
-    
+    @Binding var showCreateNewGameSheet: Bool
+
     @State var selectedItem: Course?
     @State private var isCreatingNewCourse = true
     @EnvironmentObject var locationManager: LocationManager
@@ -80,7 +81,7 @@ struct SelectCourseView: View {
             .navigationTitle("Select Course")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: Course.self) { course in
-                SelectPlayerView(selectedCourse: course)
+                SelectPlayerView(showCreateNewGameSheet: $showCreateNewGameSheet, selectedCourse: course)
 //                Text("Players Select")
                     .navigationTitle("Select Players")
                     .navigationBarTitleDisplayMode(.inline)
@@ -124,7 +125,7 @@ struct SelectCourseView: View {
                 }
                 ToolbarItem(placement: .cancellationAction, content: {
                     Button(action: {
-                        dismiss.callAsFunction()
+                        showCreateNewGameSheet = false
                     }, label: {
                         Text("Cancel")
                     })
@@ -132,7 +133,7 @@ struct SelectCourseView: View {
             }
         }
         .sheet(item: $selectedItem) { item in
-            CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse)
+            CreateCourseDetailsView(course: item, selectedItem: $selectedItem, isNewCourse: isCreatingNewCourse)
         }
         .sheet(isPresented: $showSearchCoursesSheet) {
             NavigationStack {
@@ -146,8 +147,9 @@ struct SelectCourseView: View {
 
 struct SelectPlayerView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) var dismiss
-    
+    @Binding var showCreateNewGameSheet: Bool
+    @EnvironmentObject var sharePlayManager: SharedActivityManager
+
     @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}, sort: \Player.name) private var players: [Player]
     
     var selectedCourse: Course
@@ -179,6 +181,12 @@ struct SelectPlayerView: View {
                     let newGame = Game()
 //                    modelContext.insert(newGame)
                     newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
+                    
+                    showCreateNewGameSheet = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        sharePlayManager.gameModel = newGame
+                        sharePlayManager.isDeepLinkingToGame = true
+                    }
                     print("Start Game!")
                 }, label: {
                     Text("Start Game")
@@ -189,12 +197,12 @@ struct SelectPlayerView: View {
     }
 }
 
-#Preview {
-    MainActor.assumeIsolated {
-        return  NavigationStack {
-            SelectCourseView()
-                .environmentObject(LocationManager())
-                .modelContainer(previewContainer)
-        }
-    }
-}
+//#Preview {
+//    MainActor.assumeIsolated {
+//        return  NavigationStack {
+//            SelectCourseView(showCreateNewGameSheet: <#Binding<Bool>#>)
+//                .environmentObject(LocationManager())
+//                .modelContainer(previewContainer)
+//        }
+//    }
+//}

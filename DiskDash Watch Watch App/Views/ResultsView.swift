@@ -19,12 +19,11 @@ import SwiftData
 
 struct ResultsView: View {
     @Environment(\.modelContext) private var modelContext
-    private var scoreResults: [ResultScores] = []
+    @State private var scoreResults: [ResultScores] = []
     @State var game: Game?
     @EnvironmentObject var stateManager: StateManager
 
     init(game: Game) {
-        scoreResults = game.getResults(context: modelContext)
         _game = .init(initialValue: game)
     }
     
@@ -50,6 +49,11 @@ struct ResultsView: View {
                             .foregroundStyle(Color("Pink"))
                     }
                 }
+            }
+        }
+        .onAppear {
+            if let game = game {
+                scoreResults = game.getResults(context: modelContext)
             }
         }
         .toolbar {

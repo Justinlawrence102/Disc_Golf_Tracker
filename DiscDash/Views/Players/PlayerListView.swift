@@ -20,54 +20,66 @@ struct PlayerListView: View {
     @State var showDeletePlayerAlert = false
     var body: some View {
         NavigationStack { //NavigationSplitView
-            List(players, id: \.self) { player in
-                ZStack {
-                    NavigationLink(value: player) {
-                        HStack {
-                            PlayerProfileCircleView(player: player, size: 50)
-                            VStack(alignment: .leading) {
-                                Text(player.name)
-                                    .font(.headline)
-                                if let lastPlay = player.lastPlay {
-                                    Text(String(lastPlay.timeIntervalSince1970))
-                                        .font(.subheadline)
+            ZStack {
+                if players.isEmpty {
+                    VStack{
+                        Image(systemName: "person.crop.circle.badge.plus")
+                            .font(.largeTitle)
+                            .foregroundStyle(Color("Teal"))
+                        Text("Tap the Plus button to create a new player")
+                            .foregroundStyle(Color("Navy"))
+                    }
+                }else {
+                    List(players, id: \.self) { player in
+                        ZStack {
+                            NavigationLink(value: player) {
+                                HStack {
+                                    PlayerProfileCircleView(player: player, size: 50)
+                                    VStack(alignment: .leading) {
+                                        Text(player.name)
+                                            .font(.headline)
+                                        if let lastPlay = player.lastPlay {
+                                            Text(String(lastPlay.timeIntervalSince1970))
+                                                .font(.subheadline)
+                                        }
+                                    }
+                                    .foregroundStyle(Color("Navy"))
                                 }
                             }
-                            .foregroundStyle(Color("Navy"))
-                        }
-                    }
-                    .overlay(alignment: .bottomTrailing){
-                        if player.isSharedPlayer {
-                            HStack(spacing: 3) {
-                                Image(systemName: "shareplay")
-                                Text("Shared")
+                            .overlay(alignment: .bottomTrailing){
+                                if player.isSharedPlayer {
+                                    HStack(spacing: 3) {
+                                        Image(systemName: "shareplay")
+                                        Text("Shared")
+                                    }
+                                    .foregroundStyle(.white)
+                                    .font(.caption2)
+                                    .padding(2)
+                                    .padding(.horizontal, 4)
+                                    .background(Color("Teal"))
+                                    .cornerRadius(12)
+                                }
                             }
-                            .foregroundStyle(.white)
-                            .font(.caption2)
-                            .padding(2)
-                            .padding(.horizontal, 4)
-                            .background(Color("Teal"))
-                            .cornerRadius(12)
                         }
-                    }
-                }
-                .swipeActions(edge: .trailing) {
-                    Button {
-                        selectedNewPlayer = false
-                        selectedPlayer = player
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                    }
-                    
-                    Button {
-                        //                        modelContext.delete(player)
-                        //                        selectedPlayer
-                        playerToDelete = player
-                        showDeletePlayerAlert = true
-                        //                        showDeleteAlert.toggle()
-                    } label: {
-                        Label("Delete", systemImage: "trash")
-                            .tint(.red)
+                        .swipeActions(edge: .trailing) {
+                            Button {
+                                selectedNewPlayer = false
+                                selectedPlayer = player
+                            } label: {
+                                Label("Edit", systemImage: "pencil")
+                            }
+                            
+                            Button {
+                                //                        modelContext.delete(player)
+                                //                        selectedPlayer
+                                playerToDelete = player
+                                showDeletePlayerAlert = true
+                                //                        showDeleteAlert.toggle()
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                                    .tint(.red)
+                            }
+                        }
                     }
                 }
             }
@@ -87,22 +99,22 @@ struct PlayerListView: View {
                     Label("New Player", systemImage: "plus")
                 }
             }
-        }
-        .tint(Color("Teal"))
-        .sheet(item: $selectedPlayer) { item in
-            CreatePlayerView(player: item, isNewPerson: selectedNewPlayer)
-                .presentationDetents([.medium])
-                .interactiveDismissDisabled()
-        }
-        .alert("Delete Player", isPresented: $showDeletePlayerAlert) {
-            Button("Delete", role: .destructive) {
-                if let player = playerToDelete {
-                    modelContext.delete(player)
-                }
+            .tint(Color("Teal"))
+            .sheet(item: $selectedPlayer) { item in
+                CreatePlayerView(player: item, isNewPerson: selectedNewPlayer)
+                    .presentationDetents([.medium])
+                    .interactiveDismissDisabled()
             }
-            Button("Cancel", role: .cancel) { }
-        }message: {
-            Text("Are you sure you want to delete \(playerToDelete?.name ?? "this player")?")
+            .alert("Delete Player", isPresented: $showDeletePlayerAlert) {
+                Button("Delete", role: .destructive) {
+                    if let player = playerToDelete {
+                        modelContext.delete(player)
+                    }
+                }
+                Button("Cancel", role: .cancel) { }
+            }message: {
+                Text("Are you sure you want to delete \(playerToDelete?.name ?? "this player")?")
+            }
         }
     }
 }
