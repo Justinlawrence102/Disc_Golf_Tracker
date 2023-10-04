@@ -450,15 +450,14 @@ struct PlayerScoresListView: View {
     init(game: Game) {
         let currentBasket = game.currentBasket?.number
         let gameUUID = game.uuid
-        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == currentBasket && $0.game?.uuid == gameUUID },
-                        sort: \PlayerScore.player?.name)
+        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == currentBasket && $0.game?.uuid == gameUUID })
         
         self.game = game //.init(initialValue: game)
     }
     
     var body: some View {
         VStack {
-            List(scores) {
+            List(scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})) {
                 playerScore in
                 HStack {
                     if let player = playerScore.player {

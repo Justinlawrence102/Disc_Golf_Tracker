@@ -51,8 +51,7 @@ struct BasketDetailsTabView: View {
     init(game: Game, nextBasketNumber: Int) {
         let gameUUID = game.uuid
         let courseUUID = game.course?.uuid
-        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == nextBasketNumber && $0.game?.uuid == gameUUID },
-                        sort: \PlayerScore.player?.name)
+        _scores = Query(filter: #Predicate<PlayerScore> {  $0.basket?.number  == nextBasketNumber && $0.game?.uuid == gameUUID })
         
         _basket =  Query(filter: #Predicate<Basket> {  $0.number  == nextBasketNumber && $0.course?.uuid == courseUUID })
         _game = .init(initialValue: game)
@@ -100,7 +99,7 @@ struct BasketDetailsTabView: View {
                     }
                 }
                 .tag(1)
-            List(scores) { playerScore in
+            List(scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})) { playerScore in
                 HStack {
                     Text(playerScore.player?.name ?? "N/A")
                     Spacer()

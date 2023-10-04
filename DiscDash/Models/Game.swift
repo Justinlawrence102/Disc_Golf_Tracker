@@ -149,7 +149,7 @@ class Game {
         }
         do {
             var scores = [PlayerScore]()
-            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate, sortBy: [SortDescriptor(\.player?.name)])
+            let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
 
             if context == nil {
                 let tempContext = ModelContext(PersistantData.container)
@@ -157,6 +157,7 @@ class Game {
             }else {
                 scores = try context!.fetch(descriptor)
             }
+            scores = scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})
 //            let context = ModelContext(PersistantData.container)
             
             var prevName = ""

@@ -33,7 +33,7 @@
 		98D3EC822ABF092900ADC565 /* DiskDash_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */; };
 		98D3EC862ABF092A00ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC852ABF092A00ADC565 /* Assets.xcassets */; };
 		98D3EC892ABF092A00ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */; };
-		98D3EC8C2ABF092A00ADC565 /* DiskDash Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		98D3EC8C2ABF092A00ADC565 /* DiscDash.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98D3EC7F2ABF092900ADC565 /* DiscDash.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		98D3EC952ABF09C400ADC565 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC932ABF09C400ADC565 /* StateManager.swift */; };
 		98D3EC962ABF09C400ADC565 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC942ABF09C400ADC565 /* WatchAppDelegate.swift */; };
 		98D3EC9C2ABF09D100ADC565 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC982ABF09D100ADC565 /* ResultsView.swift */; };
@@ -91,7 +91,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				98D3EC8C2ABF092A00ADC565 /* DiskDash Watch Watch App.app in Embed Watch Content */,
+				98D3EC8C2ABF092A00ADC565 /* DiscDash.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,7 +146,7 @@
 		98D3EC742ABF07B200ADC565 /* PlayerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
 		98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
 		98D3EC792ABF085400ADC565 /* SharedViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
-		98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DiskDash Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3EC7F2ABF092900ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDash_WatchApp.swift; sourceTree = "<group>"; };
 		98D3EC852ABF092A00ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				98D3EC3E2ABF06E100ADC565 /* DiscDash.app */,
-				98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */,
+				98D3EC7F2ABF092900ADC565 /* DiscDash.app */,
 				98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */,
 			);
 			name = Products;
@@ -422,7 +422,7 @@
 			);
 			name = "DiskDash Watch Watch App";
 			productName = "DiskDash Watch Watch App";
-			productReference = 98D3EC7F2ABF092900ADC565 /* DiskDash Watch Watch App.app */;
+			productReference = 98D3EC7F2ABF092900ADC565 /* DiscDash.app */;
 			productType = "com.apple.product-type.application";
 		};
 		98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */ = {
@@ -721,14 +721,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscDash/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DiskDash;
+				INFOPLIST_KEY_CFBundleDisplayName = DiscDash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
@@ -746,7 +746,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -766,14 +766,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscDash/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DiskDash;
+				INFOPLIST_KEY_CFBundleDisplayName = DiscDash;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
@@ -791,7 +791,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -811,12 +811,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "DiskDash Watch";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
@@ -824,9 +823,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = DiscDash;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -844,12 +843,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "DiskDash Watch";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
@@ -857,9 +855,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = DiscDash;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
