@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "98D3EC3D2ABF06E100ADC565"
-               BuildableName = "DiscDash.app"
-               BlueprintName = "DiscDash"
-               ReferencedContainer = "container:DiscDash.xcodeproj">
+               BuildableName = "OneDisc.app"
+               BlueprintName = "OneDisc"
+               ReferencedContainer = "container:OneDisc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98D3EC3D2ABF06E100ADC565"
-            BuildableName = "DiscDash.app"
-            BlueprintName = "DiscDash"
-            ReferencedContainer = "container:DiscDash.xcodeproj">
+            BuildableName = "OneDisc.app"
+            BlueprintName = "OneDisc"
+            ReferencedContainer = "container:OneDisc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -67,9 +67,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "98D3EC3D2ABF06E100ADC565"
-            BuildableName = "DiscDash.app"
-            BlueprintName = "DiscDash"
-            ReferencedContainer = "container:DiscDash.xcodeproj">
+            BuildableName = "OneDisc.app"
+            BlueprintName = "OneDisc"
+            ReferencedContainer = "container:OneDisc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

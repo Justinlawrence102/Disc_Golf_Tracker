@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  DiscDash
+//  OneDisc
 //
 //  Created by Justin Lawrence on 9/29/23.
 //

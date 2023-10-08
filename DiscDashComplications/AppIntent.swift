@@ -1,6 +1,6 @@
 //
 //  AppIntent.swift
-//  DiscDashComplications
+//  OneDiscComplications
 //
 //  Created by Justin Lawrence on 9/23/23.
 //

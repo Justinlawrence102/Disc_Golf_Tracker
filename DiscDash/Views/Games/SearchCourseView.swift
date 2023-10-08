@@ -1,6 +1,6 @@
 //
 //  SearchCourseView.swift
-//  DiscDash
+//  OneDisc
 //
 //  Created by Justin Lawrence on 9/28/23.
 //

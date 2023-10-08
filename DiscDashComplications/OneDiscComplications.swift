@@ -1,6 +1,6 @@
 //
-//  DiscDashComplications.swift
-//  DiscDashComplications
+//  OneDiscComplications.swift
+//  OneDiscComplications
 //
 //  Created by Justin Lawrence on 9/23/23.
 //
@@ -50,7 +50,7 @@ struct GameEntry: TimelineEntry {
     var currentGame: Game?
 }
 
-struct DiscDashComplicationsEntryView : View {
+struct             OneDiscComplicationsEntryView : View {
     var entry: Provider.Entry
     @Environment (\.widgetRenderingMode) var renderingMode
     
@@ -96,7 +96,7 @@ struct DiscDashComplicationsEntryView : View {
         }else {
             VStack {
                 VStack(alignment: .leading) {
-                    Text("Disc Golf Tracker")
+                    Text("OneDisc")
                         .font(.headline)
                         .foregroundStyle(Color("Pink"))
                     Text("Tap to start a game.")
@@ -110,13 +110,13 @@ struct DiscDashComplicationsEntryView : View {
 }
 
 @main
-struct DiscDashComplications: Widget {
+struct OneDiscComplications: Widget {
     let kind: String = "scoreCard-widget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) {
             entry in
-            DiscDashComplicationsEntryView(entry: entry)
+                        OneDiscComplicationsEntryView(entry: entry)
                 .containerBackground(.white, for: .widget)
         }
         .configurationDisplayName("Score Card")
@@ -126,6 +126,6 @@ struct DiscDashComplications: Widget {
 }
 
 #Preview(as: .accessoryRectangular) {
-    DiscDashComplications()
+    OneDiscComplications()
 } timeline: {
     GameEntry(date: .now)}

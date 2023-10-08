@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "820BF76D-E3EC-4DD7-ACB0-B2FAB586E6A2"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3985EE2C-EBC0-4829-978B-760E5F23BDBD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiscDash/SharePlay/SharePlayActivity.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "createGame(context:model:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3985EE2C-EBC0-4829-978B-760E5F23BDBD - a68128df7fa5f992"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DiscDash.SharedActivityManager.createGame(context: SwiftData.ModelContext, model: DiscDash.SharedGame) -&gt; Swift.Optional&lt;DiscDash.Game&gt;"
+                  moduleName = "DiscDash"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/justinlawrence/Documents/DiscDash/DiscDash/SharePlay/SharePlayActivity.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1840">
+               </Location>
+               <Location
+                  uuid = "3985EE2C-EBC0-4829-978B-760E5F23BDBD - c41288cf3918b5e7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "OneDisc.SharedActivityManager.createGame(context: SwiftData.ModelContext, model: OneDisc.SharedGame) -&gt; Swift.Optional&lt;OneDisc.Game&gt;"
+                  moduleName = "OneDisc"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/justinlawrence/Documents/DiscDash/DiscDash/SharePlay/SharePlayActivity.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "153"
+                  endingLineNumber = "153"
+                  offsetFromSymbolStart = "1840">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

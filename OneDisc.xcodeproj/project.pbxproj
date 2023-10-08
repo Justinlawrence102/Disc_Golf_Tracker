@@ -10,7 +10,7 @@
 		9805405F2AC65397006541BF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9805405E2AC65397006541BF /* data.json */; };
 		983B371A2AC89FC2003DD6DE /* player-file-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 983B37182AC89C0A003DD6DE /* player-file-icon.icns */; };
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
-		98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */; };
+		98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */; };
 		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
 		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
 		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
@@ -33,7 +33,7 @@
 		98D3EC822ABF092900ADC565 /* DiskDash_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */; };
 		98D3EC862ABF092A00ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC852ABF092A00ADC565 /* Assets.xcassets */; };
 		98D3EC892ABF092A00ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */; };
-		98D3EC8C2ABF092A00ADC565 /* DiscDash.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98D3EC7F2ABF092900ADC565 /* DiscDash.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		98D3EC8C2ABF092A00ADC565 /* OneDisc.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 98D3EC7F2ABF092900ADC565 /* OneDisc.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		98D3EC952ABF09C400ADC565 /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC932ABF09C400ADC565 /* StateManager.swift */; };
 		98D3EC962ABF09C400ADC565 /* WatchAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC942ABF09C400ADC565 /* WatchAppDelegate.swift */; };
 		98D3EC9C2ABF09D100ADC565 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC982ABF09D100ADC565 /* ResultsView.swift */; };
@@ -49,7 +49,7 @@
 		98D3ECA62ABF09F700ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
 		98D3ECAE2ABF0CB700ADC565 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98D3ECAD2ABF0CB700ADC565 /* WidgetKit.framework */; };
 		98D3ECB02ABF0CB700ADC565 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98D3ECAF2ABF0CB700ADC565 /* SwiftUI.framework */; };
-		98D3ECB32ABF0CB700ADC565 /* DiscDashComplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */; };
+		98D3ECB32ABF0CB700ADC565 /* OneDiscComplications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3ECB22ABF0CB700ADC565 /* OneDiscComplications.swift */; };
 		98D3ECB52ABF0CB700ADC565 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */; };
 		98D3ECB72ABF0CB900ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */; };
 		98D3ECBB2ABF0CB900ADC565 /* DiscDashComplicationsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -91,7 +91,7 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				98D3EC8C2ABF092A00ADC565 /* DiscDash.app in Embed Watch Content */,
+				98D3EC8C2ABF092A00ADC565 /* OneDisc.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,8 +123,8 @@
 		9805405E2AC65397006541BF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = scripts/data.json; sourceTree = SOURCE_ROOT; };
 		983B37182AC89C0A003DD6DE /* player-file-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "player-file-icon.icns"; sourceTree = "<group>"; };
 		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
-		98D3EC3E2ABF06E100ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashApp.swift; sourceTree = "<group>"; };
+		98D3EC3E2ABF06E100ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDiscApp.swift; sourceTree = "<group>"; };
 		98D3EC432ABF06E100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDash.entitlements; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		98D3EC742ABF07B200ADC565 /* PlayerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
 		98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
 		98D3EC792ABF085400ADC565 /* SharedViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
-		98D3EC7F2ABF092900ADC565 /* DiscDash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D3EC7F2ABF092900ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskDash_WatchApp.swift; sourceTree = "<group>"; };
 		98D3EC852ABF092A00ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3EC882ABF092A00ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DiscDashComplicationsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3ECAD2ABF0CB700ADC565 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		98D3ECAF2ABF0CB700ADC565 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscDashComplications.swift; sourceTree = "<group>"; };
+		98D3ECB22ABF0CB700ADC565 /* OneDiscComplications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDiscComplications.swift; sourceTree = "<group>"; };
 		98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3ECB82ABF0CB900ADC565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -215,8 +215,8 @@
 		98D3EC3F2ABF06E100ADC565 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				98D3EC3E2ABF06E100ADC565 /* DiscDash.app */,
-				98D3EC7F2ABF092900ADC565 /* DiscDash.app */,
+				98D3EC3E2ABF06E100ADC565 /* OneDisc.app */,
+				98D3EC7F2ABF092900ADC565 /* OneDisc.app */,
 				98D3ECAB2ABF0CB700ADC565 /* DiscDashComplicationsExtension.appex */,
 			);
 			name = Products;
@@ -229,7 +229,7 @@
 				98D3EC612ABF077700ADC565 /* Utilities */,
 				98D3EC5C2ABF076900ADC565 /* SharePlay */,
 				98D3EC532ABF074A00ADC565 /* Models */,
-				98D3EC412ABF06E100ADC565 /* DiscDashApp.swift */,
+				98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */,
 				98D3EC432ABF06E100ADC565 /* ContentView.swift */,
 				983B37182AC89C0A003DD6DE /* player-file-icon.icns */,
 				98D3EC472ABF06E200ADC565 /* Assets.xcassets */,
@@ -375,7 +375,7 @@
 		98D3ECB12ABF0CB700ADC565 /* DiscDashComplications */ = {
 			isa = PBXGroup;
 			children = (
-				98D3ECB22ABF0CB700ADC565 /* DiscDashComplications.swift */,
+				98D3ECB22ABF0CB700ADC565 /* OneDiscComplications.swift */,
 				98D3ECB42ABF0CB700ADC565 /* AppIntent.swift */,
 				98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */,
 				98D3ECB82ABF0CB900ADC565 /* Info.plist */,
@@ -386,9 +386,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		98D3EC3D2ABF06E100ADC565 /* DiscDash */ = {
+		98D3EC3D2ABF06E100ADC565 /* OneDisc */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "DiscDash" */;
+			buildConfigurationList = 98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "OneDisc" */;
 			buildPhases = (
 				98D3EC3A2ABF06E100ADC565 /* Sources */,
 				98D3EC3B2ABF06E100ADC565 /* Frameworks */,
@@ -401,14 +401,14 @@
 			dependencies = (
 				98D3EC8B2ABF092A00ADC565 /* PBXTargetDependency */,
 			);
-			name = DiscDash;
+			name = OneDisc;
 			productName = DiscDash;
-			productReference = 98D3EC3E2ABF06E100ADC565 /* DiscDash.app */;
+			productReference = 98D3EC3E2ABF06E100ADC565 /* OneDisc.app */;
 			productType = "com.apple.product-type.application";
 		};
-		98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */ = {
+		98D3EC7E2ABF092900ADC565 /* OneDisc Watch Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "DiskDash Watch Watch App" */;
+			buildConfigurationList = 98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "OneDisc Watch Watch App" */;
 			buildPhases = (
 				98D3EC7B2ABF092900ADC565 /* Sources */,
 				98D3EC7C2ABF092900ADC565 /* Frameworks */,
@@ -420,9 +420,9 @@
 			dependencies = (
 				98D3ECBA2ABF0CB900ADC565 /* PBXTargetDependency */,
 			);
-			name = "DiskDash Watch Watch App";
+			name = "OneDisc Watch Watch App";
 			productName = "DiskDash Watch Watch App";
-			productReference = 98D3EC7F2ABF092900ADC565 /* DiscDash.app */;
+			productReference = 98D3EC7F2ABF092900ADC565 /* OneDisc.app */;
 			productType = "com.apple.product-type.application";
 		};
 		98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */ = {
@@ -463,7 +463,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "DiscDash" */;
+			buildConfigurationList = 98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "OneDisc" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -476,8 +476,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				98D3EC3D2ABF06E100ADC565 /* DiscDash */,
-				98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */,
+				98D3EC3D2ABF06E100ADC565 /* OneDisc */,
+				98D3EC7E2ABF092900ADC565 /* OneDisc Watch Watch App */,
 				98D3ECAA2ABF0CB700ADC565 /* DiscDashComplicationsExtension */,
 			);
 		};
@@ -529,7 +529,7 @@
 				98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */,
 				98D3EC5B2ABF075C00ADC565 /* Game.swift in Sources */,
 				98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */,
-				98D3EC422ABF06E100ADC565 /* DiscDashApp.swift in Sources */,
+				98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */,
 				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
 				98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */,
 				98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */,
@@ -572,7 +572,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D3ECC02ABF0D3D00ADC565 /* Course.swift in Sources */,
-				98D3ECB32ABF0CB700ADC565 /* DiscDashComplications.swift in Sources */,
+				98D3ECB32ABF0CB700ADC565 /* OneDiscComplications.swift in Sources */,
 				98D3ECB52ABF0CB700ADC565 /* AppIntent.swift in Sources */,
 				98D3ECC32ABF0D4400ADC565 /* SharePlay.swift in Sources */,
 				98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */,
@@ -588,7 +588,7 @@
 /* Begin PBXTargetDependency section */
 		98D3EC8B2ABF092A00ADC565 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 98D3EC7E2ABF092900ADC565 /* DiskDash Watch Watch App */;
+			target = 98D3EC7E2ABF092900ADC565 /* OneDisc Watch Watch App */;
 			targetProxy = 98D3EC8A2ABF092A00ADC565 /* PBXContainerItemProxy */;
 		};
 		98D3ECBA2ABF0CB900ADC565 /* PBXTargetDependency */ = {
@@ -721,17 +721,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscDash/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DiscDash;
+				INFOPLIST_KEY_CFBundleDisplayName = OneDisc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "OneDisc needs your location to find the nearest courses and let you save basket and tee locations";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -746,7 +746,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -766,17 +766,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiscDash/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DiscDash;
+				INFOPLIST_KEY_CFBundleDisplayName = OneDisc;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = NO;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "OneDisc needs your location to find the nearest courses and let you save basket and tee locations";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -791,7 +791,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -811,21 +811,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "OneDisc needs your location to find the nearest courses and let you save basket and tee locations";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
-				PRODUCT_NAME = DiscDash;
+				PRODUCT_NAME = OneDisc;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -843,21 +843,21 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "DiscDash needs your location to find the nearest courses and let you save basket and tee locations";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "OneDisc needs your location to find the nearest courses and let you save basket and tee locations";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.justinLawrence.DiscDash;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
-				PRODUCT_NAME = DiscDash;
+				PRODUCT_NAME = OneDisc;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -934,7 +934,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "DiscDash" */ = {
+		98D3EC392ABF06E100ADC565 /* Build configuration list for PBXProject "OneDisc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98D3EC4E2ABF06E200ADC565 /* Debug */,
@@ -943,7 +943,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "DiscDash" */ = {
+		98D3EC502ABF06E200ADC565 /* Build configuration list for PBXNativeTarget "OneDisc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98D3EC512ABF06E200ADC565 /* Debug */,
@@ -952,7 +952,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "DiskDash Watch Watch App" */ = {
+		98D3EC8D2ABF092A00ADC565 /* Build configuration list for PBXNativeTarget "OneDisc Watch Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				98D3EC8E2ABF092A00ADC565 /* Debug */,

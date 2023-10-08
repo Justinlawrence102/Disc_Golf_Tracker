@@ -24,7 +24,8 @@ struct GameView: View {
     @Query var scores: [PlayerScore]
     @State var showingAddTeeAlert = false
     @State var showingAddBasketAlert = false
-    
+    @State var showingEditBasketInfoSheet = false
+
     @State var showingScoreSheet = true
     @State private var selectedDetent = PresentationDetent.full
     @State var sheetIsUp = true //this is used for the animation of the hole, par, distance popover
@@ -195,6 +196,20 @@ struct GameView: View {
                                         .cornerRadius(20)
                                 })
                                 Spacer()
+//                                if (basket.par == "" || basket.distance == "") {
+                                    Button(action: {
+                                        showingEditBasketInfoSheet.toggle()
+                                        print("Show info")
+                                    }, label: {
+                                        Label("Basket Info", systemImage: "info.circle.fill")
+                                            .padding(.horizontal, 12)
+                                            .padding(.vertical, 6)
+                                            .background(Color("Teal"))
+                                            .foregroundStyle(Color.white)
+                                            .cornerRadius(20)
+                                    })
+                                    Spacer()
+//                                }
                                 Button(action: {
                                     print("Save Basket")
                                     AddBasketAndTeeTip.hasAddedALocation = true
@@ -326,6 +341,14 @@ struct GameView: View {
                 }
                 .sheet(isPresented: $isActivitySharingSheetPresented) {
                     ActivitySharingViewController(activity: SharePlayActivity())
+                }
+                .sheet(isPresented: $showingEditBasketInfoSheet) {
+                    if let currentBasket = game.currentBasket {
+                        EditBasketInfoSheet(basket: currentBasket, showingEditBasketInfoSheet: $showingEditBasketInfoSheet)
+                            .presentationDetents([.height(150)])
+                    }else {
+                        Text("Hi?")
+                    }
                 }
         })
         .onChange(of: game.currentHoleIndex) {
@@ -520,6 +543,70 @@ struct PlayerScoresListView: View {
     }
 }
 
+
+extension PresentationDetent {
+    static let full = Self.height(400)
+    static let dismissed = Self.height(120)
+}
+
+struct EditBasketInfoSheet: View {
+    @State var basket: Basket
+    @Binding var showingEditBasketInfoSheet: Bool
+    var body: some View {
+        VStack {
+            Spacer()
+            HStack(spacing: 12) {
+                VStack(alignment: .leading){
+                    TextField("Par", text: $basket.par, prompt: Text("Par"))
+                        .keyboardType(.numberPad)
+                        .foregroundStyle(Color("Navy"))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .fontDesign(.rounded)
+                        .multilineTextAlignment(.center)
+                        .frame(width: 85, height: 50)
+                        .background(Color(UIColor.secondarySystemFill))
+                        .cornerRadius(12)
+                    Text("Par")
+                        .font(.subheadline)
+                        .foregroundStyle(Color("Teal"))
+                }
+                Spacer()
+                VStack(alignment: .leading){
+                    TextField("Disntance (Yards)", text: $basket.distance, prompt: Text("Distance"))
+                        .keyboardType(.numberPad)
+                        .foregroundStyle(Color("Navy"))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .fontDesign(.rounded)
+                        .multilineTextAlignment(.center)
+                        .frame(width: 85, height: 50)
+                        .background(Color(UIColor.secondarySystemFill))
+                        .cornerRadius(12)
+                    Text("Distance (Yds)")
+                        .font(.subheadline)
+                        .foregroundStyle(Color("Teal"))
+                }
+            }
+            .padding(16)
+        }
+        .overlay(alignment: .topTrailing ) {
+            Button(action: {
+                showingEditBasketInfoSheet = false
+            }, label: {
+                Text("Done")
+                    .padding(12)
+            })
+        }
+        .overlay(alignment: .top) {
+            Text("Edit Basket Details")
+                .padding(.top, 12)
+                .font(.headline)
+                .foregroundColor(Color("Pink"))
+        }
+    }
+}
+
 //#Preview {
 //    MainActor.assumeIsolated {
 //        return  NavigationStack {
@@ -530,9 +617,3 @@ struct PlayerScoresListView: View {
 //        }
 //    }
 //}
-
-
-extension PresentationDetent {
-    static let full = Self.height(400)
-    static let dismissed = Self.height(120)
-}

@@ -1,6 +1,6 @@
 //
 //  PlayerDetailsView.swift
-//  DiscDash
+//  OneDisc
 //
 //  Created by Justin Lawrence on 9/24/23.
 //

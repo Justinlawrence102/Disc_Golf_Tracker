@@ -82,8 +82,8 @@ let GamesPreviewContainer: ModelContainer = {
         sampleCourse.longitude = -81.36625
         container.mainContext.insert(sampleCourse)
         let basket1 = Basket(number: 1, course: sampleCourse)
-        basket1.par = "3"
-        basket1.distance = "500"
+        basket1.par = ""
+        basket1.distance = ""
         basket1.teeLatitudes = [28.62080]
         basket1.teeLongitudes = [-81.36582]
         basket1.basketLatitudes = [28.62159]

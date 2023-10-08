@@ -1,6 +1,6 @@
 //
-//  DiscDashApp.swift
-//  DiscDash
+//  OneDiscApp.swift
+//  OneDisc
 //
 //  Created by Justin Lawrence on 9/23/23.
 //
@@ -10,7 +10,7 @@ import SwiftData
 import TipKit
 
 @main
-struct DiscDashApp: App {
+struct OneDiscApp: App {
     @UIApplicationDelegateAdaptor var delegate: FSAppDelegate
     
     var sharedModelContainer: ModelContainer = {
