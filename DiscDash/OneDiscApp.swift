@@ -30,7 +30,7 @@ struct OneDiscApp: App {
     var sharedActivityManager = SharedActivityManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
                 .environmentObject(locationManager)
                 .environmentObject(sharedActivityManager)
                 .task {
@@ -86,4 +86,14 @@ extension View {
   func navigationBarColor(text: UIColor) -> some View {
     self.modifier(NavigationBarColor(tintColor: text))
   }
+}
+
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
+    }
 }

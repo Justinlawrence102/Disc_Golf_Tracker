@@ -114,11 +114,8 @@ class SharedActivityManager: ObservableObject {
             withAnimation {
                 self.gameModel?.currentHoleIndex = model.currentBasketIndex
                 self.gameModel?.updateFromShareplay(sharedGame: model)
-                self.gameModel?.updateMapCamera()
+//                self.gameModel?.updateMapCamera()
             }
-            //            if let session = self.session {
-            //                session.showNotice(GroupSessionEvent(originator: <#T##Participant#>, action: .updatedQueue(.added(.song("Test???"))), url: nil))
-            //            }
         }
     }
     

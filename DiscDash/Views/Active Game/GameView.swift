@@ -20,7 +20,8 @@ struct GameView: View {
 //    var game: Game! { games.first }
     
     @State var game: Game
-
+    @State var mapManager = MapManager()
+    
     @Query var scores: [PlayerScore]
     @State var showingAddTeeAlert = false
     @State var showingAddBasketAlert = false
@@ -47,7 +48,7 @@ struct GameView: View {
                 VStack(spacing: -0.0) {
 //                    Map {
                     
-                    Map(position: $game.cameraPosition, scope: mapScope) {
+                    Map(position: $mapManager.cameraPosition, scope: mapScope) {
 //                    Map(scope: mapScope) {
 //                    Map(position: $position) {
                         if showFullMapToggle {
@@ -232,7 +233,7 @@ struct GameView: View {
                         }
                     }
                     .background(Color("Lime_W_Dark"))
-                    .frame(height: 300)
+                    .frame(height: 350)
                 }
                 VStack() {
                     Spacer()
@@ -259,7 +260,7 @@ struct GameView: View {
                     }
                     TipView(AddBasketAndTeeTip())
                     Spacer()
-                        .frame(height: 360)
+                        .frame(height: 416)
                 }
                 .padding(.horizontal, 8.0)
             }else {
@@ -273,6 +274,7 @@ struct GameView: View {
             
             VStack {
                 BasketPickerView(game: game, showingScoreSheet: $showingScoreSheet, scrollPosition: $scrollPosition)
+                    .environment(mapManager)
                 Spacer()
             }
         }
@@ -281,7 +283,7 @@ struct GameView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(){
             print("Inital set map")
-            game.updateMapCamera(locationManager: locationManager)
+            mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
             sharePlayManager.addGameToSharedActivity(game: game)
         }
         .toolbar {
@@ -352,7 +354,7 @@ struct GameView: View {
                 }
         })
         .onChange(of: game.currentHoleIndex) {
-            game.updateMapCamera(locationManager: locationManager)
+            mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
@@ -387,7 +389,7 @@ struct CurrentBasketInfoView: View {
             if basket.distance != "" {
                 HStack(spacing: 4.0) {
                     Image(systemName: "location.fill")
-                    Text("\(basket.distance) Yards")
+                    Text("\(basket.distance) Feet")
                 }
                 .font(.subheadline)
                 .foregroundStyle(Color("Navy"))
@@ -399,6 +401,7 @@ struct CurrentBasketInfoView: View {
 struct BasketPickerView: View {
     @EnvironmentObject var locationManager: LocationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(MapManager.self) private var mapManager
 
     var game: Game
     
@@ -417,7 +420,7 @@ struct BasketPickerView: View {
                                 }
                                 withAnimation {
                                     game.currentHoleIndex = number - 1
-                                    game.updateMapCamera(locationManager: locationManager)
+                                    mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
                                     sharePlayManager.send(game)
                                 }
                                 showingScoreSheet = true
@@ -573,7 +576,7 @@ struct EditBasketInfoSheet: View {
                 }
                 Spacer()
                 VStack(alignment: .leading){
-                    TextField("Disntance (Yards)", text: $basket.distance, prompt: Text("Distance"))
+                    TextField("Disntance (Feet)", text: $basket.distance, prompt: Text("Distance"))
                         .keyboardType(.numberPad)
                         .foregroundStyle(Color("Navy"))
                         .font(.title3)
@@ -583,7 +586,7 @@ struct EditBasketInfoSheet: View {
                         .frame(width: 85, height: 50)
                         .background(Color(UIColor.secondarySystemFill))
                         .cornerRadius(12)
-                    Text("Distance (Yds)")
+                    Text("Distance (Ft)")
                         .font(.subheadline)
                         .foregroundStyle(Color("Teal"))
                 }

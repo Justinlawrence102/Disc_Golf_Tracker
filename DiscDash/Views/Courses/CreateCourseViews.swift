@@ -16,12 +16,11 @@ struct CreateCourseDetailsView: View {
 
     @State var course = Course()
     @State private var selectedPhotoItem: PhotosPickerItem?
-    @Binding var selectedItem: Course?
-    
+    @State private var showDeleteAlert = false
     var isNewCourse = false
     
     var body: some View {
-        NavigationStack {
+        VStack {
             Form {
                 TextField("Name", text: $course.name, prompt: Text("Course Name"))
                     .foregroundStyle(Color("Navy"))
@@ -38,7 +37,7 @@ struct CreateCourseDetailsView: View {
                         .mapStyle(.standard(elevation: .realistic))
                         .frame(height: 200)
                         .cornerRadius(12)
-//
+                    //
                     Image(systemName: "mappin")
                         .shadow(color: .blue, radius: 12)
                         .foregroundStyle(.red)
@@ -67,7 +66,7 @@ struct CreateCourseDetailsView: View {
                                         course.image = compressedData
                                     }
                                 }
-//                                course.image = data
+                                //                                course.image = data
                             }
                         }
                     })
@@ -79,35 +78,50 @@ struct CreateCourseDetailsView: View {
                     }
                 }
             }
-            .navigationTitle( isNewCourse ? "Create Course" : "Edit Course")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    NavigationLink {
-                        CreateCourseBasketListView(selectedItem: $selectedItem, course: course, isNewCourse: isNewCourse)
-                    }label: {
-                        HStack {
-                            Text("Next")
-                            Image(systemName: "chevron.right")
-                        }
-                    }
-                }
-                ToolbarItem(placement: .cancellationAction, content: {
-                    Button(action: {
-                        selectedItem = nil
-                    }, label: {
-                        Text("Cancel")
-                    })
+            if !isNewCourse {
+                Button(action: {
+                    showDeleteAlert.toggle()
+                }, label: {
+                    Text("Delete Course")
                 })
+                .frame(height: 60)
+                .frame(maxWidth: .infinity)
+                .background(Color(UIColor.secondarySystemGroupedBackground))
+                .cornerRadius(12)
+                .font(.body.weight(.medium))
+                .foregroundStyle(.red)
+                .padding()
             }
         }
-        .tint(Color("Teal"))
+        .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle( isNewCourse ? "Create Course" : "Edit Course")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                NavigationLink {
+                    CreateCourseBasketListView(course: course, isNewCourse: isNewCourse)
+                }label: {
+                    HStack {
+                        Text("Next")
+                        Image(systemName: "chevron.right")
+                    }
+                }
+            }
+        }
+        .alert("Delete Course", isPresented: $showDeleteAlert) {
+            Button("Delete", role: .destructive) {
+                modelContext.delete(course)
+            }
+            Button("Cancel", role: .cancel) { }
+        }message: {
+            Text("Are you sure you want to delete \(course.name)? Every game at this course will also be deleted.")
+        }
     }
 }
 
 struct CreateCourseBasketListView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding var selectedItem: Course?
+    @Environment(\.dismiss) var dismiss
 
     @State var course = Course()
     var isNewCourse: Bool
@@ -142,11 +156,19 @@ struct CreateCourseBasketListView: View {
                     do {
                         try modelContext.save()
                     }catch {print("Could not save")}
-                    selectedItem = nil
+                    print("Save!")
+                    dismiss.callAsFunction()
                 }, label: {
                     Text(isNewCourse ? "Save" : "Update")
                 })
             })
+        }
+        .onAppear(){
+            if isNewCourse {
+                modelContext.insert(course)
+                course.baskets = []
+                course.games = []
+            }
         }
         .navigationTitle(course.name)
         .tint(Color("Teal"))
@@ -183,7 +205,7 @@ struct BasketDetailRow: View {
                 }
                 Spacer()
                 VStack(alignment: .leading){
-                    TextField("Disntance (Yards)", text: $basket.distance, prompt: Text("Distance"))
+                    TextField("Disntance (Feet)", text: $basket.distance, prompt: Text("Distance"))
                         .keyboardType(.numberPad)
                         .foregroundStyle(Color("Navy"))
                         .font(.title3)
@@ -193,7 +215,7 @@ struct BasketDetailRow: View {
                         .frame(width: 85, height: 50)
                         .background(Color(UIColor.secondarySystemFill))
                         .cornerRadius(12)
-                    Text("Distance (Yds)")
+                    Text("Distance (Ft)")
                         .font(.subheadline)
                         .foregroundStyle(Color("Teal"))
                 }
@@ -203,9 +225,9 @@ struct BasketDetailRow: View {
     }
 }
 
-//#Preview {
-////    let course = Course(name: "Sample")
-////    CreateCourseDetailsView(course: course)
-//    CreateCourseDetailsView()
-//        .modelContainer(CoursePreviewContainer)
-//}
+#Preview {
+//    let course = Course(name: "Sample")
+//    CreateCourseDetailsView(course: course)
+    CreateCourseDetailsView()
+        .modelContainer(CoursePreviewContainer)
+}

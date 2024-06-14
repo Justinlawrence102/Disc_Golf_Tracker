@@ -84,7 +84,7 @@ struct BasketDetailsTabView: View {
                                         .font(.body)
                                 }
                                 if currentBasket.distance != "" {
-                                    Text("\(currentBasket.distance) Yds")
+                                    Text("\(currentBasket.distance) Ft")
                                         .font(.subheadline)
                                         .foregroundStyle(Color.secondary)
                                 }

@@ -40,7 +40,7 @@
 				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>DiscDash Player</string>
+			<string>OneDisc Player</string>
 			<key>UTTypeIconFiles</key>
 			<string>player-file-icon</string>
 			<key>UTTypeIcons</key>

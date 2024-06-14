@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 struct SelectCourseView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) var dismiss
 //    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
     @Query private var courses: [Course]
     @Binding var showCreateNewGameSheet: Bool
@@ -106,12 +105,8 @@ struct SelectCourseView: View {
                             Label("Search", systemImage: "magnifyingglass")
                         })
                         Button(action: {
-                            let newCourse = Course()
-                            modelContext.insert(newCourse)
-                            newCourse.baskets = []
-                            newCourse.games = []
                             isCreatingNewCourse = true
-                            selectedItem = newCourse
+                            selectedItem = Course()
                         }, label: {
                             Label("Custom Course", systemImage: "plus")
                         })
@@ -129,7 +124,20 @@ struct SelectCourseView: View {
             }
         }
         .sheet(item: $selectedItem) { item in
-            CreateCourseDetailsView(course: item, selectedItem: $selectedItem, isNewCourse: isCreatingNewCourse)
+            NavigationStack {
+                CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction, content: {
+                            Button(action: {
+                                selectedItem = nil
+                                print("Cancel")
+                            }, label: {
+                                Text("Cancel")
+                            })
+                        })
+                    }
+            }
+            .tint(Color("Teal"))
         }
         .sheet(isPresented: $showSearchCoursesSheet) {
             NavigationStack {

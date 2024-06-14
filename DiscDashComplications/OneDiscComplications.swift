@@ -68,7 +68,7 @@ struct             OneDiscComplicationsEntryView : View {
                                 .foregroundStyle(Color("Pink"))
                         }
                         if currentBasket.distance != "" {
-                            Label("\(currentBasket.distance) Yds", systemImage: "location.fill")
+                            Label("\(currentBasket.distance) Ft", systemImage: "location.fill")
                                 .font(.caption)
                                 .foregroundStyle(Color("Navy"))
                         }

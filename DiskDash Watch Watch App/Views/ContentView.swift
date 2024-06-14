@@ -15,7 +15,7 @@ struct ContentView: View {
     @ObservedObject var stateManager = StateManager()
     
     
-    @Query(filter: #Predicate<Game> { !$0.isSharedGame} ,sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+    @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
     
     
     var body: some View {

@@ -29,9 +29,7 @@ class Game {
     var currentHoleIndex: Int = 0
     var isSharedGame: Bool = false
     
-    @Transient
-    var cameraPosition: MapCameraPosition = .region(MKCoordinateRegion())
-    
+//    @Transient
     var currentBasket: Basket? {
         if let course = course, course.sortedBaskets.indices.contains(currentHoleIndex) {
             return course.sortedBaskets[currentHoleIndex]
@@ -86,35 +84,6 @@ class Game {
         return nil
     }
     
-    func updateMapCamera(locationManager: LocationManager? = nil, zoom: Double = 0.001) {
-        var coordinateRegion = MKCoordinateRegion()
-        if let currentBasket = currentBasket {
-            if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates, zoom: zoom)
-            }else if let currentLocation = locationManager?.lastLocation?.coordinate {
-                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
-            }else {
-                coordinateRegion = course!.getInitailMapPosition()
-                
-            }
-        }
-        cameraPosition = .region(coordinateRegion)
-    }
-    
-    func updateMapCamera(basketNumber: Int, locationManager: LocationManager? = nil, zoom: Double = 0.001) {
-        var coordinateRegion = MKCoordinateRegion()
-        if let currentBasket = course?.baskets?.first(where: {$0.number == basketNumber}) {
-            if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates, zoom: zoom)
-            }else if let currentLocation = locationManager?.lastLocation?.coordinate {
-                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
-            }else {
-                coordinateRegion = course!.getInitailMapPosition()
-                
-            }
-        }
-        cameraPosition = .region(coordinateRegion)
-    }
     
     func updateFromShareplay(sharedGame: SharedGame) {
         for playerScore in playerScores ?? [] {
@@ -172,6 +141,9 @@ class Game {
             scoreResults.sort(by: {$1.score > $0.score})
             if limit3 {
                 scoreResults = Array(scoreResults.prefix(3))
+            }
+            for i in 0..<scoreResults.count {
+                scoreResults[i].place = i+1
             }
             return scoreResults
         }catch {
@@ -240,6 +212,7 @@ struct ResultScores: Identifiable {
     var id: String { name }
     let image: Data?
     var color: String
+    var place: Int?
     
     init(player: Player, totalScore: Int, image: Data?, color: String) {
         self.name = player.name
@@ -257,5 +230,19 @@ struct ResultScores: Identifiable {
             return "+\(parDiff)"
         }
         return String(parDiff)
+    }
+    func getPlaceString() -> String {
+        if let place = place {
+            if place == 1 {
+                return "\(place)st"
+            }else if place == 2 {
+                return "\(place)nd"
+            }else if place == 3 {
+                return "\(place)rd"
+            }else {
+                return "\(place)th"
+            }
+        }
+        return ""
     }
 }

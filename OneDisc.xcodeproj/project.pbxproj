@@ -10,8 +10,11 @@
 		9805405F2AC65397006541BF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9805405E2AC65397006541BF /* data.json */; };
 		983B371A2AC89FC2003DD6DE /* player-file-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 983B37182AC89C0A003DD6DE /* player-file-icon.icns */; };
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
+		988967CF2C1CFA1B00695FB4 /* ListAllGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */; };
+		988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
+		988967D22C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
+		988967D32C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */; };
-		98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC432ABF06E100ADC565 /* ContentView.swift */; };
 		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
 		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
 		98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC542ABF075C00ADC565 /* SharePlay.swift */; };
@@ -24,10 +27,9 @@
 		98D3EC652ABF077F00ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
 		98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC682ABF079A00ADC565 /* ResultsView.swift */; };
 		98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC692ABF079A00ADC565 /* GameView.swift */; };
-		98D3EC702ABF07A800ADC565 /* GameSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */; };
+		98D3EC702ABF07A800ADC565 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6D2ABF07A700ADC565 /* HomeView.swift */; };
 		98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */; };
 		98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */; };
-		98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC742ABF07B200ADC565 /* PlayerListView.swift */; };
 		98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */; };
 		98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
 		98D3EC822ABF092900ADC565 /* DiskDash_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC812ABF092900ADC565 /* DiskDash_WatchApp.swift */; };
@@ -123,9 +125,10 @@
 		9805405E2AC65397006541BF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = scripts/data.json; sourceTree = SOURCE_ROOT; };
 		983B37182AC89C0A003DD6DE /* player-file-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "player-file-icon.icns"; sourceTree = "<group>"; };
 		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
+		988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAllGamesView.swift; sourceTree = "<group>"; };
+		988967D02C1CFFE100695FB4 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDiscApp.swift; sourceTree = "<group>"; };
-		98D3EC432ABF06E100ADC565 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDash.entitlements; sourceTree = "<group>"; };
 		98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -140,10 +143,9 @@
 		98D3EC632ABF077F00ADC565 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		98D3EC682ABF079A00ADC565 /* ResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsView.swift; sourceTree = "<group>"; };
 		98D3EC692ABF079A00ADC565 /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSelectionView.swift; sourceTree = "<group>"; };
+		98D3EC6D2ABF07A700ADC565 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCourseView.swift; sourceTree = "<group>"; };
 		98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCourseViews.swift; sourceTree = "<group>"; };
-		98D3EC742ABF07B200ADC565 /* PlayerListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerListView.swift; sourceTree = "<group>"; };
 		98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlayerView.swift; sourceTree = "<group>"; };
 		98D3EC792ABF085400ADC565 /* SharedViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
 		98D3EC7F2ABF092900ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,7 +232,6 @@
 				98D3EC5C2ABF076900ADC565 /* SharePlay */,
 				98D3EC532ABF074A00ADC565 /* Models */,
 				98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */,
-				98D3EC432ABF06E100ADC565 /* ContentView.swift */,
 				983B37182AC89C0A003DD6DE /* player-file-icon.icns */,
 				98D3EC472ABF06E200ADC565 /* Assets.xcassets */,
 				98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */,
@@ -255,6 +256,7 @@
 				98D3EC572ABF075C00ADC565 /* Game.swift */,
 				98D3EC552ABF075C00ADC565 /* Player.swift */,
 				98D3EC542ABF075C00ADC565 /* SharePlay.swift */,
+				988967D02C1CFFE100695FB4 /* MapManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,8 +285,10 @@
 		98D3EC662ABF078500ADC565 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				98D3EC6D2ABF07A700ADC565 /* HomeView.swift */,
+				988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */,
 				98D3EC732ABF07AB00ADC565 /* Players */,
-				98D3EC6C2ABF07A000ADC565 /* Games */,
+				98D3EC6C2ABF07A000ADC565 /* Courses */,
 				98D3EC672ABF078E00ADC565 /* Active Game */,
 			);
 			path = Views;
@@ -300,22 +304,20 @@
 			path = "Active Game";
 			sourceTree = "<group>";
 		};
-		98D3EC6C2ABF07A000ADC565 /* Games */ = {
+		98D3EC6C2ABF07A000ADC565 /* Courses */ = {
 			isa = PBXGroup;
 			children = (
 				98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */,
-				98D3EC6D2ABF07A700ADC565 /* GameSelectionView.swift */,
 				98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */,
 				98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */,
 			);
-			path = Games;
+			path = Courses;
 			sourceTree = "<group>";
 		};
 		98D3EC732ABF07AB00ADC565 /* Players */ = {
 			isa = PBXGroup;
 			children = (
 				98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */,
-				98D3EC742ABF07B200ADC565 /* PlayerListView.swift */,
 				9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */,
 				98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */,
 			);
@@ -522,8 +524,8 @@
 				9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */,
 				98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */,
 				98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */,
-				98D3EC442ABF06E100ADC565 /* ContentView.swift in Sources */,
-				98D3EC702ABF07A800ADC565 /* GameSelectionView.swift in Sources */,
+				98D3EC702ABF07A800ADC565 /* HomeView.swift in Sources */,
+				988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */,
 				98D3EC642ABF077F00ADC565 /* LocationManager.swift in Sources */,
 				98EB37432AC70BE8007E119E /* AppDelegate.swift in Sources */,
 				98D3EC722ABF07A800ADC565 /* CreateCourseViews.swift in Sources */,
@@ -532,10 +534,10 @@
 				98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */,
 				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
 				98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */,
-				98D3EC762ABF07B200ADC565 /* PlayerListView.swift in Sources */,
 				98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */,
 				98D3EC592ABF075C00ADC565 /* Player.swift in Sources */,
 				98D3EC652ABF077F00ADC565 /* SampleData.swift in Sources */,
+				988967CF2C1CFA1B00695FB4 /* ListAllGamesView.swift in Sources */,
 				98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */,
 				98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */,
 				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
@@ -551,6 +553,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D3ECA22ABF09DE00ADC565 /* Player.swift in Sources */,
+				988967D22C1CFFE100695FB4 /* MapManager.swift in Sources */,
 				98D3ECA52ABF09F400ADC565 /* SampleData.swift in Sources */,
 				98D3ECA02ABF09D900ADC565 /* Course.swift in Sources */,
 				98D3ECA12ABF09DB00ADC565 /* Game.swift in Sources */,
@@ -577,6 +580,7 @@
 				98D3ECC32ABF0D4400ADC565 /* SharePlay.swift in Sources */,
 				98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */,
 				98D3ECC22ABF0D4200ADC565 /* Player.swift in Sources */,
+				988967D32C1CFFE100695FB4 /* MapManager.swift in Sources */,
 				98D3ECC42ABF0D4700ADC565 /* SharedViews.swift in Sources */,
 				98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */,
 				98D3ECC12ABF0D4000ADC565 /* Game.swift in Sources */,
@@ -721,7 +725,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -746,7 +750,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -766,7 +770,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -791,7 +795,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -811,7 +815,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
@@ -823,7 +827,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
 				PRODUCT_NAME = OneDisc;
 				SDKROOT = watchos;
@@ -843,7 +847,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
@@ -855,7 +859,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinLawrence.DiscDash.watchkitapp;
 				PRODUCT_NAME = OneDisc;
 				SDKROOT = watchos;

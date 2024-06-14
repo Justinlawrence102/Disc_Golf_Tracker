@@ -67,6 +67,11 @@ final class Player: Codable {
     func getColor()-> Color {
         return Color(UIColor(hex: color) ?? UIColor(named: "Pink")!)
     }
+    func getNumGames() -> Int {
+        let gameIDs = (scores ?? []).map { $0.game?.id }
+        let uniqueGames = Array(Set(gameIDs))
+        return uniqueGames.count
+    }
 }
 extension Player: Transferable {
     static  var transferRepresentation: some TransferRepresentation {
