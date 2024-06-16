@@ -17,7 +17,8 @@ struct HomeView: View {
     
     @State private var showCreateNewGame = false
     @State private var showCreateNewPlayer = false
-    @State private var showCreateNewCourse = false
+    @State private var showCreateNewCourse: Course?
+
     @State private var showAllGames = false
 //    @State var createdNewCourse: Course?
     
@@ -79,115 +80,11 @@ struct HomeView: View {
                             }
                             .listStyle(.plain)
                         }
-                        HStack(alignment: .center, spacing: 6) {
-                            Text("Players")
-                                .font(.title3.weight(.semibold))
-//                            Button(action: {
-//                                print("View All Players")
-//                            }, label: {
-//                                    Text("Players")
-//                                        .font(.title3.weight(.semibold))
-//                                    Image(systemName: "chevron.right")
-//                                        .foregroundStyle(Color.gray)
-//                            })
-                            Spacer()
-                            Button(action: {
-                                showCreateNewPlayer.toggle()
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .font(.title3.weight(.semibold))
-                                    .foregroundStyle(Color("Teal"))
-                            })
+                        if !players.isEmpty {
+                            PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer, players: players)
                         }
-                        .foregroundStyle(Color("Navy"))
-                        .padding(.bottom, -4)
-                        .padding(.top)
-                        
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 12) {
-                                ForEach(players, id: \.self) {
-                                    player in
-                                    NavigationLink(value: player, label: {
-                                        HStack {
-                                            VStack(alignment: .leading) {
-                                                PlayerProfileCircleView(player: player, size: 40)
-                                                Text(player.name)
-                                                    .font(.body.weight(.semibold))
-                                                    .lineLimit(1)
-                                                Text("\(player.getNumGames()) Games")
-                                                    .foregroundStyle(.secondary)
-                                                    .font(.subheadline.weight(.medium))
-                                            }
-                                            Spacer()
-                                        }
-                                    })
-                                    .foregroundStyle(Color("Navy"))
-                                    .padding(8)
-                                    .frame(width: 160)
-                                    .background(player.getColor())
-                                    .cornerRadius(12)
-                                }
-                                Spacer()
-                            }
-                        }
-                        
-                        HStack(alignment: .center, spacing: 6) {
-                            Text("Courses")
-                                .font(.title3.weight(.semibold))
-                            Spacer()
-                            Button(action: {
-//                                let newCourse = Course()
-//                                modelContext.insert(newCourse)
-//                                newCourse.baskets = []
-//                                newCourse.games = []
-//                                createdNewCourse = newCourse
-                                showCreateNewCourse.toggle()
-                            }, label: {
-                                Image(systemName: "plus")
-                                    .font(.title3.weight(.semibold))
-                                    .foregroundStyle(Color("Teal"))
-                            })
-                        }
-                        .foregroundStyle(Color("Navy"))
-                        .padding(.bottom, -4)
-                        .padding(.top)
-
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 12) {
-                                ForEach(courses, id: \.self) {
-                                    course in
-                                    NavigationLink(value: course, label: {
-                                        VStack(alignment: .leading) {
-                                            if let courseImage = course.image, let image = UIImage(data: courseImage) {
-                                                Image(uiImage: image)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fill)
-                                                    .frame(width: 174, height: 120)
-                                                    .cornerRadius(8)
-                                            }else {
-                                                Image(systemName: "figure.disc.sports")
-                                                    .frame(width: 174, height: 120)
-                                                    .foregroundStyle(Color("Teal"))
-                                                    .font(.title)
-                                                    .background(Color("Lime"))
-                                                    .cornerRadius(8)
-                                            }
-                                            Text(course.name)
-                                                .lineLimit(1)
-                                                .font(.headline)
-                                            Label(course.cityState ?? "", systemImage: "location.fill")
-                                                .font(.subheadline.weight(.medium))
-                                                .foregroundStyle(Color("Pink"))
-                                        }
-                                    })
-                                    .foregroundStyle(Color("Navy"))
-                                    .padding(8)
-                                    .frame(width: 190)
-                                    .background(Color(UIColor.secondarySystemBackground))
-                                    .cornerRadius(12)
-                                }
-                                Spacer()
-                            }
+                        if !courses.isEmpty {
+                            CoursesSectionView(showCreateNewCourse: $showCreateNewCourse, courses: courses)
                         }
                     }
                     .safeAreaPadding(.horizontal)
@@ -201,7 +98,7 @@ struct HomeView: View {
                         
                     }
                     .navigationDestination(for: Course.self) { course in
-                        CreateCourseDetailsView(course: course, isNewCourse: false)
+                        CreateCourseDetailsView(course: course, isNewCourse: false, createCourseModalShowing: nil)
                             .navigationBarTitleDisplayMode(.inline)
                         
                     }
@@ -245,13 +142,13 @@ struct HomeView: View {
                         .presentationDetents([.medium])
                         .interactiveDismissDisabled()
                 })
-                .sheet(isPresented: $showCreateNewCourse, content: {
+                .sheet(item:$showCreateNewCourse) { item in
                     NavigationStack {
-                        CreateCourseDetailsView(course: Course(), isNewCourse: true)
+                        CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $showCreateNewCourse)
                             .toolbar {
                                 ToolbarItem(placement: .cancellationAction, content: {
                                     Button(action: {
-                                        showCreateNewCourse.toggle()
+                                        showCreateNewCourse = nil
                                     }, label: {
                                         Text("Cancel")
                                     })
@@ -259,7 +156,7 @@ struct HomeView: View {
                             }
                     }
                     .tint(Color("Teal"))
-                })
+                }
                 
             }
         }
@@ -327,6 +224,118 @@ struct GameRowView: View {
                                 .font(.subheadline.weight(.semibold))
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+private struct CoursesSectionView: View {
+    @Binding var showCreateNewCourse: Course?
+    var courses: [Course]
+    var body: some View {
+        VStack {
+            HStack(alignment: .center, spacing: 6) {
+                Text("Courses")
+                    .font(.title3.weight(.semibold))
+                Spacer()
+                Button(action: {
+                    showCreateNewCourse = Course()
+                }, label: {
+                    Image(systemName: "plus")
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(Color("Teal"))
+                })
+            }
+            .foregroundStyle(Color("Navy"))
+            .padding(.bottom, -4)
+            .padding(.top)
+            ScrollView(.horizontal) {
+                HStack(spacing: 12) {
+                    ForEach(courses, id: \.self) {
+                        course in
+                        NavigationLink(value: course, label: {
+                            VStack(alignment: .leading) {
+                                if let courseImage = course.image, let image = UIImage(data: courseImage) {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 174, height: 120)
+                                        .cornerRadius(8)
+                                }else {
+                                    Image(systemName: "figure.disc.sports")
+                                        .frame(width: 174, height: 120)
+                                        .foregroundStyle(Color("Teal"))
+                                        .font(.title)
+                                        .background(Color("Lime"))
+                                        .cornerRadius(8)
+                                }
+                                Text(course.name)
+                                    .lineLimit(1)
+                                    .font(.headline)
+                                Label(course.cityState ?? "", systemImage: "location.fill")
+                                    .font(.subheadline.weight(.medium))
+                                    .foregroundStyle(Color("Pink"))
+                            }
+                        })
+                        .foregroundStyle(Color("Navy"))
+                        .padding(8)
+                        .frame(width: 190)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(12)
+                    }
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+private struct PlayersSectionView: View {
+    @Binding var showCreateNewPlayer: Bool
+    var players: [Player]
+    var body: some View {
+        VStack {
+            HStack(alignment: .center, spacing: 6) {
+                Text("Players")
+                    .font(.title3.weight(.semibold))
+                Spacer()
+                Button(action: {
+                    showCreateNewPlayer.toggle()
+                }, label: {
+                    Image(systemName: "plus")
+                        .font(.title3.weight(.semibold))
+                        .foregroundStyle(Color("Teal"))
+                })
+            }
+            .foregroundStyle(Color("Navy"))
+            .padding(.bottom, -4)
+            .padding(.top)
+            ScrollView(.horizontal) {
+                HStack(spacing: 12) {
+                    ForEach(players, id: \.self) {
+                        player in
+                        NavigationLink(value: player, label: {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    PlayerProfileCircleView(player: player, size: 40)
+                                    Text(player.name)
+                                        .font(.body.weight(.semibold))
+                                        .lineLimit(1)
+                                    Text("\(player.getNumGames()) Games")
+                                        .foregroundStyle(.secondary)
+                                        .font(.subheadline.weight(.medium))
+                                }
+                                Spacer()
+                            }
+                        })
+                        .foregroundStyle(Color("Navy"))
+                        .padding(8)
+                        .frame(width: 160)
+                        .background(player.getColor())
+                        .cornerRadius(12)
+                    }
+                    Spacer()
                 }
             }
         }

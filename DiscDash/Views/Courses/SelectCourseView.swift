@@ -21,7 +21,6 @@ struct SelectCourseView: View {
     @State var courseToDelete: Course?
     @State var showDeleteCourseAlert = false
     @State var showSearchCoursesSheet = false
-    
     var body: some View {
         NavigationStack {
             List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) ?? 0 > $0.getDistance(locationManager: locationManager) ?? 0})) { course in
@@ -125,7 +124,7 @@ struct SelectCourseView: View {
         }
         .sheet(item: $selectedItem) { item in
             NavigationStack {
-                CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse)
+                CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse, createCourseModalShowing: $selectedItem)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction, content: {
                             Button(action: {
@@ -161,28 +160,37 @@ struct SelectPlayerView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var showCreateNewGameSheet: Bool
     @EnvironmentObject var sharePlayManager: SharedActivityManager
-
+    @State var showCreateNewPlayer = false
     @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}, sort: \Player.name) private var players: [Player]
     
     var selectedCourse: Course
     
     var body: some View {
-        List(players, id: \.self) {
-            player in
+        List {
+            ForEach(players, id: \.self) {
+                player in
+                Button(action: {
+                    player.isSelected.toggle()
+                    print("Tapped \(player.name), \(player.isSelected)")
+                }, label: {
+                    HStack {
+                        PlayerProfileCircleView(player: player, size: 50)
+                        Text(player.name)
+                            .font(.headline)
+                            .foregroundStyle(Color("Navy"))
+                        Spacer()
+                        Image(systemName: player.isSelected ? "checkmark.circle.fill":"circle")
+                            .font(.title2)
+                            .foregroundStyle(Color("Teal"))
+                    }
+                })
+                .buttonStyle(.plain)
+            }
             Button(action: {
-                player.isSelected.toggle()
-                print("Tapped \(player.name), \(player.isSelected)")
+                print("Create New player")
+                showCreateNewPlayer.toggle()
             }, label: {
-                HStack {
-                    PlayerProfileCircleView(player: player, size: 50)
-                    Text(player.name)
-                        .font(.headline)
-                        .foregroundStyle(Color("Navy"))
-                    Spacer()
-                    Image(systemName: player.isSelected ? "checkmark.circle.fill":"circle")
-                        .font(.title2)
-                        .foregroundStyle(Color("Teal"))
-                }
+                Label("Create New Player", systemImage: "plus")
             })
             .buttonStyle(.plain)
         }
@@ -203,9 +211,14 @@ struct SelectPlayerView: View {
                 }, label: {
                     Text("Start Game")
                 })
+                .disabled(players.filter({$0.isSelected}).count == 0)
             }
         }
-        
+        .sheet(isPresented: $showCreateNewPlayer, content: {
+            CreatePlayerView(player: Player(), isNewPerson: true)
+                .presentationDetents([.medium])
+                .interactiveDismissDisabled()
+        })
     }
 }
 

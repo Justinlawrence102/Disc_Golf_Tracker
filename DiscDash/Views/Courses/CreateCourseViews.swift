@@ -13,11 +13,21 @@ import MapKit
 
 struct CreateCourseDetailsView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
 
     @State var course = Course()
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var showDeleteAlert = false
+    
+    @Binding var createCourseModalShowing: Course?
+    
     var isNewCourse = false
+    
+    init(course: Course, isNewCourse: Bool, createCourseModalShowing: Binding<Course?>?) {
+        self.course = course
+        self.isNewCourse = isNewCourse
+        self._createCourseModalShowing = createCourseModalShowing ?? Binding.constant(nil)
+    }
     
     var body: some View {
         VStack {
@@ -84,7 +94,7 @@ struct CreateCourseDetailsView: View {
                 }, label: {
                     Text("Delete Course")
                 })
-                .frame(height: 60)
+                .frame(height: 55)
                 .frame(maxWidth: .infinity)
                 .background(Color(UIColor.secondarySystemGroupedBackground))
                 .cornerRadius(12)
@@ -99,7 +109,7 @@ struct CreateCourseDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 NavigationLink {
-                    CreateCourseBasketListView(course: course, isNewCourse: isNewCourse)
+                    CreateCourseBasketListView(course: course, createCourseModalShowing: $createCourseModalShowing, isNewCourse: isNewCourse)
                 }label: {
                     HStack {
                         Text("Next")
@@ -111,6 +121,7 @@ struct CreateCourseDetailsView: View {
         .alert("Delete Course", isPresented: $showDeleteAlert) {
             Button("Delete", role: .destructive) {
                 modelContext.delete(course)
+                dismiss.callAsFunction()
             }
             Button("Cancel", role: .cancel) { }
         }message: {
@@ -124,6 +135,7 @@ struct CreateCourseBasketListView: View {
     @Environment(\.dismiss) var dismiss
 
     @State var course = Course()
+    @Binding var createCourseModalShowing: Course?
     var isNewCourse: Bool
 
     var body: some View {
@@ -157,6 +169,9 @@ struct CreateCourseBasketListView: View {
                         try modelContext.save()
                     }catch {print("Could not save")}
                     print("Save!")
+                    if (createCourseModalShowing != nil) {
+                        createCourseModalShowing = nil
+                    }
                     dismiss.callAsFunction()
                 }, label: {
                     Text(isNewCourse ? "Save" : "Update")
@@ -166,7 +181,9 @@ struct CreateCourseBasketListView: View {
         .onAppear(){
             if isNewCourse {
                 modelContext.insert(course)
-                course.baskets = []
+                if course.baskets == nil {
+                    course.baskets = []
+                }
                 course.games = []
             }
         }
@@ -225,9 +242,9 @@ struct BasketDetailRow: View {
     }
 }
 
-#Preview {
-//    let course = Course(name: "Sample")
-//    CreateCourseDetailsView(course: course)
-    CreateCourseDetailsView()
-        .modelContainer(CoursePreviewContainer)
-}
+//#Preview {
+////    let course = Course(name: "Sample")
+////    CreateCourseDetailsView(course: course)
+////    CreateCourseDetailsView()
+////        .modelContainer(CoursePreviewContainer)
+//}
