@@ -11,6 +11,7 @@ import WidgetKit
 
 struct SelectCourseView: View {
     @Query(sort: \Course.name) private var courses: [Course]
+    @Environment(LocationManager.self) var locationManager
 
     var body: some View {
         NavigationStack {
@@ -26,7 +27,7 @@ struct SelectCourseView: View {
                         .foregroundStyle(Color.secondary)
                 }
             }
-            List(courses) {
+            List(courses.sorted(by: {$1.getDistance(locationManager: locationManager) ?? 0 > $0.getDistance(locationManager: locationManager) ?? 0})) {
                 course in
                 NavigationLink(destination: {
                     SelectPlayersView(selectedCourse: course)

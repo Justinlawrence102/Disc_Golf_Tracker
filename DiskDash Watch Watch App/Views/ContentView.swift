@@ -13,9 +13,10 @@ struct ContentView: View {
 
     @ObservedObject var stateManager = StateManager()
     
+    @State var showJumpToBasketAlert = false
+    @State var tempSelectedGame: Game?
     
     @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
-    
     
     var body: some View {
         if games.isEmpty {
@@ -35,9 +36,16 @@ struct ContentView: View {
             }
         }else {
             NavigationStack {
-                List(games, selection: $stateManager.selectedGame) {
+                List(games) { //, selection: $stateManager.selectedGame
                     game in
-                    NavigationLink(value: game) {
+                    Button(action: {
+                        if game.currentHoleIndex > 0 && game.currentHoleIndex != game.course?.baskets?.count ?? 0 {
+                            tempSelectedGame = game
+                            showJumpToBasketAlert.toggle()
+                        }else {
+                            stateManager.selectedGame = game
+                        }
+                    }, label: {
                         VStack(alignment: .leading) {
                             if let course = game.course {
                                 Text(course.name)
@@ -48,7 +56,7 @@ struct ContentView: View {
                                 .font(.subheadline)
                         }
                         .padding(.vertical, 16.0)
-                    }
+                    })
                     .swipeActions(edge: .trailing) {
                         Button {
                             modelContext.delete(game)
@@ -90,10 +98,23 @@ struct ContentView: View {
                     }
                 }
                 .navigationDestination(item: $stateManager.selectedGame) { game in
-                    GoToNextBasketView(game: game, nextBasketNumber: 1)
+                    //game.currentHoleIndex+1
+                    GoToNextBasketView(game: game, nextBasketNumber: stateManager.jumpToBasket)
                         .environmentObject(stateManager)
                 }
             }
+            .alert("Continue game?", isPresented: $showJumpToBasketAlert) {
+                Button("Basket \((tempSelectedGame?.currentHoleIndex ?? -1)+1)") {
+                    stateManager.jumpToBasket = (tempSelectedGame?.currentHoleIndex ?? 0) + 1
+                    stateManager.selectedGame = tempSelectedGame
+                }
+                Button("Basket 1", role: .cancel) {
+                    stateManager.jumpToBasket = 1
+                    stateManager.selectedGame = tempSelectedGame
+                }
+            } message: {
+            Text("This game is already in progress. Would you like to jump to basket \((tempSelectedGame?.currentHoleIndex ?? -1)+1) or start from the begining?")
+        }
             .sheet(isPresented: $stateManager.showCreateGameSheet) {
                 SelectCourseView()
                     .environmentObject(stateManager)
@@ -101,7 +122,14 @@ struct ContentView: View {
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    stateManager.selectedGame = games.first
+                    if let game = games.first, Calendar.current.startOfDay(for: Date()) == Calendar.current.startOfDay(for: game.startDate) {
+                        if game.currentHoleIndex > 0 && game.currentHoleIndex != game.course?.baskets?.count ?? 0 {
+                            tempSelectedGame = game
+                            showJumpToBasketAlert.toggle()
+                        }else {
+                            stateManager.selectedGame = game
+                        }
+                    }
                 }
             }
         }
@@ -111,4 +139,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(GamesPreviewContainer)
+        .environment(LocationManager())
 }

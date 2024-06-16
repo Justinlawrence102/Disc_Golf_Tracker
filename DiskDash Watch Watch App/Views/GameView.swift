@@ -45,6 +45,7 @@ struct BasketDetailsTabView: View {
     
     @Query private var basket: [Basket]
     var currentBasket: Basket! { basket.first }
+    @State private var isAnimateCountDown = false
 
     @EnvironmentObject var stateManager: StateManager
 
@@ -62,100 +63,135 @@ struct BasketDetailsTabView: View {
     var body: some View {
         TabView(selection: $stateManager.tabSelection) {
             //            let _ = Self._printChanges()
-            BasketMapView(basket: currentBasket)
-                .toolbar {
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        if currentBasket.number != 1 {
-                            Button {
-                                print("Go back")
-                                stateManager.selectedGame = nil
-                            } label: {
-                                Image(systemName: "list.bullet")
-                                    .foregroundStyle(Color("Lime"))
-                            }
-                        }else {
-                            Spacer()
-                        }
-                        if currentBasket.par != "" || currentBasket.distance != "" {
-                            VStack {
-                                if currentBasket.par != "" {
-                                    Text("Par \(currentBasket.par)")
+            if (!currentBasket.basketCoordinates.isEmpty && !currentBasket.teeCoordinates.isEmpty) {
+                BasketMapView(basket: currentBasket)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .bottomBar) {
+                            if currentBasket.number != 1 {
+                                Button {
+                                    print("Go back")
+                                    stateManager.selectedGame = nil
+                                } label: {
+                                    Image(systemName: "list.bullet")
                                         .foregroundStyle(Color("Lime"))
-                                        .font(.body)
                                 }
-                                if currentBasket.distance != "" {
-                                    Text("\(currentBasket.distance) Ft")
-                                        .font(.subheadline)
-                                        .foregroundStyle(Color.secondary)
-                                }
+                            }else {
+                                Spacer()
                             }
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(20)
-                            .padding(.bottom, 8)
-                        }else {
-                            Spacer()
+                            if currentBasket.par != "" || currentBasket.distance != "" {
+                                VStack(spacing: 0) {
+                                    if currentBasket.par != "" {
+                                        Text("Par \(currentBasket.par)")
+                                            .foregroundStyle(Color("Pink"))
+                                            .font(.body)
+                                    }
+                                    if currentBasket.distance != "" {
+                                        Text("\(currentBasket.distance) Ft")
+                                            .font(.subheadline)
+                                            .foregroundStyle(Color.secondary)
+                                    }
+                                }
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .cornerRadius(20)
+                                .padding(.bottom, 8)
+                            }else {
+                                Spacer()
+                            }
+                        }
+                    }
+                    .tag(1)
+            }
+            List {
+                if currentBasket.par != "" || currentBasket.distance != "" {
+                    HStack {
+                        if (currentBasket.par != "") {
+                            VStack(alignment: .leading) {
+                                Text(currentBasket.par)
+                                    .font(.title3.weight(.semibold))
+                                    .foregroundStyle(Color("Pink"))
+                                Text("Par")
+                            }
+                        }
+                        Spacer()
+                        if (currentBasket.distance != "") {
+                            VStack(alignment: .leading) {
+                                Text("\(currentBasket.distance) ft")
+                                    .font(.title3.weight(.semibold))
+                                    .foregroundStyle(Color("Pink"))
+                                Text("Distance")
+                            }
                         }
                     }
                 }
-                .tag(1)
-            List(scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})) { playerScore in
-                HStack {
-                    Text(playerScore.player?.name ?? "N/A")
-                    Spacer()
-                    Button(action: {
-                        WKInterfaceDevice.current().play(.click)
-                        playerScore.decrementScore()
-                        WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
-                    }, label: {
-                        ZStack {
-                            Rectangle()
-                                .foregroundStyle(.ultraThinMaterial)
-                                .cornerRadius(17.5)
-                            Image(systemName: "minus")
-                                .foregroundStyle(Color("Pink"))
-                                .font(.system(size: 15))
-                                .fontWeight(.semibold)
-                        }
-                        .frame(width: 35, height: 35)
-                    })
-                    .buttonStyle(.plain)
-                    .disabled(playerScore.score == 0)
-                    Text(String(playerScore.score))
-                        .fontDesign(.rounded)
-                        .fontWeight(.semibold)
-                    Button(action: {
-                        WKInterfaceDevice.current().play(.click)
-                        WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
-                        if let par = Int(currentBasket.par) {
-                            playerScore.incrementScore(par: par)
-                        }else {
-                            playerScore.score += 1
-                        }
-                        
-                    }, label: {
-                        ZStack {
-                            Rectangle()
-                                .foregroundStyle(.ultraThinMaterial)
-                                .cornerRadius(17.5)
-                            Image(systemName: "plus")
-                                .foregroundStyle(Color("Lime"))
-                                .font(.system(size: 15))
-                                .fontWeight(.semibold)
-                        }
-                        .frame(width: 35, height: 35)
-                    })
-                    .buttonStyle(.plain)
+                ForEach(scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})) { playerScore in
+                    HStack {
+                        Text(playerScore.player?.name ?? "N/A")
+                        Spacer()
+                        Button(action: {
+                            WKInterfaceDevice.current().play(.click)
+                            isAnimateCountDown = true
+                            withAnimation {
+                                playerScore.decrementScore()
+                            }
+                            WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
+                        }, label: {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .cornerRadius(17.5)
+                                Image(systemName: "minus")
+                                    .foregroundStyle(Color("Pink"))
+                                    .font(.system(size: 15))
+                                    .fontWeight(.semibold)
+                            }
+                            .frame(width: 35, height: 35)
+                        })
+                        .buttonStyle(.plain)
+                        .disabled(playerScore.score == 0)
+                        Text(String(playerScore.score))
+                            .fontDesign(.rounded)
+                            .fontWeight(.semibold)
+                            .contentTransition(.numericText(countsDown: isAnimateCountDown))
+                        Button(action: {
+                            WKInterfaceDevice.current().play(.click)
+                            WidgetCenter.shared.reloadTimelines(ofKind: "scoreCard-widget")
+                            isAnimateCountDown = false
+                            withAnimation {
+                                if let par = Int(currentBasket.par) {
+                                    playerScore.incrementScore(par: par)
+                                }else {
+                                    playerScore.score += 1
+                                }
+                            }
+                            
+                        }, label: {
+                            ZStack {
+                                Rectangle()
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .cornerRadius(17.5)
+                                Image(systemName: "plus")
+                                    .foregroundStyle(Color("Lime"))
+                                    .font(.system(size: 15))
+                                    .fontWeight(.semibold)
+                            }
+                            .frame(width: 35, height: 35)
+                        })
+                        .buttonStyle(.plain)
+                    }
                 }
             }
             .tag(2)
             .containerBackground(for: .tabView, alignment: .center) {
-                ZStack {
-                    BasketMapView(basket: currentBasket, includeMarkers: false)
-
-                    Rectangle()
-                        .foregroundStyle(.ultraThinMaterial)
-                }
+                Rectangle()
+                    .foregroundStyle(Gradient(colors: [Color("Teal").opacity(0.5), Color("Teal").opacity(0)]))
+                
+                //                ZStack {
+                //                    BasketMapView(basket: currentBasket, includeMarkers: false)
+                //
+                //                    Rectangle()
+                //                        .foregroundStyle(.ultraThinMaterial)
+                //                }
             }
         }
         .tabViewStyle(.verticalPage)
@@ -220,16 +256,21 @@ struct BasketMapView: View {
         .scrollDisabled(true)
         .disabled(true)
         .onAppear{
-            print("Start heading")
-            locationManager.startTrackingHeading()
+            if includeMarkers {
+                print("Start heading")
+                locationManager.startTrackingHeading()
+            }
         }
         .onDisappear {
-            print("Stop heading")
-            locationManager.stopTrackingHeading()
+            if includeMarkers {
+                print("Stop heading")
+                locationManager.stopTrackingHeading()
+            }
         }
     }
 }
 #Preview {
     ContentView()
         .modelContainer(GamesPreviewContainer)
+        .environment(LocationManager())
 }

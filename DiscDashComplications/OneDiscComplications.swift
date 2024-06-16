@@ -33,7 +33,8 @@ struct Provider: TimelineProvider {
             var currentGameFetch = FetchDescriptor<Game>(predicate: #Predicate {$0.endDate == nil && ($0.startDate >= startOfDay && $0.startDate < endOfDay) }, sortBy: [SortDescriptor(\.startDate)])
             currentGameFetch.fetchLimit = 1
             let currentGames = try modelContext.fetch(currentGameFetch)
-            
+            print("Fetching...")
+            print(currentGames.count)
             currentGame = currentGames.first
         } catch let error {
             print(error)
@@ -50,7 +51,7 @@ struct GameEntry: TimelineEntry {
     var currentGame: Game?
 }
 
-struct             OneDiscComplicationsEntryView : View {
+struct OneDiscComplicationsEntryView : View {
     var entry: Provider.Entry
     @Environment (\.widgetRenderingMode) var renderingMode
     
@@ -80,7 +81,9 @@ struct             OneDiscComplicationsEntryView : View {
                     Divider()
                     VStack {
                         if renderingMode == .fullColor {
-                            PlayerProfileCircleView(player: Player(name: player.name, color: player.color, image: player.image), size: 25)
+                            Text(player.name.prefix(2))
+                                .font(.headline)
+//                            PlayerProfileCircleView(player: Player(name: player.name, color: player.color, image: player.image), size: 25)
                         }else {
                             Text(player.name.prefix(2))
                                 .font(.headline)

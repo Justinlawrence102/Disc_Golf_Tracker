@@ -102,6 +102,7 @@ let GamesPreviewContainer: ModelContainer = {
         let game = Game()
         game.course = sampleCourse
         game.uuid = "1234"
+        game.currentHoleIndex = 1
         container.mainContext.insert(game)
         
         let player = Player(name: "Sample Player", color: "C7F465")

@@ -11,4 +11,6 @@ class StateManager: ObservableObject {
     @Published var selectedGame: Game?
     @Published var tabSelection: Int = 2
     @Published var showCreateGameSheet: Bool = false
+    
+    var jumpToBasket = 1
 }
