@@ -323,11 +323,11 @@ struct GameView: View {
                     .enabled
                 )
                 .interactiveDismissDisabled()
-                .onChange(of: selectedDetent) { newValue in
+                .onChange(of: selectedDetent, {
                     withAnimation(.spring()) {
                         sheetIsUp.toggle()
                     }
-                }
+                })
                 .alert("How would you like to add a new tee?", isPresented: $showingAddTeeAlert) {
                     Button("Add Tee") {
                         game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
@@ -438,6 +438,7 @@ struct BasketPickerView: View {
                                     mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
                                     sharePlayManager.send(game)
                                 }
+                                print("SHOWIng")
                                 showingScoreSheet = true
                             }, label: {
                                 Text(String(number))
