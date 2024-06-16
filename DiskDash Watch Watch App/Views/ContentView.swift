@@ -10,8 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var locationManager: LocationManager
-    
+
     @ObservedObject var stateManager = StateManager()
     
     

@@ -183,6 +183,9 @@ struct BasketDetailsTabView: View {
 
 struct BasketMapView: View {
     @State var basket: Basket
+    @State private var heading: Double = 0
+    @Environment(LocationManager.self) var locationManager
+
     var includeMarkers = true
     var body: some View {
         Map(position: $basket.cameraPosition) {
@@ -202,16 +205,67 @@ struct BasketMapView: View {
                     Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
                         .tint(Color("Pink"))
                 }
-                UserAnnotation()
+                UserAnnotation(content: {
+                    CurrentLocationPinView(heading: $heading, locationManager: locationManager)
+                })
             }
         }
         .mapStyle(.standard(pointsOfInterest: .excludingAll))
+        .onMapCameraChange(frequency: .continuous) { context in
+            withAnimation {
+                heading = context.camera.heading
+            }
+        }
         .moveDisabled(true)
         .scrollDisabled(true)
         .disabled(true)
+        .onAppear{
+            print("Start heading")
+            locationManager.startTrackingHeading()
+        }
+        .onDisappear {
+            print("Stop heading")
+            locationManager.stopTrackingHeading()
+        }
     }
 }
 #Preview {
     ContentView()
         .modelContainer(GamesPreviewContainer)
+}
+
+
+struct Cone: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+            path.move(to: CGPoint(x: rect.midX, y: rect.midY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.closeSubpath()
+
+            return path
+    }
+}
+
+struct CurrentLocationPinView: View {
+    @Binding var heading: Double
+    var locationManager: LocationManager
+    
+    var body: some View {
+        ZStack {
+            Cone()
+                .fill(Gradient(colors: [Color("Pink").opacity(0), Color("Pink"), .blue]))
+                .frame(width: 50, height: 90)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 25))
+                .foregroundStyle(.white)
+                .shadow(radius: 10)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 15))
+                .foregroundStyle(Color("Pink"))
+                .transition(.scale.combined(with: .slide))
+            
+        }
+        .rotationEffect(Angle(degrees: locationManager.trueNorthOffset - heading))
+    }
 }

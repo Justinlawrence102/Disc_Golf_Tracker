@@ -35,22 +35,22 @@ struct GameView: View {
     @State private var showFullMapToggle = false
 
     @State var scrollPosition = 0
+    @State private var heading: Double = 0
     
     var sortedBasketsList: [Basket] {
       return (game.course?.baskets ?? []).sorted(by: {$1.number ?? 0 > $0.number ?? 0})
     }
 
-    @EnvironmentObject var locationManager: LocationManager
+    @Environment(LocationManager.self) var locationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {
                 VStack(spacing: -0.0) {
 //                    Map {
-                    
                     Map(position: $mapManager.cameraPosition, scope: mapScope) {
-//                    Map(scope: mapScope) {
-//                    Map(position: $position) {
+                        //                    Map(scope: mapScope) {
+                        //                    Map(position: $position) {
                         if showFullMapToggle {
                             ForEach(sortedBasketsList) {
                                 hole in
@@ -100,8 +100,10 @@ struct GameView: View {
                                     .tint(Color("Pink"))
                             }
                         }
-                    
-                        UserAnnotation()
+                        UserAnnotation(content: {
+                            CurrentLocationPinView(heading: $heading, locationManager: locationManager)
+                        })
+                        
                     }
                     .overlay(alignment: .bottomTrailing) {
                         VStack {
@@ -113,7 +115,13 @@ struct GameView: View {
                         .padding(.trailing, 8)
                     }
                     .mapControlVisibility(.hidden)
+                    .onMapCameraChange(frequency: .continuous) { context in
+                        withAnimation {
+                            heading = context.camera.heading
+                        }
+                    }
                     .mapScope(mapScope)
+
                     VStack(spacing: -90.0) {
                         Rectangle()
                             .padding(.top, -45.0)
@@ -266,6 +274,7 @@ struct GameView: View {
             }else {
                 ResultsView(game: game)
                     .onAppear {
+                        showingScoreSheet = false
                         if game.endDate == nil {
                             game.endDate = Date()
                         }
@@ -357,11 +366,17 @@ struct GameView: View {
             mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
         }
         .onAppear {
+            print("Start Tracking Heading")
+            locationManager.startTrackingHeading()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 withAnimation {
                     scrollPosition = game.currentHoleIndex+1
                 }
             }
+        }
+        .onDisappear {
+            print("Stop Tracking Heading")
+            locationManager.stopTrackingHeading()
         }
 //        .task {
 //            for await session in SharePlayActivity.sessions() {
@@ -399,7 +414,7 @@ struct CurrentBasketInfoView: View {
 }
 
 struct BasketPickerView: View {
-    @EnvironmentObject var locationManager: LocationManager
+    @Environment(LocationManager.self) var locationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     @Environment(MapManager.self) private var mapManager
 
@@ -440,7 +455,7 @@ struct BasketPickerView: View {
                     }
                     Button(action: {
                         game.currentHoleIndex = game.course?.baskets?.count ?? 0
-                        showingScoreSheet = false
+//                        showingScoreSheet = false
                         sharePlayManager.send(game)
                     }, label: {
                         Text("Results")
@@ -610,13 +625,50 @@ struct EditBasketInfoSheet: View {
     }
 }
 
-//#Preview {
-//    MainActor.assumeIsolated {
-//        return  NavigationStack {
-//            GameView()
-//                .environmentObject(LocationManager())
-//                .environmentObject(SharedActivityManager())
-//                .modelContainer(GamesPreviewContainer)
-//        }
-//    }
-//}
+#Preview {
+    MainActor.assumeIsolated {
+        return  NavigationStack {
+            GameView(game: Game())
+                .environment(LocationManager())
+                .environmentObject(SharedActivityManager())
+                .modelContainer(GamesPreviewContainer)
+        }
+    }
+}
+
+struct Cone: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+            path.move(to: CGPoint(x: rect.midX, y: rect.midY))
+//            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.closeSubpath()
+
+            return path
+    }
+}
+
+struct CurrentLocationPinView: View {
+    @Binding var heading: Double
+    var locationManager: LocationManager
+    
+    var body: some View {
+        ZStack {
+            Cone()
+                .fill(Gradient(colors: [Color("Pink").opacity(0), Color("Pink"), .blue]))
+                .frame(width: 50, height: 90)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 25))
+                .foregroundStyle(.white)
+                .shadow(radius: 10)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 15))
+                .foregroundStyle(Color("Pink"))
+                .transition(.scale.combined(with: .slide))
+            
+        }
+        .rotationEffect(Angle(degrees: locationManager.trueNorthOffset - heading))
+    }
+}

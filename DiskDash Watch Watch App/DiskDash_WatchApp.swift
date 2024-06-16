@@ -30,7 +30,7 @@ struct DiskDash_Watch_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(locationManager)
+                .environment(locationManager)
                 .onReceive(isActive) {_ in
                     print("Check location")
                     Task {

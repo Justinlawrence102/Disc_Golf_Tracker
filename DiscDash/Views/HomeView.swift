@@ -275,7 +275,7 @@ struct HomeView: View {
     MainActor.assumeIsolated {
         return HomeView()
             .modelContainer(GamesPreviewContainer)
-            .environmentObject(LocationManager())
+            .environment(LocationManager())
             .environmentObject(SharedActivityManager())
     }
 }

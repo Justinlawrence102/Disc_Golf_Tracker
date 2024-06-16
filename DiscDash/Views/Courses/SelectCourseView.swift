@@ -16,7 +16,7 @@ struct SelectCourseView: View {
 
     @State var selectedItem: Course?
     @State private var isCreatingNewCourse = true
-    @EnvironmentObject var locationManager: LocationManager
+    @Environment(LocationManager.self) var locationManager
 
     @State var courseToDelete: Course?
     @State var showDeleteCourseAlert = false

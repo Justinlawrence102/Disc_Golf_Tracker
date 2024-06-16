@@ -31,7 +31,7 @@ struct OneDiscApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environmentObject(locationManager)
+                .environment(locationManager)
                 .environmentObject(sharedActivityManager)
                 .task {
 //                    Tips.showAllTipsForTesting()

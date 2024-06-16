@@ -13,7 +13,7 @@ struct SearchCourseView: View {
 
     @State var courses = [ImportedCourses]()
     @State var searchText = ""
-    @EnvironmentObject var locationManager: LocationManager
+    @Environment(LocationManager.self) var locationManager
 
     @Binding var showSearchCoursesSheet: Bool
     @Binding var selectedItem: Course?
