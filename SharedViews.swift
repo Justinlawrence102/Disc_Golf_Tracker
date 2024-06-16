@@ -99,6 +99,43 @@ class Utilities {
     }
 }
 
+struct Cone: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+            path.move(to: CGPoint(x: rect.midX, y: rect.midY))
+//            path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.closeSubpath()
+
+            return path
+    }
+}
+
+struct CurrentLocationPinView: View {
+    @Binding var heading: Double
+    var locationManager: LocationManager
+    
+    var body: some View {
+        ZStack {
+            Cone()
+                .fill(Gradient(colors: [Color("Pink").opacity(0), Color("Pink"), .blue]))
+                .frame(width: 50, height: 90)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 25))
+                .foregroundStyle(.white)
+                .shadow(radius: 10)
+            Image(systemName: "circle.fill")
+                .font(.system(size: 15))
+                .foregroundStyle(Color("Pink"))
+                .transition(.scale.combined(with: .slide))
+            
+        }
+        .rotationEffect(Angle(degrees: locationManager.trueNorthOffset - heading))
+    }
+}
+
 class PersistantData {
      static let schema = SwiftData.Schema([
         Game.self, Player.self
