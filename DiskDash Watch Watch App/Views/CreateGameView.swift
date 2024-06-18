@@ -37,7 +37,7 @@ struct SelectCourseView: View {
                             .font(.body)
                         Text(course.lastPlayedString)
                             .font(.subheadline)
-                            .foregroundStyle(Color.secondary)
+                            .foregroundStyle(.secondary)
                     }
                 })
                 

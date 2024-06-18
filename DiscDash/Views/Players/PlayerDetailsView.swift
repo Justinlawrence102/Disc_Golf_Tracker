@@ -14,6 +14,7 @@ import TipKit
 struct PlayerDetailsView: View {
     @Namespace private var animation
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
 
 //    @Query private var players: [Player]
 //    var player: Player! { players.first }
@@ -24,6 +25,10 @@ struct PlayerDetailsView: View {
     @State private var profileViewState = 0
     @State private var selectedFilter: Int = 0
     @State private var showEditPlayerSheet = false
+    
+    @State var playerToDelete: Player?
+    @State var showDeletePlayerAlert = false
+    
     init(player: Player) {
 //    init() {
         playerStats = PlayerStats(player: player)
@@ -53,7 +58,7 @@ struct PlayerDetailsView: View {
             }
             TabView(selection: $selectedTabView) {
                 BasketsOverview(playerStats: playerStats)
-                .tag(0)
+                    .tag(0)
                 StatsOverview(playerStats: playerStats)
                     .tag(1)
                 TopRoundsPerCourse(playerStats: playerStats)
@@ -88,7 +93,7 @@ struct PlayerDetailsView: View {
                 }else {
                     HStack {
                         PlayerProfileCircleView(player: player, size: 75)
-                         .padding([.top, .leading, .bottom], 12)
+                            .padding([.top, .leading, .bottom], 12)
                             .matchedGeometryEffect(id: "PlayerProfilePhoto", in: animation)
                         VStack(alignment: .leading) {
                             Text("\(playerStats.coursesPlayed.count) Courses Played")
@@ -133,6 +138,12 @@ struct PlayerDetailsView: View {
                             Label("Share", systemImage: "square.and.arrow.up")
                         }
                     }
+                    Button(role: .destructive, action: {
+                        playerToDelete = player
+                        showDeletePlayerAlert = true
+                    }, label: {
+                        Label("Delete Player", systemImage: "trash.fill")
+                    })
                     Section(header: Text("Filter")) {
                         
                         Picker(selection: $selectedFilter, label: Text("Sorting options")) {
@@ -164,10 +175,10 @@ struct PlayerDetailsView: View {
                         }
                     }
                 }
-                label: {
-                    Label("Info", systemImage: "ellipsis.circle")
-                }
-//                .popoverTip(SharePlayerTip())
+            label: {
+                Label("Info", systemImage: "ellipsis.circle")
+            }
+                //                .popoverTip(SharePlayerTip())
             }
         }
         .sheet(isPresented: $showEditPlayerSheet) {
@@ -190,6 +201,17 @@ struct PlayerDetailsView: View {
                     .padding(.bottom, 65)
                 }
             }
+        }
+        .alert("Delete Player", isPresented: $showDeletePlayerAlert) {
+            Button("Delete", role: .destructive) {
+                if let player = playerToDelete {
+                    modelContext.delete(player)
+                    dismiss.callAsFunction()
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        }message: {
+            Text("Are you sure you want to delete \(playerToDelete?.name ?? "this player")?")
         }
     }
 }

@@ -94,7 +94,7 @@ struct CreateCourseDetailsView: View {
                 }, label: {
                     Text("Delete Course")
                 })
-                .frame(height: 55)
+                .frame(height: 50)
                 .frame(maxWidth: .infinity)
                 .background(Color(UIColor.secondarySystemGroupedBackground))
                 .cornerRadius(12)

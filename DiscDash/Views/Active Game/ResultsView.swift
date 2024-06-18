@@ -29,12 +29,12 @@ struct ResultsView: View {
                 Rectangle()
                     .padding(.top, -100.0)
                     .frame(height: 220)
-                    .blur(radius: 20)
-                    .foregroundStyle(Color("Lime_W_Dark"))
+//                    .blur(radius: 20)
+                    .foregroundStyle(Gradient(colors: [Color("Lime_W_Dark"), Color("Lime_W_Dark").opacity(0)]))
                 Spacer()
             }
-            ScrollView {
-                VStack {
+            VStack {
+                ScrollView {
                     VStack(spacing: 8) {
                         ForEach(scoreResults) { score in
                             HStack {
@@ -75,20 +75,32 @@ struct ResultsView: View {
                                 .padding(.trailing)
                         }
                     }
-                    Spacer()
-                    
-                    Button(action: {
-                        print("Delete")
-                        showDeleteGameAlert.toggle()
-                    }, label: {
-                        Label("Delete Game", systemImage: "trash.fill")
-                            .foregroundColor(.white)
-                            .frame(width: 350, height: 50)
-                            .background(Color("Pink"))
-                            .cornerRadius(12)
-                    })
-                    .padding(.top, 16)
                 }
+                ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
+                    Label("Share", systemImage: "square.and.arrow.up.fill")
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(12)
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(Color("Teal"))
+                        .padding(.horizontal)
+                }
+                
+                Button(action: {
+                    print("Delete")
+                    showDeleteGameAlert.toggle()
+                }, label: {
+                    Label("Delete Game", systemImage: "trash.fill")
+                })
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
+                .background(Color(UIColor.secondarySystemBackground))
+                .cornerRadius(12)
+                .font(.body.weight(.medium))
+                .foregroundStyle(.red)
+                .padding(.horizontal)
+                .padding(.vertical, 12)
             }
         }
         .onAppear {
@@ -98,11 +110,11 @@ struct ResultsView: View {
             Button("Delete", role: .destructive) {
                 let gameId = game.uuid
                 do {
-                    if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
-                        let courseId = course.uuid
-//                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedPlayer}, includeSubclasses: false)
-                    }
+//                    if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
+//                        let courseId = course.uuid
+////                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
+////                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedPlayer}, includeSubclasses: false)
+//                    }
                     try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
                     dismiss.callAsFunction()
                 }catch {
@@ -115,7 +127,7 @@ struct ResultsView: View {
         }
     }
 }
-//#Preview {
-//    ResultsView()
-//        .modelContainer(GamesPreviewContainer)
-//}
+#Preview {
+    ResultsView(game: Game())
+        .modelContainer(GamesPreviewContainer)
+}

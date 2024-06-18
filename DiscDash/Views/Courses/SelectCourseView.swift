@@ -47,7 +47,7 @@ struct SelectCourseView: View {
                                 .foregroundStyle(Color("Navy"))
                             Text(course.lastPlayedString)
                                 .font(.subheadline)
-                                .foregroundStyle(Color("Navy"))
+                                .foregroundStyle(.secondary)
                             HStack(spacing: 0.0) {
                                 Image(systemName: "location.fill")
                                 if let distance = course.getDistance(locationManager: locationManager){

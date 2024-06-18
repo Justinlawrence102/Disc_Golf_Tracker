@@ -10,6 +10,7 @@
 		9805405F2AC65397006541BF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9805405E2AC65397006541BF /* data.json */; };
 		983B371A2AC89FC2003DD6DE /* player-file-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 983B37182AC89C0A003DD6DE /* player-file-icon.icns */; };
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
+		987861652C1FC49900339AFB /* ImportGameWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987861642C1FC49900339AFB /* ImportGameWizardView.swift */; };
 		988967CF2C1CFA1B00695FB4 /* ListAllGamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */; };
 		988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		988967D22C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
@@ -125,6 +126,7 @@
 		9805405E2AC65397006541BF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = scripts/data.json; sourceTree = SOURCE_ROOT; };
 		983B37182AC89C0A003DD6DE /* player-file-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "player-file-icon.icns"; sourceTree = "<group>"; };
 		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
+		987861642C1FC49900339AFB /* ImportGameWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGameWizardView.swift; sourceTree = "<group>"; };
 		988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAllGamesView.swift; sourceTree = "<group>"; };
 		988967D02C1CFFE100695FB4 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,7 +258,6 @@
 				98D3EC572ABF075C00ADC565 /* Game.swift */,
 				98D3EC552ABF075C00ADC565 /* Player.swift */,
 				98D3EC542ABF075C00ADC565 /* SharePlay.swift */,
-				988967D02C1CFFE100695FB4 /* MapManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -274,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				98D3EC622ABF077F00ADC565 /* LocationManager.swift */,
+				988967D02C1CFFE100695FB4 /* MapManager.swift */,
 				98EB37422AC70BE8007E119E /* AppDelegate.swift */,
 				98EB37442AC70E1C007E119E /* SceneDelegate.swift */,
 				98D3EC632ABF077F00ADC565 /* SampleData.swift */,
@@ -287,6 +289,7 @@
 			children = (
 				98D3EC6D2ABF07A700ADC565 /* HomeView.swift */,
 				988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */,
+				987861642C1FC49900339AFB /* ImportGameWizardView.swift */,
 				98D3EC732ABF07AB00ADC565 /* Players */,
 				98D3EC6C2ABF07A000ADC565 /* Courses */,
 				98D3EC672ABF078E00ADC565 /* Active Game */,
@@ -540,6 +543,7 @@
 				988967CF2C1CFA1B00695FB4 /* ListAllGamesView.swift in Sources */,
 				98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */,
 				98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */,
+				987861652C1FC49900339AFB /* ImportGameWizardView.swift in Sources */,
 				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
 				98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */,
 				98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */,
@@ -725,7 +729,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -770,7 +774,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -815,7 +819,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
@@ -847,7 +851,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;

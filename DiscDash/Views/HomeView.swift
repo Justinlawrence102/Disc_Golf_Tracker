@@ -14,7 +14,8 @@ import _MapKit_SwiftUI
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var sharePlayManager: SharedActivityManager
-    
+    @EnvironmentObject var sceneDelegate: FSSceneDelegate
+
     @State private var showCreateNewGame = false
     @State private var showCreateNewPlayer = false
     @State private var showCreateNewCourse: Course?
@@ -161,6 +162,9 @@ struct HomeView: View {
             }
         }
         .tint(Color("Teal"))
+        .sheet(item: $sceneDelegate.importedGame) { game in
+            ImportGameWizardView(importedGame: game)
+        }
     }
 }
 //#Preview {
@@ -174,6 +178,7 @@ struct HomeView: View {
             .modelContainer(GamesPreviewContainer)
             .environment(LocationManager())
             .environmentObject(SharedActivityManager())
+            .environmentObject(FSSceneDelegate())
     }
 }
 

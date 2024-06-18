@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 import SwiftData
 
-class FSSceneDelegate: NSObject, UIWindowSceneDelegate {
+class FSSceneDelegate: NSObject, UIWindowSceneDelegate, ObservableObject {
+    @Published var importedGame: SharedGame?
+    
   func sceneWillEnterForeground(_ scene: UIScene) {
     // ...
   }
@@ -21,7 +23,12 @@ class FSSceneDelegate: NSObject, UIWindowSceneDelegate {
   func sceneWillResignActive(_ scene: UIScene) {
     // ...
   }
-
+    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = FSSceneDelegate.self // 👈🏻
+        return sceneConfig
+    }
+    
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         print("Opened via Share Sheet \(URLContexts.count)")
         if !URLContexts.isEmpty {
@@ -53,7 +60,19 @@ class FSSceneDelegate: NSObject, UIWindowSceneDelegate {
                         print("Inserted Player!")
                         
                     }catch {
-                        print("could not decode data \(error)")
+                        print("Try to decode as gmae....")
+                        do {
+                            let game = (try JSONDecoder().decode(SharedGame.self, from: data))
+                            print(game.baskets.count)
+                            print("Found data!")
+//                            presentImportWizard = true
+                            importedGame = game
+//                            let context = ModelContext(PersistantData.container)
+//                            
+//                            _ = game.saveGame(context: context)
+                        }catch {
+                            print("could not decode data \(error)")
+                        }
                     }
                 }
             }

@@ -105,7 +105,12 @@ class SharedActivityManager: ObservableObject {
             if self.gameModel?.uuid != model.uuid { //self.gameModel?.uuid
                 print("IN DIFFERENT GAME, NAVIGATE/MAKE NEW IF NEEDED!")
                 if let context = self.modelContext {
-                    _ = self.createGame(context: context, model: model)
+                    model.saveGame(context: context, completion: {
+                        game, success in
+                        self.gameModel = game
+                        
+                    })
+//                    _ = self.createGame(context: context, model: model)
                     //                    self.gameModel = newGame
                     //                    self.isDeepLinkingToGame = true
 //                    self.gameSelectionPickerStatus = 1
@@ -136,95 +141,5 @@ class SharedActivityManager: ObservableObject {
                 }
             }
         }
-    }
-    func createGame(context: ModelContext, model: SharedGame) -> Game? {
-        do {
-            //check if you already have the game
-            let gamePredicate = #Predicate<Game> {
-                $0.uuid == model.uuid
-            }
-            let gameDescriptor = FetchDescriptor<Game>(predicate: gamePredicate)
-            let testGame = try context.fetch(gameDescriptor)
-            if !testGame.isEmpty {
-                self.gameModel = testGame.first!
-                return testGame.first!
-            }
-            
-            //check if you already have the course
-            let coursePredicate = #Predicate<Course> {
-                $0.uuid == model.courseId
-            }
-            let descriptor = FetchDescriptor<Course>(predicate: coursePredicate)
-            let testCourse = try context.fetch(descriptor)
-            
-            var course = Course()
-            var needToSaveBaskets = false
-            if testCourse.isEmpty || (testCourse.first?.baskets?.count != model.baskets.count){
-                course = Course(name: model.courseName)
-                course.isSharedGame = true
-                course.uuid = model.courseId
-                course.latitude = model.courseLatitude
-                course.longitude = model.courseLongitude
-                course.lookUpCurrentLocation() //get city/state
-                course.baskets = []
-                context.insert(course)
-                needToSaveBaskets = true
-            }else {
-                course = testCourse.first!
-            }
-            
-            let newGame = Game()
-            newGame.uuid = model.uuid
-            newGame.startDate = Date()
-            newGame.isSharedGame = true
-            newGame.course = course
-            context.insert(newGame)
-
-            var newBaskets = [Basket]()
-            if needToSaveBaskets {
-                for basket in model.baskets {
-                    let newBasket = Basket(number: basket.number, course: course)
-                    newBasket.par = basket.par
-                    newBasket.distance = basket.distance
-                    newBasket.uuid = basket.basketId
-                    context.insert(newBasket)
-                    newBaskets.append(newBasket)
-                }
-            }else {
-                newBaskets = course.baskets ?? []
-            }
-            
-            var newPlayers = [Player]()
-            for player in model.players {
-                let playerPredicate = #Predicate<Player> {
-                    $0.uuid == player.playerUuid
-                }
-                let descriptor = FetchDescriptor<Player>(predicate: playerPredicate)
-                let testPlayer = try context.fetch(descriptor)
-                if testPlayer.isEmpty {
-                    let newPlayer = Player(name: player.name, color: player.color)
-                    newPlayer.uuid = player.playerUuid
-                    //            newPlayer.image = player.image
-                    newPlayer.isSharedPlayer = true
-                    context.insert(newPlayer)
-                    newPlayers.append(newPlayer)
-                }else {
-                    newPlayers.append(testPlayer.first!)
-                }
-            }
-            
-            for basket_ in newBaskets {
-                for player_ in newPlayers {
-                    let playerScore = PlayerScore(player: player_, game: newGame, basket: basket_)
-                    let sharedBasket = model.baskets.first(where: {$0.basketId == basket_.uuid})
-                    if let score = sharedBasket?.playerScores.first(where: {$0.player.playerUuid == player_.uuid}) {
-                        playerScore.score = score.score
-                    }
-                    context.insert(playerScore)
-                }
-            }
-            return newGame
-        }catch { }
-        return nil
     }
 }

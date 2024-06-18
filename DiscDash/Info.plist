@@ -20,6 +20,20 @@
 			<key>NSDocumentClass</key>
 			<string></string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeIconFile</key>
+			<string>player-file-icon</string>
+			<key>CFBundleTypeName</key>
+			<string>Game</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.justinlawrence.discDash.game</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -52,6 +66,51 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>player</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>OneDisc Game</string>
+			<key>UTTypeIconFiles</key>
+			<string>player-file-icon</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.justinlawrence.discDash.game</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>game</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>OneDisc Game</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.justinlawrence.discDash.game</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>game</string>
 				</array>
 			</dict>
 		</dict>

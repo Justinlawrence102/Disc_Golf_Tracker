@@ -10,6 +10,7 @@ import UIKit
 import SwiftUI
 import MapKit
 import SwiftData
+import UniformTypeIdentifiers
 
 struct PlayerProfileCircleView: View {
     var player: Player
@@ -145,3 +146,15 @@ class PersistantData {
 //    Player.self
      static let container = try! ModelContainer(for: schema)
  }
+
+extension UTType {
+    static var player: UTType =
+    {
+        UTType(exportedAs: "com.justinlawrence.discDash.player")
+    }()
+    
+    static var game: UTType =
+    {
+        UTType(exportedAs: "com.justinlawrence.discDash.game")
+    }()
+}

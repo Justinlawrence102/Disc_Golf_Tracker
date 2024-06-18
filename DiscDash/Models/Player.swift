@@ -76,21 +76,9 @@ final class Player: Codable {
 extension Player: Transferable {
     static  var transferRepresentation: some TransferRepresentation {
         CodableRepresentation(contentType: .player)
+            .suggestedFileName { session in session.suggestedFileName }
     }
-//    static  var transferRepresentation: some TransferRepresentation {
-//        CodableRepresentation(contentType: .commaSeparatedText) {
-//            archive in
-//            try archive.convertToCSV()
-//        } importing { data in
-//            try Player(c)
-//        }
-//    }
-}
-extension UTType {
-    static var player: UTType =
-    {
-        UTType(exportedAs: "com.justinlawrence.discDash.player")
-    }()
+    var suggestedFileName: String { "\(name).game" }
 }
     
 struct ScoreBreakdown: Identifiable {

@@ -274,7 +274,10 @@ struct GameView: View {
             }else {
                 ResultsView(game: game)
                     .onAppear {
-                        showingScoreSheet = false
+                        print("Hiding")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            showingScoreSheet = false
+                        }
                         if game.endDate == nil {
                             game.endDate = Date()
                         }
