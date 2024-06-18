@@ -33,7 +33,7 @@ struct ResultsView: View {
                     .foregroundStyle(Gradient(colors: [Color("Lime_W_Dark"), Color("Lime_W_Dark").opacity(0)]))
                 Spacer()
             }
-            VStack {
+            VStack(spacing: 12) {
                 ScrollView {
                     VStack(spacing: 8) {
                         ForEach(scoreResults) { score in
@@ -100,7 +100,7 @@ struct ResultsView: View {
                 .font(.body.weight(.medium))
                 .foregroundStyle(.red)
                 .padding(.horizontal)
-                .padding(.vertical, 12)
+                .padding(.bottom, 12)
             }
         }
         .onAppear {

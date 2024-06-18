@@ -87,8 +87,10 @@ struct HomeView: View {
                         if !courses.isEmpty {
                             CoursesSectionView(showCreateNewCourse: $showCreateNewCourse, courses: courses)
                         }
+                        
                     }
                     .safeAreaPadding(.horizontal)
+                    .safeAreaPadding(.bottom)
                     .navigationDestination(for: Game.self) { game in
                         GameView(game: game)
                     }
@@ -292,6 +294,25 @@ private struct CoursesSectionView: View {
                     Spacer()
                 }
             }
+            NavigationLink(destination: {
+                CoursesMapView()
+                    .navigationTitle("Map")
+                    .navigationBarTitleDisplayMode(.inline)
+            }, label: {
+                HStack(alignment: .center) {
+                    Image(systemName: "map.fill")
+                        .foregroundStyle(Color("Pink"))
+                    Text("Map")
+                        .foregroundStyle(Color("Navy"))
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 20)
+                .background(Color(UIColor.secondarySystemBackground))
+                .cornerRadius(10)
+            })
         }
     }
 }

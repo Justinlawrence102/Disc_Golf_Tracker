@@ -15,6 +15,7 @@
 		988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		988967D22C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		988967D32C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
+		989007502C22332C00FBDD4F /* CoursesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890074F2C22332C00FBDD4F /* CoursesMapView.swift */; };
 		98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */; };
 		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
 		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
@@ -129,6 +130,7 @@
 		987861642C1FC49900339AFB /* ImportGameWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGameWizardView.swift; sourceTree = "<group>"; };
 		988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAllGamesView.swift; sourceTree = "<group>"; };
 		988967D02C1CFFE100695FB4 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
+		9890074F2C22332C00FBDD4F /* CoursesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesMapView.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDiscApp.swift; sourceTree = "<group>"; };
 		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			children = (
 				98D3EC6D2ABF07A700ADC565 /* HomeView.swift */,
 				988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */,
+				9890074F2C22332C00FBDD4F /* CoursesMapView.swift */,
 				987861642C1FC49900339AFB /* ImportGameWizardView.swift */,
 				98D3EC732ABF07AB00ADC565 /* Players */,
 				98D3EC6C2ABF07A000ADC565 /* Courses */,
@@ -528,6 +531,7 @@
 				98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */,
 				98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */,
 				98D3EC702ABF07A800ADC565 /* HomeView.swift in Sources */,
+				989007502C22332C00FBDD4F /* CoursesMapView.swift in Sources */,
 				988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */,
 				98D3EC642ABF077F00ADC565 /* LocationManager.swift in Sources */,
 				98EB37432AC70BE8007E119E /* AppDelegate.swift in Sources */,
@@ -729,7 +733,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -774,7 +778,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"DiscDash/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -819,7 +823,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;
@@ -851,7 +855,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"DiskDash Watch Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = Y48L6965QA;
 				ENABLE_PREVIEWS = YES;

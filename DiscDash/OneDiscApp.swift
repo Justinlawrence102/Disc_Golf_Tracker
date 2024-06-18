@@ -25,42 +25,45 @@ struct OneDiscApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    @Environment(\.undoManager) var undoManager
-    var locationManager = LocationManager()
-    var sharedActivityManager = SharedActivityManager()
+   
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environment(locationManager)
-                .environmentObject(sharedActivityManager)
-                .task {
-//                    Tips.showAllTipsForTesting()
-//                    try? Tips.resetDatastore()
-                    try?  Tips.configure([
-                        .displayFrequency(.immediate),
-                        .datastoreLocation(.applicationDefault)
-                    ])
-                    
-                }
-                .onAppear {
-                    locationManager.requestLocation()
-                }
-                .navigationBarColor(text: UIColor(named: "Pink")!)
-                .task {
-                    for await session in SharePlayActivity.sessions() {
-                        print("SharePlay exp started")
-                        sharedActivityManager.configureGroupSession(session) //, modelContext: modelContext
-                    }
-                }
+            //Fix for background crash https://stackoverflow.com/questions/78265564/background-crash-swiftdata-swiftui-one-time-initialization-function-for-empty
+            ContentView(container: sharedModelContainer)
         }
-//        .modelContainer(for: [
-//            Course.self,
-//            Player.self,
-//            Basket.self,
-//            Game.self
-//        ], isUndoEnabled: true)
-        .modelContainer(sharedModelContainer)
     }
+}
+
+struct ContentView: View {
+    let container: ModelContainer
+    var locationManager = LocationManager()
+    var sharedActivityManager = SharedActivityManager()
+    
+    var body: some View {
+        HomeView()
+            .modelContainer(container)
+            .environment(locationManager)
+            .environmentObject(sharedActivityManager)
+            .task {
+                try?  Tips.configure([
+                    .displayFrequency(.immediate),
+                    .datastoreLocation(.applicationDefault)
+                ])
+                
+            }
+            .onAppear {
+                locationManager.requestLocation()
+            }
+            .navigationBarColor(text: UIColor(named: "Pink")!)
+            .task {
+                for await session in SharePlayActivity.sessions() {
+                    print("SharePlay exp started")
+                    sharedActivityManager.configureGroupSession(session) //, modelContext: modelContext
+                }
+            }
+    }
+    
+
 }
 
 struct NavigationBarColor: ViewModifier {
