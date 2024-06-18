@@ -10,7 +10,6 @@ import SwiftUI
 import SwiftData
 struct SelectCourseView: View {
     @Environment(\.modelContext) private var modelContext
-//    @Query(filter: #Predicate<Course> { !$0.isSharedGame }) private var courses: [Course]
     @Query private var courses: [Course]
     @Binding var showCreateNewGameSheet: Bool
 
@@ -161,7 +160,7 @@ struct SelectPlayerView: View {
     @Binding var showCreateNewGameSheet: Bool
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     @State var showCreateNewPlayer = false
-    @Query(filter: #Predicate<Player> { !$0.isSharedPlayer}, sort: \Player.name) private var players: [Player]
+    @Query(sort: \Player.name) private var players: [Player]
     
     var selectedCourse: Course
     

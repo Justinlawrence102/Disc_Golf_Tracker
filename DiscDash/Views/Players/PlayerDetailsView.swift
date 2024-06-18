@@ -184,24 +184,6 @@ struct PlayerDetailsView: View {
         .sheet(isPresented: $showEditPlayerSheet) {
             CreatePlayerView(player: player, isNewPerson: false)
         }
-        .overlay(alignment: .bottom) {
-            if player.isSharedPlayer {
-                Button {
-                    player.isSharedPlayer = false
-                    print("test")
-                } label: {
-                    HStack {
-                        Image(systemName: "square.and.arrow.down")
-                        Text("Save Shared Player")
-                    }
-                    .foregroundColor(.white)
-                    .frame(width: 350, height: 50)
-                    .background(Color("Teal"))
-                    .cornerRadius(25)
-                    .padding(.bottom, 65)
-                }
-            }
-        }
         .alert("Delete Player", isPresented: $showDeletePlayerAlert) {
             Button("Delete", role: .destructive) {
                 if let player = playerToDelete {

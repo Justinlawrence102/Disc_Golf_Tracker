@@ -27,7 +27,6 @@ class Game {
     var endDate: Date?
     var photo: Data?
     var currentHoleIndex: Int = 0
-    var isSharedGame: Bool = false
     
 //    @Transient
     var currentBasket: Basket? {

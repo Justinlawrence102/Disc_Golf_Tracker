@@ -35,7 +35,6 @@ class Course: Identifiable {
     var latitude: Double?
     var longitude: Double?
     var cityState: String?
-    var isSharedGame: Bool = false
     
     @Relationship(deleteRule: .cascade) // inverse: \Game.course deleteRule: .cascade,
     var games: [Game]?

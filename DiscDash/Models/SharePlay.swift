@@ -117,7 +117,6 @@ class SharedGame: Codable, Identifiable {
             var needToSaveBaskets = false
             if testCourse.isEmpty || (testCourse.first?.baskets?.count != self.baskets.count){
                 course = Course(name: self.courseName)
-                course.isSharedGame = true
                 course.uuid = self.courseId
                 course.latitude = self.courseLatitude
                 course.longitude = self.courseLongitude
@@ -132,7 +131,6 @@ class SharedGame: Codable, Identifiable {
             let newGame = Game()
             newGame.uuid = self.uuid
             newGame.startDate = Date()
-            newGame.isSharedGame = true
             newGame.course = course
             newGame.startDate = startDate ?? Date()
             newGame.endDate = endDate
@@ -169,7 +167,6 @@ class SharedGame: Codable, Identifiable {
                     let newPlayer = Player(name: player.name, color: player.color)
                     newPlayer.uuid = player.playerUuid
                     //            newPlayer.image = player.image
-                    newPlayer.isSharedPlayer = true
                     context.insert(newPlayer)
                     newPlayers.append(newPlayer)
                 }else {

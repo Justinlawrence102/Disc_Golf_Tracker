@@ -21,7 +21,6 @@ final class Player: Codable {
     var image: Data?
     var lastPlay: Date?
     var color: String = "C7F465"
-    var isSharedPlayer: Bool = false
     
     @Relationship(deleteRule: .cascade, inverse: \PlayerScore.player)
     var scores: [PlayerScore]?
@@ -78,7 +77,7 @@ extension Player: Transferable {
         CodableRepresentation(contentType: .player)
             .suggestedFileName { session in session.suggestedFileName }
     }
-    var suggestedFileName: String { "\(name).game" }
+    var suggestedFileName: String { "\(name).player" }
 }
     
 struct ScoreBreakdown: Identifiable {

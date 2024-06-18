@@ -1,2 +1,4 @@
 /DiscDash.xcodeproj/xcuserdata/
 *.pxd
+/screenshots
+*.DS_Store
