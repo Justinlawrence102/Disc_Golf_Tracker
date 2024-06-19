@@ -15,14 +15,10 @@ struct GameView: View {
     @Environment(\.modelContext) private var modelContext
     @Namespace private var animation
     @Namespace private var mapScope
-
-//    @Query private var games: [Game]
-//    var game: Game! { games.first }
     
     @State var game: Game
     @State var mapManager = MapManager()
     
-    @Query var scores: [PlayerScore]
     @State var showingAddTeeAlert = false
     @State var showingAddBasketAlert = false
     @State var showingEditBasketInfoSheet = false
@@ -40,9 +36,29 @@ struct GameView: View {
     var sortedBasketsList: [Basket] {
       return (game.course?.baskets ?? []).sorted(by: {$1.number ?? 0 > $0.number ?? 0})
     }
+//    @Query var sortedBasketsList: [Basket]
 
     @Environment(LocationManager.self) var locationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
+    
+//    init(game: Game) {
+//        print("Init game view!")
+//        let courseID = game.course?.uuid
+//        let basketPredicate = #Predicate<Basket> {
+//            $0.number != nil && $0.course != nil && $0.course?.uuid == courseID
+//        }
+////        let basketPredicate = #Predicate<Basket> {
+////             $0.course?.uuid == courseID
+////        }
+//        
+//        var descriptor = FetchDescriptor<Basket>(predicate: basketPredicate)
+//        descriptor.sortBy = [SortDescriptor(\Basket.number)]
+//        _sortedBasketsList = Query(descriptor)
+//        
+////        self.game = game
+//        self.game = game
+//        
+//    }
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {

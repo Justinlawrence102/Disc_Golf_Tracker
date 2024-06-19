@@ -92,7 +92,7 @@ struct HomeView: View {
                     .safeAreaPadding(.horizontal)
                     .safeAreaPadding(.bottom)
                     .navigationDestination(for: Game.self) { game in
-                        GameView(game: game)
+                        NavigationLazyView(GameView(game: game))
                     }
                     .navigationDestination(for: Player.self) { player in
                         PlayerDetailsView(player: player)
@@ -108,7 +108,7 @@ struct HomeView: View {
                 }
                 .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {
                     if let game = sharePlayManager.gameModel {
-                        GameView(game: game)
+                        NavigationLazyView((GameView(game: game)))
                         
                     }
                 }
