@@ -19,6 +19,7 @@ struct ResultsView: View {
     @State private var scoreResults: [ResultScores] = []
     @State var game: Game
     @State var showDeleteGameAlert = false
+    @State var showScoresheet = false
 
     init(game: Game) {
         _game = .init(initialValue: game)
@@ -75,6 +76,19 @@ struct ResultsView: View {
                                 .padding(.trailing)
                         }
                     }
+                    Button(action: {
+                        print("Score Sheet")
+                        showScoresheet.toggle()
+                    }, label: {
+                        Label("Score Sheet", systemImage: "rectangle.and.pencil.and.ellipsis")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(Color("Teal"))
+                            .cornerRadius(12)
+                            .font(.body.weight(.medium))
+                            .foregroundStyle(.white)
+                            .padding(.horizontal)
+                    })
                 }
                 ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
                     Label("Share", systemImage: "square.and.arrow.up.fill")
@@ -124,6 +138,9 @@ struct ResultsView: View {
             Button("Cancel", role: .cancel) { }
         }message: {
             Text("Are you sure you want to delete this game from \(game.formattedStartDate)?")
+        }
+        .sheet(isPresented: $showScoresheet) {
+            ScoreSheetView(game: game)
         }
     }
 }

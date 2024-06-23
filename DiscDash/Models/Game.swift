@@ -28,6 +28,14 @@ class Game {
     var photo: Data?
     var currentHoleIndex: Int = 0
     
+    var players: [Player] {
+        if let playerScores = playerScores {
+            let players = playerScores.map { $0.player ?? Player() }
+            return Array(Set(players)).sorted(by: {$0.name < $1.name})
+        }
+        return []
+    }
+    
 //    @Transient
     var currentBasket: Basket? {
         if let course = course, course.sortedBaskets.indices.contains(currentHoleIndex) {
@@ -166,6 +174,18 @@ class PlayerScore {
     @Relationship(inverse: \Game.playerScores)
     var game: Game?
     
+    var isBelowPar: Bool {
+        if let basket = basket, let par = Int(basket.par) {
+            return score < par
+        }
+        return false
+    }
+    var isAbovePar: Bool {
+        if let basket = basket, let par = Int(basket.par) {
+            return score > par
+        }
+        return false
+    }
     init(player: Player, game: Game, basket: Basket) {
             player.scores?.append(self)
             self.player = player
