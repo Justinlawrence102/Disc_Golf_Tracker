@@ -17,7 +17,6 @@ struct CreateCourseDetailsView: View {
 
     @State var course = Course()
     @State private var selectedPhotoItem: PhotosPickerItem?
-    @State private var showDeleteAlert = false
     
     @Binding var createCourseModalShowing: Course?
     
@@ -88,20 +87,6 @@ struct CreateCourseDetailsView: View {
                     }
                 }
             }
-            if !isNewCourse {
-                Button(action: {
-                    showDeleteAlert.toggle()
-                }, label: {
-                    Text("Delete Course")
-                })
-                .frame(height: 50)
-                .frame(maxWidth: .infinity)
-                .background(Color(UIColor.secondarySystemGroupedBackground))
-                .cornerRadius(12)
-                .font(.body.weight(.medium))
-                .foregroundStyle(.red)
-                .padding()
-            }
         }
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle( isNewCourse ? "Create Course" : "Edit Course")
@@ -117,15 +102,6 @@ struct CreateCourseDetailsView: View {
                     }
                 }
             }
-        }
-        .alert("Delete Course", isPresented: $showDeleteAlert) {
-            Button("Delete", role: .destructive) {
-                modelContext.delete(course)
-                dismiss.callAsFunction()
-            }
-            Button("Cancel", role: .cancel) { }
-        }message: {
-            Text("Are you sure you want to delete \(course.name)? Every game at this course will also be deleted.")
         }
     }
 }

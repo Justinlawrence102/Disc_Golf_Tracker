@@ -131,7 +131,7 @@ class Game {
             var prevName = ""
             for score in scores {
                 if let player = score.player, prevName != player.name {
-                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color))
+                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color, date: startDate))
                     prevName = player.name
                 }else if scoreResults.indices.contains(scoreResults.count-1){
                     scoreResults[scoreResults.count-1].score += score.score
@@ -206,22 +206,27 @@ class PlayerScore {
 
 
 struct ResultScores: Identifiable {
+    var id = UUID()
+    
     let name: String
     var score: Int
-    var id: String { name }
+//    var id: String { name }
     let image: Data?
     var color: String
     var place: Int?
+    var date: Date
     
-    init(player: Player, totalScore: Int, image: Data?, color: String) {
+    init(player: Player, totalScore: Int, image: Data?, color: String, date: Date) {
         self.name = player.name
         self.score = totalScore
         self.image = image
         self.color = color
+        self.date = date
     }
-    func getParDiff(game: Game) -> String {
+
+    func getParDiff(course: Course?) -> String {
         var parTotal = 0
-        for basket in game.course?.baskets ?? [] {
+        for basket in course?.baskets ?? [] {
             parTotal += Int(basket.par) ?? 0
         }
         let parDiff = score - parTotal
@@ -243,5 +248,14 @@ struct ResultScores: Identifiable {
             }
         }
         return ""
+    }
+    func getColor()-> Color {
+        return Color(UIColor(hex: color) ?? UIColor(named: "Pink")!)
+    }
+    var formattedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium //.long
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: date)
     }
 }

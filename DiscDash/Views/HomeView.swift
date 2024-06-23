@@ -101,9 +101,7 @@ struct HomeView: View {
                         
                     }
                     .navigationDestination(for: Course.self) { course in
-                        CreateCourseDetailsView(course: course, isNewCourse: false, createCourseModalShowing: nil)
-                            .navigationBarTitleDisplayMode(.inline)
-                        
+                        CourseDetailsView(course: course)
                     }
                 }
                 .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {

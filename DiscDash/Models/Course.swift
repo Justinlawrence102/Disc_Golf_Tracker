@@ -54,7 +54,12 @@ class Course: Identifiable {
         }
         return "Never Played"
     }
-    
+    func getImage()->UIImage? {
+        if let courseIamge = self.image {
+            return UIImage(data: courseIamge)
+        }
+        return nil
+    }
 //    var distance: Double {
 //        let userClLocation = locationManager.lastLocation?.coordinate
 //        let userCoordinates = CLLocation(latitude: userClLocation?.latitude ?? 0.0, longitude: userClLocation?.longitude ?? 0.0)
@@ -104,6 +109,18 @@ class Course: Identifiable {
                     self.cityState = "\(placemark.locality ?? ""), \(placemark.administrativeArea ?? "")"
                 }
             })
+        }
+    }
+    func getTopScores(modelContext: ModelContext) -> [ResultScores]?{
+        var results = [ResultScores]()
+        if let allGames = self.games {
+            for game in allGames {
+                results += game.getResults(context: modelContext)
+            }
+            results.sort(by: {$0.score < $1.score})
+            return Array(results.prefix(5))
+        }else {
+            return nil
         }
     }
 }

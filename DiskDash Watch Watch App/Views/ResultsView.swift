@@ -42,7 +42,7 @@ struct ResultsView: View {
                         .fontDesign(.rounded)
                         .foregroundStyle(Color("Teal"))
                     if let game = game {
-                        Text(score.getParDiff(game: game))
+                        Text(score.getParDiff(course: game.course))
                             .font(.caption)
                             .fontWeight(.semibold)
                             .fontDesign(.rounded)

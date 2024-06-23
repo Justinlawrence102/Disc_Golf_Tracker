@@ -16,6 +16,7 @@
 		988967D22C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		988967D32C1CFFE100695FB4 /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988967D02C1CFFE100695FB4 /* MapManager.swift */; };
 		989007502C22332C00FBDD4F /* CoursesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890074F2C22332C00FBDD4F /* CoursesMapView.swift */; };
+		989007562C2879E200FBDD4F /* CourseDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989007552C2879E200FBDD4F /* CourseDetailsView.swift */; };
 		98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */; };
 		98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC472ABF06E200ADC565 /* Assets.xcassets */; };
 		98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98D3EC4B2ABF06E200ADC565 /* Preview Assets.xcassets */; };
@@ -131,6 +132,7 @@
 		988967CE2C1CFA1B00695FB4 /* ListAllGamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAllGamesView.swift; sourceTree = "<group>"; };
 		988967D02C1CFFE100695FB4 /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		9890074F2C22332C00FBDD4F /* CoursesMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesMapView.swift; sourceTree = "<group>"; };
+		989007552C2879E200FBDD4F /* CourseDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseDetailsView.swift; sourceTree = "<group>"; };
 		98D3EC3E2ABF06E100ADC565 /* OneDisc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OneDisc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneDiscApp.swift; sourceTree = "<group>"; };
 		98D3EC472ABF06E200ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 			children = (
 				98D3EC6F2ABF07A700ADC565 /* CreateCourseViews.swift */,
 				98D3EC6E2ABF07A700ADC565 /* SelectCourseView.swift */,
+				989007552C2879E200FBDD4F /* CourseDetailsView.swift */,
 				98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */,
 			);
 			path = Courses;
@@ -549,6 +552,7 @@
 				98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */,
 				987861652C1FC49900339AFB /* ImportGameWizardView.swift in Sources */,
 				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
+				989007562C2879E200FBDD4F /* CourseDetailsView.swift in Sources */,
 				98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */,
 				98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */,
 				98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */,

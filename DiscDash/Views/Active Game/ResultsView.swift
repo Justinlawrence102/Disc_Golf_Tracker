@@ -49,7 +49,7 @@ struct ResultsView: View {
                                         .fontWeight(.semibold)
                                         .fontDesign(.rounded)
                                         .foregroundStyle(Color("Teal"))
-                                    Text(score.getParDiff(game: game))
+                                    Text(score.getParDiff(course: game.course))
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .fontDesign(.rounded)
@@ -92,15 +92,15 @@ struct ResultsView: View {
                     showDeleteGameAlert.toggle()
                 }, label: {
                     Label("Delete Game", systemImage: "trash.fill")
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(12)
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(.red)
+                        .padding(.horizontal)
+                        .padding(.bottom, 12)
                 })
-                .frame(height: 50)
-                .frame(maxWidth: .infinity)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(12)
-                .font(.body.weight(.medium))
-                .foregroundStyle(.red)
-                .padding(.horizontal)
-                .padding(.bottom, 12)
             }
         }
         .onAppear {

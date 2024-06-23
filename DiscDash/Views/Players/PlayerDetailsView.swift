@@ -61,8 +61,8 @@ struct PlayerDetailsView: View {
                     .tag(0)
                 StatsOverview(playerStats: playerStats)
                     .tag(1)
-                TopRoundsPerCourse(playerStats: playerStats)
-                    .tag(2)
+//                TopRoundsPerCourse(playerStats: playerStats)
+//                    .tag(2)
                 Map() {
                     ForEach(playerStats.coursesPlayed, id: \.self) {
                         courses in
