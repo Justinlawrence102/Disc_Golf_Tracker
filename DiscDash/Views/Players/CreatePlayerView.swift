@@ -132,6 +132,16 @@ struct CreatePlayerView: View {
                                     .tint(.white)
                                     .font(.title)
                             })
+                            
+//                            Button(action: {
+//                                print("Tapped Memoji")
+//                            }, label: {
+//                                Text("😀")
+//                                    .font(.system(size: 35))
+//                                    .frame(width: 75, height: 75)
+//                                    .background(Color("Teal"))
+//                                    .cornerRadius(37.5)
+//                            })
                         }
                     }
                     Text("Color")

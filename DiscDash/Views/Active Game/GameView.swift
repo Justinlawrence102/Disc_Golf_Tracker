@@ -396,6 +396,7 @@ struct GameView: View {
         .onDisappear {
             print("Stop Tracking Heading")
             locationManager.stopTrackingHeading()
+            showingScoreSheet = false
         }
 //        .task {
 //            for await session in SharePlayActivity.sessions() {
@@ -423,7 +424,7 @@ struct CurrentBasketInfoView: View {
             if basket.distance != "" {
                 HStack(spacing: 4.0) {
                     Image(systemName: "location.fill")
-                    Text("\(basket.distance) Feet")
+                    Text("\(basket.distance) \(Locale.current.measurementSystem == .us ? "Feet" : "Meters")")
                 }
                 .font(.subheadline)
                 .foregroundStyle(Color("Navy"))
@@ -611,7 +612,7 @@ struct EditBasketInfoSheet: View {
                 }
                 Spacer()
                 VStack(alignment: .leading){
-                    TextField("Disntance (Feet)", text: $basket.distance, prompt: Text("Distance"))
+                    TextField("Disntance (\(Locale.current.measurementSystem == .us ? "Feet" : "Meters"))", text: $basket.distance, prompt: Text("Distance"))
                         .keyboardType(.numberPad)
                         .foregroundStyle(Color("Navy"))
                         .font(.title3)
@@ -621,7 +622,7 @@ struct EditBasketInfoSheet: View {
                         .frame(width: 85, height: 50)
                         .background(Color(UIColor.secondarySystemFill))
                         .cornerRadius(12)
-                    Text("Distance (Ft)")
+                    Text("Distance (\(Locale.current.measurementSystem == .us ? "Ft" : "M"))")
                         .font(.subheadline)
                         .foregroundStyle(Color("Teal"))
                 }
