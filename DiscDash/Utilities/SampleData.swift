@@ -102,7 +102,7 @@ let GamesPreviewContainer: ModelContainer = {
         let game = Game()
         game.course = sampleCourse
         game.uuid = "1234"
-        game.currentHoleIndex = 1
+        game.currentHoleIndex = 0
         container.mainContext.insert(game)
         
         let player = Player(name: "Sample Player", color: "C7F465")
@@ -126,6 +126,13 @@ let GamesPreviewContainer: ModelContainer = {
         playerScore4.score = 0
         container.mainContext.insert(playerScore4)
         
+        let result1 = PlayerScore(player: player, resultsGame: game)
+        result1.score = 0
+        container.mainContext.insert(result1)
+        
+        let result2 = PlayerScore(player: player2, resultsGame: game)
+        result2.score = 0
+        container.mainContext.insert(result2)
 
         return container
     } catch {

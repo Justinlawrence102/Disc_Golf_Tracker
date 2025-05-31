@@ -46,16 +46,27 @@ struct ContentView: View {
                             stateManager.selectedGame = game
                         }
                     }, label: {
-                        VStack(alignment: .leading) {
-                            if let course = game.course {
-                                Text(course.name)
-                                    .font(.headline)
+                        HStack(spacing: 8) {
+                            if let image = game.getImage() {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .background(Color.red)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
                             }
-                            Text(game.formattedStartDate)
-                                .foregroundStyle(.secondary)
-                                .font(.subheadline)
+                            VStack(alignment: .leading) {
+                                if let course = game.course {
+                                    Text(course.name)
+                                        .font(.headline)
+                                        .lineLimit(1)
+                                }
+                                Text(game.formattedStartDate)
+                                    .foregroundStyle(Color("Teal"))
+                                    .font(.subheadline)
+                            }
+                            .padding(.vertical, 16.0)
                         }
-                        .padding(.vertical, 16.0)
                     })
                     .swipeActions(edge: .trailing) {
                         Button {
@@ -67,22 +78,9 @@ struct ContentView: View {
                     }
                     .listRowBackground(
                         ZStack {
-                            if let image = game.getImage() {
-                                Rectangle()
-                                    .overlay {
-                                        ZStack {
-                                            Image(uiImage: image)
-                                                .resizable()
-                                                .scaledToFill()
-                                        }
-                                    }
-                                    .clipShape(.containerRelative)
-                                
-                            }else {
-                                Color("Lime")
-                            }
+                            Color("Teal")
                             Rectangle()
-                                .foregroundStyle(.ultraThinMaterial)
+                                .foregroundStyle(.regularMaterial)
                         }
                             .clipped()
                             .cornerRadius(12)

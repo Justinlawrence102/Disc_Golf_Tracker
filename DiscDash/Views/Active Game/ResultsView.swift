@@ -10,7 +10,6 @@ import SwiftData
 
 struct ResultsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(\.dismiss) var dismiss
     
     //    @Query private var games: [Game]
     //    var game: Game! { games.first }
@@ -18,7 +17,6 @@ struct ResultsView: View {
     //        private let playerScores: [ResultScores] = []
     @State private var scoreResults: [ResultScores] = []
     @State var game: Game
-    @State var showDeleteGameAlert = false
     @State var showScoresheet = false
 
     init(game: Game) {
@@ -59,6 +57,16 @@ struct ResultsView: View {
                             }
                             .padding(.horizontal)
                             .padding(.vertical, 6)
+                            .contextMenu(menuItems: {
+                                Group {
+                                    Button(action: {
+                                        game.markPlayerNotFinish(playerId: score.playerId)
+                                        scoreResults = game.getResults(context: modelContext)
+                                    }, label: {
+                                        Label("Did Not Finish", systemImage: "person.slash.fill")
+                                    })
+                                }
+                            })
                             Divider()
                         }
                     }
@@ -90,54 +98,11 @@ struct ResultsView: View {
                             .padding(.horizontal)
                     })
                 }
-                ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
-                    Label("Share", systemImage: "square.and.arrow.up.fill")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(12)
-                        .font(.body.weight(.medium))
-                        .foregroundStyle(Color("Teal"))
-                        .padding(.horizontal)
-                }
-                
-                Button(action: {
-                    print("Delete")
-                    showDeleteGameAlert.toggle()
-                }, label: {
-                    Label("Delete Game", systemImage: "trash.fill")
-                        .frame(height: 50)
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(12)
-                        .font(.body.weight(.medium))
-                        .foregroundStyle(.red)
-                        .padding(.horizontal)
-                        .padding(.bottom, 12)
-                })
             }
         }
         .onAppear {
+            game.calculateResults(context: modelContext)
             scoreResults = game.getResults(context: modelContext)
-        }
-        .alert("Delete Game", isPresented: $showDeleteGameAlert) {
-            Button("Delete", role: .destructive) {
-                let gameId = game.uuid
-                do {
-//                    if game.isSharedGame, let course = game.course { //if it is a shared game, also delete the course!
-//                        let courseId = course.uuid
-////                        try modelContext.delete(model: Course.self, where: #Predicate<Course> { $0.uuid == courseId}, includeSubclasses: false)
-////                        try modelContext.delete(model: Player.self, where: #Predicate<Player> { $0.isSharedPlayer}, includeSubclasses: false)
-//                    }
-                    try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
-                    dismiss.callAsFunction()
-                }catch {
-                    print("Could not delete!")
-                }
-            }
-            Button("Cancel", role: .cancel) { }
-        }message: {
-            Text("Are you sure you want to delete this game from \(game.formattedStartDate)?")
         }
         .sheet(isPresented: $showScoresheet) {
             ScoreSheetView(game: game)

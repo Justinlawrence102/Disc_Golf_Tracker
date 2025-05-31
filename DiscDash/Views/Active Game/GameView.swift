@@ -13,6 +13,8 @@ import TipKit
 
 struct GameView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) var dismiss
+
     @Namespace private var animation
     @Namespace private var mapScope
     
@@ -22,6 +24,7 @@ struct GameView: View {
     @State var showingAddTeeAlert = false
     @State var showingAddBasketAlert = false
     @State var showingEditBasketInfoSheet = false
+    @State var showDeleteGameAlert = false
 
     @State var showingScoreSheet = true
     @State private var selectedDetent = PresentationDetent.full
@@ -316,21 +319,34 @@ struct GameView: View {
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                if groupStateObserver.isEligibleForGroupSession && sharePlayManager.gameModel?.uuid == game.uuid {
-                    Button(action: {
-                        sharePlayManager.startSharing(game: game)
-                    }) {
-                        Image(systemName: "shareplay")
-                            .symbolEffect(.variableColor.cumulative.dimInactiveLayers.nonReversing, options: .repeating)
+                Menu {
+                    if groupStateObserver.isEligibleForGroupSession && sharePlayManager.gameModel?.uuid == game.uuid {
+                        Button(action: {
+                            sharePlayManager.startSharing(game: game)
+                        }) {
+                            Label("Shareplay", systemImage: "shareplay")
+                                .symbolEffect(.variableColor.cumulative.dimInactiveLayers.nonReversing, options: .repeating)
+                        }
+                        
+                    }else {
+                        Button(action: {
+                            isActivitySharingSheetPresented = true
+                            sharePlayManager.gameModel = game
+                        }) {
+                            Label("Shareplay", systemImage: "shareplay")
+                        }
+                    }
+                    ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
+                        Label("Export", systemImage: "square.and.arrow.up")
                     }
                     
-                }else {
-                    Button(action: {
-                        isActivitySharingSheetPresented = true
-                        sharePlayManager.gameModel = game
+                    Button(role: .destructive, action: {
+                        showDeleteGameAlert.toggle()
                     }) {
-                        Image(systemName: "shareplay")
+                        Label("Delete Game", systemImage: "trash")
                     }
+                } label: {
+                    Label( "Options", systemImage: "ellipsis.circle")
                 }
                 
             }
@@ -382,7 +398,9 @@ struct GameView: View {
                 }
         })
         .onChange(of: game.currentHoleIndex) {
-            mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
+            withAnimation {
+                mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
+            }
         }
         .onAppear {
             print("Start Tracking Heading")
@@ -398,6 +416,21 @@ struct GameView: View {
             locationManager.stopTrackingHeading()
             showingScoreSheet = false
         }
+        .alert("Delete Game", isPresented: $showDeleteGameAlert) {
+            Button("Delete", role: .destructive) {
+                let gameId = game.uuid
+                do {
+                    try modelContext.delete(model: Game.self, where: #Predicate<Game> { $0.uuid == gameId}, includeSubclasses: false)
+                    dismiss.callAsFunction()
+                }catch {
+                    print("Could not delete!")
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        }message: {
+            Text("Are you sure you want to delete this game from \(game.formattedStartDate)?")
+        }
+        
 //        .task {
 //            for await session in SharePlayActivity.sessions() {
 //                game.configureGroupSession(session)
@@ -450,15 +483,10 @@ struct BasketPickerView: View {
                         basket in
                         if let number = basket.number {
                             Button(action: {
-                                Task {
-                                    await AddBasketAndTeeTip.selectedABasket.donate()
-                                }
-                                withAnimation {
-                                    game.currentHoleIndex = number - 1
-                                    mapManager.updateMapCamera(currentBasket: game.currentBasket, locationManager: locationManager)
-                                    sharePlayManager.send(game)
-                                }
-                                print("SHOWIng")
+//                                AddBasketAndTeeTip.selectedABasket.sendDonation()
+                                game.currentHoleIndex = number - 1
+                                sharePlayManager.send(game)
+                                print("Change Basket")
                                 showingScoreSheet = true
                             }, label: {
                                 Text(String(number))

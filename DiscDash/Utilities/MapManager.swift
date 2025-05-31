@@ -25,6 +25,7 @@ import MapKit
                 }
             }
         }
+        print("Set camera Position here")
         cameraPosition = .region(coordinateRegion)
     }
     
@@ -40,6 +41,7 @@ import MapKit
                 
             }
         }
+        print("Set camera Position below")
         cameraPosition = .region(coordinateRegion)
     }
     

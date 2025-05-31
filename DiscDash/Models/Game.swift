@@ -28,10 +28,12 @@ class Game {
     var photo: Data?
     var currentHoleIndex: Int = 0
     
+    @Relationship(deleteRule: .cascade)
+    var results: [PlayerScore]?
+    
     var players: [Player] {
-        if let playerScores = playerScores {
-            let players = playerScores.map { $0.player ?? Player() }
-            return Array(Set(players)).sorted(by: {$0.name < $1.name})
+        if let results = results {
+            return results.map { $0.player ?? Player() }
         }
         return []
     }
@@ -80,7 +82,10 @@ class Game {
                 let playerScore = PlayerScore(player: player, game: self, basket: basket)
                 modelContext.insert(playerScore)
             }
+            let playerResult = PlayerScore(player: player, resultsGame: self)
+            modelContext.insert(playerResult)
         }
+        
     }
     func getImage()->UIImage? {
         if let gameImage = photo {
@@ -89,6 +94,12 @@ class Game {
             return UIImage(data: courseIamge)
         }
         return nil
+    }
+    func markPlayerNotFinish(playerId: String) {
+        if let resultPlayer = results?.firstIndex(where: {$0.player?.uuid == playerId}) {
+            results?.remove(at: resultPlayer)
+            calculateResults()
+        }
     }
     
     
@@ -112,39 +123,56 @@ class Game {
             }
         }
     }
-    func getResults(limit3: Bool = false, forPlayer: String? = nil, context: ModelContext? = nil) -> [ResultScores] {
-        var scoreResults: [ResultScores] = []
+    func calculateResults(context: ModelContext? = nil) {
+    
         let gameId = self.uuid
-        var scoresPredicate = #Predicate<PlayerScore> {
+        let scoresPredicate = #Predicate<PlayerScore> {
             $0.game?.uuid == gameId
         }
-        if let playerID = forPlayer {
-            scoresPredicate = #Predicate<PlayerScore> {
-                $0.game?.uuid == gameId && $0.player?.uuid == playerID
-            }
-        }
+        
         do {
             var scores = [PlayerScore]()
             let descriptor = FetchDescriptor<PlayerScore>(predicate: scoresPredicate)
-
+            
             if context == nil {
                 let tempContext = ModelContext(PersistantData.container)
                 scores = try tempContext.fetch(descriptor)
             }else {
                 scores = try context!.fetch(descriptor)
             }
-            scores = scores.sorted(by: {$1.player?.name ?? "" > $0.player?.name ?? ""})
-//            let context = ModelContext(PersistantData.container)
+            //reset scores
+            for resultsPlayer in results ?? [] {
+                resultsPlayer.score = 0
+            }
             
-            var prevName = ""
             for score in scores {
-                if let player = score.player, prevName != player.name {
-                    scoreResults.append(ResultScores(player: player, totalScore: score.score, image: player.image, color: player.color, date: startDate))
-                    prevName = player.name
-                }else if scoreResults.indices.contains(scoreResults.count-1){
-                    scoreResults[scoreResults.count-1].score += score.score
+                if let player = score.player, score.basket != nil, let resultPlayer = results?.first(where: {$0.player?.uuid == player.uuid}) {
+                    resultPlayer.score += score.score
                 }
             }
+        }catch {
+            print("Could not create results")
+        }
+    }
+    func getResults(limit3: Bool = false, forPlayer: String? = nil, context: ModelContext? = nil) -> [ResultScores] {
+        //migrate data and create playerResult object
+        if (results ?? []).isEmpty {
+            var legacyPlayers = playerScores?.map { $0.player ?? Player() }
+            legacyPlayers = Array(Set(legacyPlayers ?? [])).sorted(by: {$0.name < $1.name})
+            for player in legacyPlayers ?? [] {
+                let playerResult = PlayerScore(player: player, resultsGame: self)
+                context?.insert(playerResult)
+            }
+            print("Running migration...this shouldn't happen often. Only once")
+            calculateResults()
+        }
+        
+        if let forPlayer = forPlayer {
+            if let results = results?.first(where: {$0.player?.uuid == forPlayer}), let player = results.player {
+                return [ResultScores(player: player, totalScore: results.score, image: player.image, color: player.color, date: startDate)]
+            }
+        }
+        if var scoreResults = results?.map({ResultScores(player: $0.player ?? Player(), totalScore: $0.score, image: ($0.player ?? Player()).image, color: ($0.player ?? Player()).color, date: startDate)}) {
             scoreResults.sort(by: {$1.score > $0.score})
             if limit3 {
                 scoreResults = Array(scoreResults.prefix(3))
@@ -153,8 +181,6 @@ class Game {
                 scoreResults[i].place = i+1
             }
             return scoreResults
-        }catch {
-            print("Could not create results")
         }
         return []
     }
@@ -170,10 +196,13 @@ class PlayerScore {
     var basket: Basket?
     
     var score: Int = 0
-        
+
+    @Relationship(inverse: \Game.results)
+    var resultsGame: Game?
+    
     @Relationship(inverse: \Game.playerScores)
     var game: Game?
-    
+        
     var isBelowPar: Bool {
         if let basket = basket, let par = Int(basket.par) {
             return score < par
@@ -186,15 +215,23 @@ class PlayerScore {
         }
         return false
     }
-    init(player: Player, game: Game, basket: Basket) {
-            player.scores?.append(self)
-            self.player = player
-            
+    
+    init(player: Player, game: Game? = nil, resultsGame: Game? = nil, basket: Basket? = nil) {
+        player.scores?.append(self)
+        self.player = player
+        
+        if let game = game {
             game.playerScores?.append(self)
             self.game = game
-            
+        }
+        if let resultsGame = resultsGame {
+            resultsGame.playerScores?.append(self)
+            self.resultsGame = resultsGame
+        }
+        if let basket = basket {
             basket.playerScores?.append(self)
             self.basket = basket
+        }
     }
     func incrementScore(par: Int) {
         if score == 0 {
@@ -229,6 +266,7 @@ struct ResultScores: Identifiable {
     var id = UUID()
     
     let name: String
+    var playerId: String
     var score: Int
 //    var id: String { name }
     let image: Data?
@@ -238,6 +276,7 @@ struct ResultScores: Identifiable {
     
     init(player: Player, totalScore: Int, image: Data?, color: String, date: Date) {
         self.name = player.name
+        self.playerId = player.uuid
         self.score = totalScore
         self.image = image
         self.color = color

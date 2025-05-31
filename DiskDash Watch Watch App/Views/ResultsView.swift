@@ -53,6 +53,7 @@ struct ResultsView: View {
         }
         .onAppear {
             if let game = game {
+                game.calculateResults(context: modelContext)
                 scoreResults = game.getResults(context: modelContext)
             }
         }
