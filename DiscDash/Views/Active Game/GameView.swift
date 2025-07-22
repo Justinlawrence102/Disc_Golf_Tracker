@@ -16,7 +16,6 @@ struct GameView: View {
     @Environment(\.dismiss) var dismiss
 
     @Namespace private var animation
-    @Namespace private var mapScope
     
     @State var game: Game
     @State var mapManager = MapManager()
@@ -34,112 +33,19 @@ struct GameView: View {
     @State private var showFullMapToggle = false
 
     @State var scrollPosition = 0
-    @State private var heading: Double = 0
     
     var sortedBasketsList: [Basket] {
       return (game.course?.baskets ?? []).sorted(by: {$1.number ?? 0 > $0.number ?? 0})
     }
-//    @Query var sortedBasketsList: [Basket]
 
     @Environment(LocationManager.self) var locationManager
     @EnvironmentObject var sharePlayManager: SharedActivityManager
     
-//    init(game: Game) {
-//        print("Init game view!")
-//        let courseID = game.course?.uuid
-//        let basketPredicate = #Predicate<Basket> {
-//            $0.number != nil && $0.course != nil && $0.course?.uuid == courseID
-//        }
-////        let basketPredicate = #Predicate<Basket> {
-////             $0.course?.uuid == courseID
-////        }
-//        
-//        var descriptor = FetchDescriptor<Basket>(predicate: basketPredicate)
-//        descriptor.sortBy = [SortDescriptor(\Basket.number)]
-//        _sortedBasketsList = Query(descriptor)
-//        
-////        self.game = game
-//        self.game = game
-//        
-//    }
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {
                 VStack(spacing: -0.0) {
-//                    Map {
-                    Map(position: $mapManager.cameraPosition, scope: mapScope) {
-                        //                    Map(scope: mapScope) {
-                        //                    Map(position: $position) {
-                        if showFullMapToggle {
-                            ForEach(sortedBasketsList) {
-                                hole in
-                                ForEach(hole.teeCoordinates, id: \.self) {
-                                    teeCoordinate in
-                                    Marker("", systemImage: "\(hole.number ?? 1).square.fill", coordinate: teeCoordinate)
-                                        .tint(Color("Teal"))
-                                    ForEach(hole.basketCoordinates, id: \.self) {
-                                        basketCoordiante in
-                                        if let currentNumber = basket.number, let holeHumber = hole.number {
-                                            if currentNumber == holeHumber {
-                                                MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
-                                                    .stroke(Color("LightPink"), style: StrokeStyle(lineWidth: 12, lineCap: .round))
-                                            } else {
-                                                MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
-                                                    .stroke(.tertiary, style: StrokeStyle(lineWidth: 5, lineCap: .round))
-                                            }
-                                        }
-                                    }
-                                }
-                                ForEach(hole.basketCoordinates, id: \.self) {
-                                    basketCoordinate in
-                                    Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
-                                        .tint(Color("Pink"))
-                                }
-                                if let index = sortedBasketsList.firstIndex(of: hole), sortedBasketsList.indices.contains(index+1){
-                                    if let currentBasket = hole.basketCoordinates.first, let nextTee = sortedBasketsList[index+1].teeCoordinates.first {
-                                        MapPolyline(points: [MKMapPoint(currentBasket), MKMapPoint(nextTee)])
-                                            .stroke(.secondary, style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 5]))
-                                    }
-                                }
-                            }
-                        }else {
-                            ForEach(basket.teeCoordinates, id: \.self) {
-                                teeCoordinate in
-                                Marker("", systemImage: "\(basket.number ?? 1).square.fill", coordinate: teeCoordinate)
-                                    .tint(Color("Teal"))
-                                ForEach(basket.basketCoordinates, id: \.self) {
-                                    basketCoordiante in
-                                    MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
-                                        .stroke(Color("LightPink"), style: StrokeStyle(lineWidth: 12, lineCap: .round))
-                                }
-                            }
-                            ForEach(basket.basketCoordinates, id: \.self) {
-                                basketCoordinate in
-                                Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
-                                    .tint(Color("Pink"))
-                            }
-                        }
-                        UserAnnotation(content: {
-                            CurrentLocationPinView(heading: $heading, locationManager: locationManager)
-                        })
-                        
-                    }
-                    .overlay(alignment: .bottomTrailing) {
-                        VStack {
-                            MapCompass(scope: mapScope)
-                                .mapControlVisibility(.automatic)
-                            Spacer()
-                                .frame(height: 110)
-                        }
-                        .padding(.trailing, 8)
-                    }
-                    .mapControlVisibility(.hidden)
-                    .onMapCameraChange(frequency: .continuous) { context in
-                        withAnimation {
-                            heading = context.camera.heading
-                        }
-                    }
-                    .mapScope(mapScope)
+                    GameMapView(cameraPosition: $mapManager.cameraPosition, showFullMapToggle: showFullMapToggle, sortedBasketsList: sortedBasketsList, basket: basket)
 
                     VStack(spacing: -90.0) {
                         Rectangle()
@@ -153,8 +59,7 @@ struct GameView: View {
                                 CurrentBasketInfoView(basket: basket, alignment: .center)
                                     .frame(maxWidth: .infinity)
                                     .padding(8)
-                                    .background(.thickMaterial)
-                                    .cornerRadius(12)
+                                    .glassEffect(in: .rect(cornerRadius: 12))
                                     .padding(.horizontal, 12)
                                     .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
                             }
@@ -268,8 +173,7 @@ struct GameView: View {
                         if sheetIsUp {
                             CurrentBasketInfoView(basket: basket, alignment: .leading)
                                 .padding(8)
-                                .background(.regularMaterial)
-                                .cornerRadius(12)
+                                .glassEffect(in: .rect(cornerRadius: 12))
                                 .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
                         }
                         Spacer()
@@ -279,9 +183,8 @@ struct GameView: View {
                         } label: {
                             Image(systemName: "map.fill")
                                 .frame(width: 45, height: 45)
-                                .background(.regularMaterial)
-                                .background(showFullMapToggle ? Color("Teal") : .clear)
-                                .cornerRadius(22.5)
+//                                .buttonStyle(.glass)
+                                .glassEffect(.regular.tint(showFullMapToggle ? Color("Teal") : .clear))
                         }
                         
                     }
@@ -346,7 +249,7 @@ struct GameView: View {
                         Label("Delete Game", systemImage: "trash")
                     }
                 } label: {
-                    Label( "Options", systemImage: "ellipsis.circle")
+                    Label( "Options", systemImage: "ellipsis")
                 }
                 
             }
@@ -477,55 +380,58 @@ struct BasketPickerView: View {
     @Binding var scrollPosition: Int
     var body: some View {
         ScrollViewReader { sp in
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(game.course?.sortedBaskets ?? []) {
-                        basket in
-                        if let number = basket.number {
-                            Button(action: {
-//                                AddBasketAndTeeTip.selectedABasket.sendDonation()
-                                game.currentHoleIndex = number - 1
-                                sharePlayManager.send(game)
-                                print("Change Basket")
-                                showingScoreSheet = true
-                            }, label: {
-                                Text(String(number))
-                                    .font(.title2)
-                                    .fontWeight(.semibold)
-                                    .fontDesign(.rounded)
-                                    .foregroundStyle(game.currentHoleIndex + 1 == number ? Color.white : Color("Navy"))
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 35)
-                                    .background(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime"))
-                                    .cornerRadius(12)
-                            })
-                            .id(basket.number)
+            GlassEffectContainer(content: {
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(game.course?.sortedBaskets ?? []) {
+                            basket in
+                            if let number = basket.number {
+                                Button(action: {
+                                    //                                AddBasketAndTeeTip.selectedABasket.sendDonation()
+                                    game.currentHoleIndex = number - 1
+                                    sharePlayManager.send(game)
+                                    print("Change Basket")
+                                    showingScoreSheet = true
+                                }, label: {
+                                    Text(String(number))
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                        .fontDesign(.rounded)
+                                        .foregroundStyle(game.currentHoleIndex + 1 == number ? Color.white : Color("Navy"))
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 35)
+                                    //                                            .cornerRadius(12)
+                                })
+                                .glassEffect(.regular.tint(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime")))
+                                .id(basket.number)
+                            }
                         }
+                        Button(action: {
+                            game.currentHoleIndex = game.course?.baskets?.count ?? 0
+                            //                        showingScoreSheet = false
+                            sharePlayManager.send(game)
+                        }, label: {
+                            Text("Results")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color.white : Color("Navy"))
+                                .padding(8)
+                            //                                    .cornerRadius(12)
+                        })
+                        .glassEffect(.regular.tint(game.currentHoleIndex == game.course?.baskets?.count ? Color("Teal") : Color(uiColor: .systemBackground)))
+                        .id((game.course?.baskets?.count ?? 99)+1)
                     }
-                    Button(action: {
-                        game.currentHoleIndex = game.course?.baskets?.count ?? 0
-//                        showingScoreSheet = false
-                        sharePlayManager.send(game)
-                    }, label: {
-                        Text("Results")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .fontDesign(.rounded)
-                            .foregroundStyle(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color.white : Color("Navy"))
-                            .padding(8)
-                            .background(game.currentHoleIndex == game.course?.baskets?.count ? Color("Teal") : Color(uiColor: .systemBackground))
-                            .cornerRadius(12)
-                    })
-                    .id((game.course?.baskets?.count ?? 99)+1)
+                    
                 }
-            }
+                .scrollIndicators(.hidden)
+            })
             .onChange(of: scrollPosition) {
                 sp.scrollTo(scrollPosition)
             }
             .padding(8)
-            .background(.regularMaterial)
-    //                .shadow(radius: 12)
-            .cornerRadius(12)
+            .glassEffect()
+            .clipShape(Capsule())
             .padding(12)
         }
     }
@@ -595,6 +501,7 @@ struct PlayerScoresListView: View {
                         .buttonStyle(.plain)
                     }
                 }
+                .listRowBackground(Color.clear)
             }
             .listStyle(.plain)
             if let session = sharePlayManager.session, groupStateObserver.isEligibleForGroupSession && sharePlayManager.gameModel?.uuid == game.uuid {

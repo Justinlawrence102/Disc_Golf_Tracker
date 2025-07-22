@@ -42,11 +42,12 @@ struct HomeView: View {
                     Spacer()
                         .frame(maxWidth: .infinity)
                         .frame(height: 100)
-                        .background(Gradient(colors: [Color("Lime_W_Dark"), Color(UIColor.systemBackground)]))
+                        .background(Gradient(colors: [Color("Lime_W_Dark"), Color(UIColor.systemGroupedBackground)]))
                     Spacer()
                 }
+                .background(Color(UIColor.systemGroupedBackground))
                 ScrollView {
-                    VStack(spacing: 8.0) {
+                    LazyVStack(spacing: 8.0) {
                         Button(action: {
                             showAllGames.toggle()
                             print("View All Courses")
@@ -70,16 +71,18 @@ struct HomeView: View {
                                     .foregroundStyle(Color("Navy"))
                             }
                         }else {
-                            ForEach(games, id: \.self) { game in
-                                NavigationLink(value: game, label: {
-                                    GameRowView(game: game)
-                                })
-                                .padding(12)
-                                .background(Color(UIColor.secondarySystemBackground))
-                                .cornerRadius(10)
-                                .listRowSeparator(.hidden)
+                            VStack(spacing: 12) {
+                                ForEach(games, id: \.self) { game in
+                                    NavigationLink(value: game, label: {
+                                        GameRowView(game: game)
+                                    })
+                                }
+                                
                             }
-                            .listStyle(.plain)
+                            .padding(12)
+                            .background(Color(UIColor.secondarySystemGroupedBackground))
+                            .cornerRadius(10)
+                            .listRowSeparator(.hidden)
                         }
                         if !players.isEmpty {
                             PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer, players: players)
@@ -115,7 +118,6 @@ struct HomeView: View {
                         .navigationTitle("All Games")
                         .navigationBarTitleDisplayMode(.inline)
                 }
-            
                 .navigationTitle("OneDisc")
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
@@ -127,10 +129,6 @@ struct HomeView: View {
                                     .font(.caption.weight(.semibold))
                                 Text("New Game")
                             }
-                            .font(.subheadline.weight(.semibold))
-                            .padding(6)
-                            .background(.thinMaterial)
-                            .cornerRadius(24)
                         }
                     }
                 }
@@ -251,6 +249,8 @@ private struct CoursesSectionView: View {
                         .font(.title3.weight(.semibold))
                         .foregroundStyle(Color("Teal"))
                 })
+                .padding(8)
+                .buttonStyle(.glass)
             }
             .foregroundStyle(Color("Navy"))
             .padding(.bottom, -4)
@@ -286,7 +286,7 @@ private struct CoursesSectionView: View {
                         .foregroundStyle(Color("Navy"))
                         .padding(8)
                         .frame(width: 190)
-                        .background(Color(UIColor.secondarySystemBackground))
+                        .background(Color(UIColor.secondarySystemGroupedBackground))
                         .cornerRadius(12)
                     }
                     Spacer()
@@ -308,7 +308,7 @@ private struct CoursesSectionView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 20)
-                .background(Color(UIColor.secondarySystemBackground))
+                .background(Color(UIColor.secondarySystemGroupedBackground))
                 .cornerRadius(10)
             })
         }
@@ -331,6 +331,8 @@ private struct PlayersSectionView: View {
                         .font(.title3.weight(.semibold))
                         .foregroundStyle(Color("Teal"))
                 })
+                .padding(8)
+                .buttonStyle(.glass)
             }
             .foregroundStyle(Color("Navy"))
             .padding(.bottom, -4)

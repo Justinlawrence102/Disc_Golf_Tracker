@@ -68,6 +68,7 @@
 		98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
 		98EB37432AC70BE8007E119E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB37422AC70BE8007E119E /* AppDelegate.swift */; };
 		98EB37452AC70E1C007E119E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB37442AC70E1C007E119E /* SceneDelegate.swift */; };
+		98F4B18E2E303CFC0004E38D /* GameMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F4B18D2E303CFC0004E38D /* GameMapView.swift */; };
 		98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */; };
 		98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */; };
 		98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */; };
@@ -177,6 +178,7 @@
 		98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDashComplicationsExtension.entitlements; sourceTree = "<group>"; };
 		98EB37422AC70BE8007E119E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98EB37442AC70E1C007E119E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		98F4B18D2E303CFC0004E38D /* GameMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapView.swift; sourceTree = "<group>"; };
 		98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBasketAndTeeTip.swift; sourceTree = "<group>"; };
 		98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNContactVC.swift; sourceTree = "<group>"; };
 		98FA7B742AC5AF5A00C2A8D3 /* SearchCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCourseView.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				98FA7B702AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift */,
 				98D3EC682ABF079A00ADC565 /* ResultsView.swift */,
 				989007572C28A15400FBDD4F /* ScoreSheetView.swift */,
+				98F4B18D2E303CFC0004E38D /* GameMapView.swift */,
 			);
 			path = "Active Game";
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				988967CF2C1CFA1B00695FB4 /* ListAllGamesView.swift in Sources */,
 				98D3EC772ABF07B200ADC565 /* CreatePlayerView.swift in Sources */,
 				98D3EC582ABF075C00ADC565 /* SharePlay.swift in Sources */,
+				98F4B18E2E303CFC0004E38D /* GameMapView.swift in Sources */,
 				987861652C1FC49900339AFB /* ImportGameWizardView.swift in Sources */,
 				98D3EC6B2ABF079A00ADC565 /* GameView.swift in Sources */,
 				989007562C2879E200FBDD4F /* CourseDetailsView.swift in Sources */,
@@ -762,7 +766,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -807,7 +811,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;

@@ -134,6 +134,12 @@ let GamesPreviewContainer: ModelContainer = {
         result2.score = 0
         container.mainContext.insert(result2)
 
+        
+        let game2 = Game()
+        game2.course = sampleCourse
+        game2.uuid = "12345"
+        game2.currentHoleIndex = 0
+        container.mainContext.insert(game2)
         return container
     } catch {
         fatalError ("Failed to create container")

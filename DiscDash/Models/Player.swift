@@ -11,7 +11,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 @Model
-final class Player: Codable {
+final class Player: Codable, Hashable {
     
     var uuid: String = UUID().uuidString
     
