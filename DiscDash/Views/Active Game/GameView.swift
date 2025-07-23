@@ -20,8 +20,6 @@ struct GameView: View {
     @State var game: Game
     @State var mapManager = MapManager()
     
-    @State var showingAddTeeAlert = false
-    @State var showingAddBasketAlert = false
     @State var showingEditBasketInfoSheet = false
     @State var showDeleteGameAlert = false
 
@@ -44,156 +42,18 @@ struct GameView: View {
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {
-                VStack(spacing: -0.0) {
+                ZStack {
                     GameMapView(cameraPosition: $mapManager.cameraPosition, showFullMapToggle: showFullMapToggle, sortedBasketsList: sortedBasketsList, basket: basket)
-
-                    VStack(spacing: -90.0) {
-                        Rectangle()
-                            .padding(.top, -45.0)
-                            .frame(height: 90)
-                            .blur(radius: 20)
-                            .foregroundStyle(Color("Lime_W_Dark"))
-                        
-                        VStack(spacing: 12.0) {
-                            if !sheetIsUp {
-                                CurrentBasketInfoView(basket: basket, alignment: .center)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(8)
-                                    .glassEffect(in: .rect(cornerRadius: 12))
-                                    .padding(.horizontal, 12)
-                                    .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
+                        .overlay(alignment: .bottom, content: {
+                            VStack(spacing: 12) {
+                                TopOfSheetDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, showFullMapToggle: $showFullMapToggle)
+                                    .padding(.horizontal, 8.0)
+                                ManageBasketDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, game: game, showingEditBasketInfoSheet: $showingEditBasketInfoSheet)
+                                    .frame(minHeight: 390, alignment: .top)
+                                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground).opacity(01)]))
                             }
-                            
-                            HStack(alignment: .top, spacing: 12.0) {
-                                if let highScore = basket.getHighScore(modelContext: modelContext) {
-                                    VStack(alignment: .leading, spacing: 0.0) {
-                                        HStack {
-                                            if highScore.indices.contains(2), let player = highScore[2] as? Player {
-                                                PlayerProfileCircleView(player: player, size: 30)
-                                            }
-                                            Text(highScore[0] as? String ?? "")
-                                                .font(.title)
-                                                .fontWeight(.semibold)
-                                                .fontDesign(.rounded)
-                                                .foregroundStyle(Color("Pink"))
-                                            Spacer()
-                                        }
-                                        Text("Best Score")
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(Color("Navy"))
-                                        Text(highScore[1] as? String ?? "")
-                                            .font(.caption)
-                                            .foregroundStyle(Color("Navy"))
-                                    }
-                                    .padding(8)
-                                    .background(.thickMaterial)
-                                    .cornerRadius(12)
-                                }
-                                if let averageScore = basket.getAverageScore(modelContext: modelContext) {
-                                    VStack(alignment: .leading, spacing: 0.0) {
-                                        HStack {
-                                            Text(averageScore)
-                                                .font(.title)
-                                                .fontWeight(.semibold)
-                                                .fontDesign(.rounded)
-                                                .foregroundStyle(Color("Pink"))
-                                            Spacer()
-                                        }
-                                        Text("Average Score")
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(Color("Navy"))
-                                    }
-                                    .padding(8)
-                                    .background(.thickMaterial)
-                                    .cornerRadius(12)
-                                }
-                            }
-                            .padding(.horizontal, 12)
-                            HStack{
-                                Button(action: {
-                                    AddBasketAndTeeTip.hasAddedALocation = true
-                                    if basket.teeCoordinates.isEmpty {
-                                        basket.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                                    }else {
-                                        showingAddTeeAlert.toggle()
-                                    }
-                                    print("Save Tee")
-                                }, label: {
-                                    Label("Tee", systemImage: "mappin")
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(Color("Teal"))
-                                        .foregroundStyle(Color.white)
-                                        .cornerRadius(20)
-                                })
-                                Spacer()
-//                                if (basket.par == "" || basket.distance == "") {
-                                    Button(action: {
-                                        showingEditBasketInfoSheet.toggle()
-                                        print("Show info")
-                                    }, label: {
-                                        Label("Basket Info", systemImage: "info.circle.fill")
-                                            .padding(.horizontal, 12)
-                                            .padding(.vertical, 6)
-                                            .background(Color("Teal"))
-                                            .foregroundStyle(Color.white)
-                                            .cornerRadius(20)
-                                    })
-                                    Spacer()
-//                                }
-                                Button(action: {
-                                    print("Save Basket")
-                                    AddBasketAndTeeTip.hasAddedALocation = true
-                                    if basket.basketCoordinates.isEmpty {
-                                        basket.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                                    }else {
-                                        showingAddBasketAlert.toggle()
-                                    }
-                                }, label: {
-                                    Label("Basket", systemImage: "mappin")
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(Color("Teal"))
-                                        .foregroundStyle(Color.white)
-                                        .cornerRadius(20)
-                                })
-                            }
-                            .padding(.horizontal, 12)
-                            Spacer()
-                        }
-                    }
-                    .background(Color("Lime_W_Dark"))
-                    .frame(height: 350)
+                        })
                 }
-                VStack() {
-                    Spacer()
-                    HStack(alignment: .bottom) {
-                        if sheetIsUp {
-                            CurrentBasketInfoView(basket: basket, alignment: .leading)
-                                .padding(8)
-                                .glassEffect(in: .rect(cornerRadius: 12))
-                                .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
-                        }
-                        Spacer()
-                        Button {
-                            showFullMapToggle.toggle()
-                            print("Toggle map")
-                        } label: {
-                            Image(systemName: "map.fill")
-                                .font(.title)
-                                .foregroundStyle(showFullMapToggle ? .white: Color("Teal") )
-                        }
-                        .buttonStyle(.glassProminent)
-                        .tint(showFullMapToggle ? Color("Teal") : .clear)
-                        
-                    }
-                    TipView(AddBasketAndTeeTip())
-                    Spacer()
-                        .frame(height: 416)
-                }
-                .padding(.horizontal, 8.0)
             }else {
                 ResultsView(game: game)
                     .onAppear {
@@ -270,39 +130,17 @@ struct GameView: View {
         }
         .sheet(isPresented: $showingScoreSheet, content: {
             PlayerScoresListView(game: game)
-                .presentationDetents([.height(400), .height(120)], selection: $selectedDetent)
+                .presentationDetents([.height(400), .height(150)], selection: $selectedDetent)
                 .presentationBackgroundInteraction(
                     .enabled
                 )
                 .interactiveDismissDisabled()
-                .background(Color(UIColor.systemBackground).opacity(0.7))
+//                .background(Color(UIColor.systemBackground).opacity(0.7))
                 .onChange(of: selectedDetent, {
                     withAnimation(.spring()) {
                         sheetIsUp.toggle()
                     }
                 })
-                .alert("How would you like to add a new tee?", isPresented: $showingAddTeeAlert) {
-                    Button("Add Tee") {
-                        game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                    }
-                    Button("Replace Exisiting Tees", role: .destructive) {
-                        game.currentBasket!.teeLatitudes.removeAll()
-                        game.currentBasket!.teeLongitudes.removeAll()
-                        game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                    }
-                    Button("Cancel", role: .cancel) { }
-                }
-                .alert("How would you like to add a new basket?", isPresented: $showingAddBasketAlert) {
-                    Button("Add Basket") {
-                        game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                    }
-                    Button("Replace Exisiting Baskets", role: .destructive) {
-                        game.currentBasket!.basketLatitudes.removeAll()
-                        game.currentBasket!.basketLongitudes.removeAll()
-                        game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-                    }
-                    Button("Cancel", role: .cancel) { }
-                }
                 .sheet(isPresented: $isActivitySharingSheetPresented) {
                     ActivitySharingViewController(activity: SharePlayActivity())
                 }
@@ -357,6 +195,183 @@ struct GameView: View {
     }
 }
 
+struct TopOfSheetDetailsView: View {
+    let animation: Namespace.ID
+    
+    var sheetIsUp: Bool
+    var basket: Basket
+    @Binding var showFullMapToggle: Bool
+    var body: some View {
+        HStack(alignment: .bottom) {
+            if sheetIsUp {
+                CurrentBasketInfoView(basket: basket, alignment: .leading)
+                    .padding(8)
+                    .glassEffect(in: .rect(cornerRadius: 12))
+                    .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
+            }
+            Spacer()
+            Button {
+                showFullMapToggle.toggle()
+                print("Toggle map")
+            } label: {
+                Image(systemName: "map.fill")
+                    .font(.title)
+                    .foregroundStyle(showFullMapToggle ? .white: Color("Teal") )
+            }
+            .buttonStyle(.glassProminent)
+            .tint(showFullMapToggle ? Color("Teal") : .clear)
+            
+        }
+        TipView(AddBasketAndTeeTip())
+    }
+}
+
+struct ManageBasketDetailsView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(LocationManager.self) var locationManager
+    
+    let animation: Namespace.ID
+    
+    var sheetIsUp: Bool
+    var basket: Basket
+    var game: Game
+    
+    @Binding var showingEditBasketInfoSheet: Bool
+
+    @State var showingAddTeeAlert = false
+    @State var showingAddBasketAlert = false
+
+    var body: some View {
+        VStack(spacing: 12.0) {
+            if !sheetIsUp {
+                CurrentBasketInfoView(basket: basket, alignment: .center)
+                    .frame(maxWidth: .infinity)
+                    .padding(8)
+                    .glassEffect(in: .rect(cornerRadius: 12))
+                    .padding(.horizontal, 12)
+                    .matchedGeometryEffect(id: "CurrentHoleView", in: animation)
+            }
+            
+            HStack(alignment: .top, spacing: 12.0) {
+                if let highScore = basket.getHighScore(modelContext: modelContext) {
+                    VStack(alignment: .leading, spacing: 0.0) {
+                        HStack {
+                            if highScore.indices.contains(2), let player = highScore[2] as? Player {
+                                PlayerProfileCircleView(player: player, size: 30)
+                            }
+                            Text(highScore[0] as? String ?? "")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(Color("Pink"))
+                            Spacer()
+                        }
+                        Text("Best Score")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color("Navy"))
+                        Text(highScore[1] as? String ?? "")
+                            .font(.caption)
+                            .foregroundStyle(Color("Navy"))
+                    }
+                    .padding(8)
+                    .glassEffect(in: .rect(cornerRadius: 12))
+                }
+                if let averageScore = basket.getAverageScore(modelContext: modelContext) {
+                    VStack(alignment: .leading, spacing: 0.0) {
+                        HStack {
+                            Text(averageScore)
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                                .foregroundStyle(Color("Pink"))
+                            Spacer()
+                        }
+                        Text("Average Score")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(Color("Navy"))
+                    }
+                    .padding(8)
+                    .glassEffect(in: .rect(cornerRadius: 12))
+                }
+            }
+            .padding(.horizontal, 12)
+            HStack{
+                Button(action: {
+                    AddBasketAndTeeTip.hasAddedALocation = true
+                    if basket.teeCoordinates.isEmpty {
+                        basket.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }else {
+                        showingAddTeeAlert.toggle()
+                    }
+                    print("Save Tee")
+                }, label: {
+                    Label("Tee", systemImage: "mappin")
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color("Teal"))
+                        .foregroundStyle(Color.white)
+                        .cornerRadius(20)
+                })
+                Spacer()
+                //                                if (basket.par == "" || basket.distance == "") {
+                Button(action: {
+                    showingEditBasketInfoSheet.toggle()
+                    print("Show info")
+                }, label: {
+                    Label("Basket Info", systemImage: "info.circle.fill")
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color("Teal"))
+                        .foregroundStyle(Color.white)
+                        .cornerRadius(20)
+                })
+                Spacer()
+                //                                }
+                Button(action: {
+                    print("Save Basket")
+                    AddBasketAndTeeTip.hasAddedALocation = true
+                    if basket.basketCoordinates.isEmpty {
+                        basket.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }else {
+                        showingAddBasketAlert.toggle()
+                    }
+                }, label: {
+                    Label("Basket", systemImage: "mappin")
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color("Teal"))
+                        .foregroundStyle(Color.white)
+                        .cornerRadius(20)
+                })
+            }
+            .padding(.horizontal, 12)
+        }
+        .alert("How would you like to add a new basket?", isPresented: $showingAddBasketAlert) {
+            Button("Add Basket") {
+                game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+            }
+            Button("Replace Exisiting Baskets", role: .destructive) {
+                game.currentBasket!.basketLatitudes.removeAll()
+                game.currentBasket!.basketLongitudes.removeAll()
+                game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+            }
+            Button("Cancel", role: .cancel) { }
+        }
+        .alert("How would you like to add a new tee?", isPresented: $showingAddTeeAlert) {
+            Button("Add Tee") {
+                game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+            }
+            Button("Replace Exisiting Tees", role: .destructive) {
+                game.currentBasket!.teeLatitudes.removeAll()
+                game.currentBasket!.teeLongitudes.removeAll()
+                game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+            }
+            Button("Cancel", role: .cancel) { }
+        }
+    }
+}
 struct CurrentBasketInfoView: View {
     
     var basket: Basket
@@ -542,7 +557,7 @@ struct PlayerScoresListView: View {
 
 extension PresentationDetent {
     static let full = Self.height(400)
-    static let dismissed = Self.height(120)
+    static let dismissed = Self.height(150)
 }
 
 struct EditBasketInfoSheet: View {
