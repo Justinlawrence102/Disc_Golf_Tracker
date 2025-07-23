@@ -81,9 +81,11 @@ struct OneDiscComplicationsEntryView : View {
                     Divider()
                     VStack {
                         if renderingMode == .fullColor {
-                            Text(player.name.prefix(2))
-                                .font(.headline)
-//                            PlayerProfileCircleView(player: Player(name: player.name, color: player.color, image: player.image), size: 25)
+//                            Text(player.name.prefix(2))
+//                                .font(.headline)
+                            if let player = player.player {
+                                PlayerProfileCircleView(player: player, size: 25)
+                            }
                         }else {
                             Text(player.name.prefix(2))
                                 .font(.headline)

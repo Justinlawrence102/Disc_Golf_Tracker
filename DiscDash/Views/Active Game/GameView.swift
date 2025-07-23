@@ -12,12 +12,13 @@ import GroupActivities
 import TipKit
 
 struct GameView: View {
+    @State var game: Game
+
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
 
     @Namespace private var animation
     
-    @State var game: Game
     @State var mapManager = MapManager()
     
     @State var showingEditBasketInfoSheet = false
@@ -37,8 +38,15 @@ struct GameView: View {
     }
 
     @Environment(LocationManager.self) var locationManager
-    @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(SharedActivityManager.self) var sharePlayManager
     
+    @Binding var selectedGame: Game?
+    
+
+    init(game: Game, selectedGame: Binding<Game?>) {
+        _game = State(initialValue: game)
+        _selectedGame = selectedGame
+    }
     var body: some View {
         ZStack {
             if let basket = game.currentBasket {
@@ -86,6 +94,15 @@ struct GameView: View {
 //                .frame(height: 80)
 //                .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0.6), Color(UIColor.systemBackground).opacity(0)]))
 //        })
+        .onChange(of: selectedGame, {
+            old, new in
+            if selectedGame == nil {
+                showingScoreSheet = false
+            }
+//            if !navigationPath.contains(where: {$0.uuid == game.uuid}) {
+//                showingScoreSheet = false
+//            }
+        })
         .frame(maxHeight: .infinity)
         .navigationTitle(game.course?.name ?? "Course")
         .navigationBarTitleDisplayMode(.inline)
@@ -113,10 +130,12 @@ struct GameView: View {
                             Label("Shareplay", systemImage: "shareplay")
                         }
                     }
-                    ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
-                        Label("Export", systemImage: "square.and.arrow.up")
+                    Button(action: {
+                        game.resetScores()
+                        game.calculateResults(context: modelContext)
+                    }) {
+                        Label("Recalculate Scores", systemImage: "arrow.counterclockwise")
                     }
-                    
                     Button(role: .destructive, action: {
                         showDeleteGameAlert.toggle()
                     }) {
@@ -401,7 +420,7 @@ struct CurrentBasketInfoView: View {
 
 struct BasketPickerView: View {
     @Environment(LocationManager.self) var locationManager
-    @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(SharedActivityManager.self) var sharePlayManager
     @Environment(MapManager.self) private var mapManager
 
     var game: Game
@@ -477,7 +496,7 @@ struct PlayerScoresListView: View {
     @Query var scores: [PlayerScore]
     var game: Game
     @State private var isAnimateCountDown = false
-    @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(SharedActivityManager.self) var sharePlayManager
     @StateObject var groupStateObserver = GroupStateObserver()
     
     init(game: Game) {
@@ -618,13 +637,26 @@ struct EditBasketInfoSheet: View {
     }
 }
 
-#Preview {
-    MainActor.assumeIsolated {
-        return  NavigationStack {
-            GameView(game: Game())
+struct CustomListsSettings_Previews: PreviewProvider {
+
+    static var previews: some View {
+        @State var selectedGame: Game? = Game()
+        NavigationStack {
+            GameView(game: Game(), selectedGame: $selectedGame)
                 .environment(LocationManager())
-                .environmentObject(SharedActivityManager())
+                .environment(SharedActivityManager())
                 .modelContainer(GamesPreviewContainer)
         }
     }
 }
+
+//#Preview {
+//    MainActor.assumeIsolated {
+//        return  NavigationStack {
+//            GameView(game: Game(), navigationPath: <#Binding<Bool>#>)
+//                .environment(LocationManager())
+//                .environment(SharedActivityManager())
+//                .modelContainer(GamesPreviewContainer)
+//        }
+//    }
+//}

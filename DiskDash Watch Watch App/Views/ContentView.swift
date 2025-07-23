@@ -16,7 +16,16 @@ struct ContentView: View {
     @State var showJumpToBasketAlert = false
     @State var tempSelectedGame: Game?
     
-    @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+//    @Query(sort: [SortDescriptor(\Game.startDate, order: .reverse)]) private var games: [Game]
+    
+    @Query var games: [Game]
+
+    init() {
+        var descriptor = FetchDescriptor<Game>()
+        descriptor.fetchLimit = 6
+        descriptor.sortBy = [SortDescriptor(\Game.startDate, order: .reverse)]
+        _games = Query(descriptor)
+    }
     
     var body: some View {
         if games.isEmpty {

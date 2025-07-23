@@ -16,6 +16,13 @@ struct PlayerProfileCircleView: View {
     var player: Player
     var size: CGFloat
     var body: some View {
+//        ZStack {
+//            Text(player.name.prefix(2))
+//        }
+//        .foregroundStyle(.white)
+//        .frame(width: size, height: size)
+//        .background(player.getColor())
+//        .cornerRadius(size/2)
         if let playerImage = player.image, let image = UIImage(data: playerImage) {
             Image(uiImage: image)
                 .resizable()

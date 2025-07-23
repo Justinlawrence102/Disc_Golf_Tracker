@@ -56,8 +56,6 @@ struct BasketDetailsTabView: View {
         
         _basket =  Query(filter: #Predicate<Basket> {  $0.number  == nextBasketNumber && $0.course?.uuid == courseUUID })
         _game = .init(initialValue: game)
-        
-        print("init")
     }
     
     var body: some View {

@@ -57,6 +57,7 @@ struct ResultsView: View {
                             }
                             .padding(.horizontal)
                             .padding(.vertical, 6)
+                            .contentShape(Rectangle())
                             .contextMenu(menuItems: {
                                 Group {
                                     Button(action: {
@@ -97,6 +98,16 @@ struct ResultsView: View {
                             .foregroundStyle(.white)
                             .padding(.horizontal)
                     })
+                    ShareLink(item: SharedGame(game: game), preview: SharePreview("\(game.course?.name ?? "") on \(game.formattedStartDate)")) {
+                        Label("Export", systemImage: "square.and.arrow.up")
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.systemGroupedBackground))
+                            .cornerRadius(12)
+                            .font(.body.weight(.medium))
+                            .foregroundStyle(Color("Teal"))
+                            .padding(.horizontal)
+                    }
                 }
             }
         }

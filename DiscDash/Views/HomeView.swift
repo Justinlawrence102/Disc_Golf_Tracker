@@ -13,30 +13,21 @@ import _MapKit_SwiftUI
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(SharedActivityManager.self) var sharePlayManager
     @EnvironmentObject var sceneDelegate: FSSceneDelegate
 
     @State private var showCreateNewGame = false
     @State private var showCreateNewPlayer = false
     @State private var showCreateNewCourse: Course?
+    @State private var selectedGame: Game?
 
     @State private var showAllGames = false
+    
 //    @State var createdNewCourse: Course?
     
-    @Query var games: [Game]
-    @Query(sort: [SortDescriptor(\Player.name)]) private var players: [Player]
-    
-    @Query(sort: [SortDescriptor(\Course.name)]) private var courses: [Course]
-
-    init() {
-        var descriptor = FetchDescriptor<Game>()
-        descriptor.fetchLimit = 6
-        descriptor.sortBy = [SortDescriptor(\Game.startDate, order: .reverse)]
-        _games = Query(descriptor)
-    }
-    
     var body: some View {
-        NavigationStack {
+        @Bindable var sharePlayManager = sharePlayManager
+        NavigationStack() {
             ZStack {
                 VStack {
                     Spacer()
@@ -47,117 +38,84 @@ struct HomeView: View {
                 }
                 .background(Color(UIColor.systemGroupedBackground))
                 ScrollView {
-                    LazyVStack(spacing: 8.0) {
-                        Button(action: {
-                            showAllGames.toggle()
-                            print("View All Courses")
-                        }, label: {
-                            HStack(alignment: .center, spacing: 6) {
-                                Text("Games")
-                                    .font(.title3.weight(.semibold))
-                                Image(systemName: "chevron.right")
-                                    .foregroundStyle(Color.gray)
-                                Spacer()
-                            }
-                            .foregroundStyle(Color("Navy"))
-                            .padding(.bottom, -4)
-                        })
-                        if games.isEmpty {
-                            VStack{
-                                Image(systemName: "figure.disc.sports")
-                                    .font(.largeTitle)
-                                    .foregroundStyle(Color("Teal"))
-                                Text("Tap the Plus to create a new game")
-                                    .foregroundStyle(Color("Navy"))
-                            }
-                        }else {
-                            VStack(spacing: 12) {
-                                ForEach(games, id: \.self) { game in
-                                    NavigationLink(value: game, label: {
-                                        GameRowView(game: game)
-                                    })
-                                }
-                                
-                            }
-                            .padding(12)
-                            .background(Color(UIColor.secondarySystemGroupedBackground))
-                            .cornerRadius(10)
-                            .listRowSeparator(.hidden)
-                        }
-                        if !players.isEmpty {
-                            PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer, players: players)
-                        }
-                        if !courses.isEmpty {
-                            CoursesSectionView(showCreateNewCourse: $showCreateNewCourse, courses: courses)
-                        }
-                        
+                    VStack(spacing: 8.0) {
+                        RecentGamesView(showAllGames: $showAllGames, selectedGame: $selectedGame)
+                        PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer)                        
+                        CoursesSectionView(showCreateNewCourse: $showCreateNewCourse)
                     }
                     .safeAreaPadding(.horizontal)
                     .safeAreaPadding(.bottom)
-                    .navigationDestination(for: Game.self) { game in
-                        NavigationLazyView(GameView(game: game))
-                    }
-                    .navigationDestination(for: Player.self) { player in
-                        PlayerDetailsView(player: player)
-                            .navigationTitle(player.name)
-                            .navigationBarTitleDisplayMode(.inline)
-                        
-                    }
-                    .navigationDestination(for: Course.self) { course in
-                        CourseDetailsView(course: course)
-                    }
                 }
-                .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {
-                    if let game = sharePlayManager.gameModel {
-                        NavigationLazyView((GameView(game: game)))
-                        
-                    }
+            }
+            .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {
+                if let game = sharePlayManager.gameModel {
+                    GameView(game: game, selectedGame: $selectedGame)
                 }
-                .navigationDestination(isPresented: $showAllGames){
-                    ListAllGamesView()
-                        .navigationTitle("All Games")
-                        .navigationBarTitleDisplayMode(.inline)
-                }
-                .navigationTitle("OneDisc")
-                .toolbar {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button(action: {
-                            showCreateNewGame.toggle()
-                        }) {
-                            HStack(alignment: .center, spacing: 4) {
-                                Image(systemName: "plus")
-                                    .font(.caption.weight(.semibold))
-                                Text("New Game")
-                            }
-                        }
-                    }
-                }
-                .sheet(isPresented: $showCreateNewGame, content: {
-                    SelectCourseView(showCreateNewGameSheet: $showCreateNewGame)
-                        .presentationDetents([.medium])
-                })
-                .sheet(isPresented: $showCreateNewPlayer, content: {
-                    CreatePlayerView(player: Player(), isNewPerson: true)
-                        .presentationDetents([.medium])
-                        .interactiveDismissDisabled()
-                })
-                .sheet(item:$showCreateNewCourse) { item in
-                    NavigationStack {
-                        CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $showCreateNewCourse)
-                            .toolbar {
-                                ToolbarItem(placement: .cancellationAction, content: {
-                                    Button(action: {
-                                        showCreateNewCourse = nil
-                                    }, label: {
-                                        Text("Cancel")
-                                    })
-                                })
-                            }
-                    }
-                    .tint(Color("Teal"))
-                }
+            }
+            .navigationDestination(isPresented: $showAllGames){
+                ListAllGamesView()
+                    .navigationTitle("All Games")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .navigationDestination(item: $selectedGame, destination: { game in
+                GameView(game: game, selectedGame: $selectedGame)
+            })
+//            .navigationDestination(for: Game.self) { game in
+//                GameView(game: game, selectedGame: $selectedGame)
+//            }
+            .navigationDestination(for: Player.self) { player in
+                PlayerDetailsView(player: player)
+                    .navigationTitle(player.name)
+                    .navigationBarTitleDisplayMode(.inline)
                 
             }
+            .navigationDestination(for: Course.self) { course in
+                CourseDetailsView(course: course)
+            }
+        
+            .navigationTitle("OneDisc")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        showCreateNewGame.toggle()
+                    }) {
+                        HStack(alignment: .center, spacing: 4) {
+                            Image(systemName: "plus")
+                                .font(.caption.weight(.semibold))
+                            Text("New Game")
+                        }
+                        .font(.subheadline.weight(.semibold))
+                        .padding(6)
+                        .background(.thinMaterial)
+                        .cornerRadius(24)
+                    }
+                }
+            }
+            .sheet(isPresented: $showCreateNewGame, content: {
+                SelectCourseView(showCreateNewGameSheet: $showCreateNewGame)
+                    .presentationDetents([.medium])
+            })
+            .sheet(isPresented: $showCreateNewPlayer, content: {
+                CreatePlayerView(player: Player(), isNewPerson: true)
+                    .presentationDetents([.medium])
+                    .interactiveDismissDisabled()
+            })
+            .sheet(item:$showCreateNewCourse) { item in
+                NavigationStack {
+                    CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $showCreateNewCourse)
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction, content: {
+                                Button(action: {
+                                    showCreateNewCourse = nil
+                                }, label: {
+                                    Text("Cancel")
+                                })
+                            })
+                        }
+                }
+                .tint(Color("Teal"))
+            }
+            //put them here
         }
         .tint(Color("Teal"))
         .sheet(item: $sceneDelegate.importedGame) { game in
@@ -175,11 +133,68 @@ struct HomeView: View {
         return HomeView()
             .modelContainer(GamesPreviewContainer)
             .environment(LocationManager())
-            .environmentObject(SharedActivityManager())
+            .environment(SharedActivityManager())
             .environmentObject(FSSceneDelegate())
     }
 }
 
+private struct RecentGamesView: View {
+    @Binding var showAllGames: Bool
+    
+    @Query var games: [Game]
+    @Binding var selectedGame: Game?
+
+    init(showAllGames: Binding<Bool>, selectedGame: Binding<Game?>) {
+        var descriptor = FetchDescriptor<Game>()
+        descriptor.fetchLimit = 6
+        descriptor.sortBy = [SortDescriptor(\Game.startDate, order: .reverse)]
+        _games = Query(descriptor)
+        
+        _selectedGame = selectedGame
+        
+        self._showAllGames = showAllGames
+    }
+    
+    var body: some View {
+        Button(action: {
+            showAllGames.toggle()
+            print("View All Courses")
+        }, label: {
+            HStack(alignment: .center, spacing: 6) {
+                Text("Games")
+                    .font(.title3.weight(.semibold))
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.gray)
+                Spacer()
+            }
+            .foregroundStyle(Color("Navy"))
+            .padding(.bottom, -4)
+        })
+        if games.isEmpty {
+            VStack{
+                Image(systemName: "figure.disc.sports")
+                    .font(.largeTitle)
+                    .foregroundStyle(Color("Teal"))
+                Text("Tap the Plus to create a new game")
+                    .foregroundStyle(Color("Navy"))
+            }
+        }else {
+//            let _ = Self._printChanges()
+            ForEach(games, id: \.self) { game in
+                Button(action: {
+                    selectedGame = game
+                }, label: {
+                    GameRowView(game: game)
+                })
+                .padding(12)
+                .background(Color(UIColor.secondarySystemBackground))
+                .cornerRadius(10)
+                .listRowSeparator(.hidden)
+            }
+            .listStyle(.plain)
+        }
+    }
+}
 
 struct GameRowView: View {
     let game: Game
@@ -217,25 +232,37 @@ struct GameRowView: View {
                     .font(.headline)
                     .foregroundStyle(Color("Pink"))
             }else {
-                VStack(alignment: .leading, spacing: 4.0) {
-                    ForEach(game.getResults(limit3: true, context: modelContext)) {
-                        score in
-                        HStack {
-                            PlayerProfileCircleView(player: Player(name: score.name, color: score.color, image: score.image), size: 18)
-                            Text(score.getPlaceString())
-                                .foregroundStyle(score.place ?? 0 == 1 ? Color("Pink") : Color("Navy"))
-                                .font(.subheadline.weight(.semibold))
-                        }
-                    }
-                }
+//                Text("Done")
+                TopThreeResultsView(results: game.getResults(limit3: true, context: modelContext))
             }
         }
     }
 }
 
+private struct TopThreeResultsView: View {
+    let results: [ResultScores]
+    
+    @Environment(\.modelContext) private var modelContext
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4.0) {
+            ForEach(results) {
+                score in
+                HStack {
+                    if let player = score.player {
+                        PlayerProfileCircleView(player: player, size: 18)
+                    }
+                    Text(score.placeString)
+                        .foregroundStyle(score.place ?? 0 == 1 ? Color("Pink") : Color("Navy"))
+                        .font(.subheadline.weight(.semibold))
+                }
+            }
+        }
+    }
+}
 private struct CoursesSectionView: View {
     @Binding var showCreateNewCourse: Course?
-    var courses: [Course]
+    
+    @Query(sort: [SortDescriptor(\Course.name)]) private var courses: [Course]
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 6) {
@@ -255,69 +282,72 @@ private struct CoursesSectionView: View {
             .foregroundStyle(Color("Navy"))
             .padding(.bottom, -4)
             .padding(.top)
-            ScrollView(.horizontal) {
-                HStack(spacing: 12) {
-                    ForEach(courses, id: \.self) {
-                        course in
-                        NavigationLink(value: course, label: {
-                            VStack(alignment: .leading) {
-                                if let courseImage = course.image, let image = UIImage(data: courseImage) {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 174, height: 120)
-                                        .cornerRadius(8)
-                                }else {
-                                    Image(systemName: "figure.disc.sports")
-                                        .frame(width: 174, height: 120)
-                                        .foregroundStyle(Color("Teal"))
-                                        .font(.title)
-                                        .background(Color("Lime"))
-                                        .cornerRadius(8)
+            if !courses.isEmpty {
+                ScrollView(.horizontal) {
+                    HStack(spacing: 12) {
+                        ForEach(courses, id: \.self) {
+                            course in
+                            NavigationLink(value: course, label: {
+                                VStack(alignment: .leading) {
+                                    if let courseImage = course.image, let image = UIImage(data: courseImage) {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 174, height: 120)
+                                            .cornerRadius(8)
+                                    }else {
+                                        Image(systemName: "figure.disc.sports")
+                                            .frame(width: 174, height: 120)
+                                            .foregroundStyle(Color("Teal"))
+                                            .font(.title)
+                                            .background(Color("Lime"))
+                                            .cornerRadius(8)
+                                    }
+                                    Text(course.name)
+                                        .lineLimit(1)
+                                        .font(.headline)
+                                    Label(course.cityState ?? "", systemImage: "location.fill")
+                                        .font(.subheadline.weight(.medium))
+                                        .foregroundStyle(Color("Pink"))
                                 }
-                                Text(course.name)
-                                    .lineLimit(1)
-                                    .font(.headline)
-                                Label(course.cityState ?? "", systemImage: "location.fill")
-                                    .font(.subheadline.weight(.medium))
-                                    .foregroundStyle(Color("Pink"))
-                            }
-                        })
-                        .foregroundStyle(Color("Navy"))
-                        .padding(8)
-                        .frame(width: 190)
-                        .background(Color(UIColor.secondarySystemGroupedBackground))
-                        .cornerRadius(12)
+                            })
+                            .foregroundStyle(Color("Navy"))
+                            .padding(8)
+                            .frame(width: 190)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(12)
+                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
+                NavigationLink(destination: {
+                    CoursesMapView()
+                        .navigationTitle("Map")
+                        .navigationBarTitleDisplayMode(.inline)
+                }, label: {
+                    HStack(alignment: .center) {
+                        Image(systemName: "map.fill")
+                            .foregroundStyle(Color("Pink"))
+                        Text("Map")
+                            .foregroundStyle(Color("Navy"))
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 20)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(10)
+                })
             }
-            NavigationLink(destination: {
-                CoursesMapView()
-                    .navigationTitle("Map")
-                    .navigationBarTitleDisplayMode(.inline)
-            }, label: {
-                HStack(alignment: .center) {
-                    Image(systemName: "map.fill")
-                        .foregroundStyle(Color("Pink"))
-                    Text("Map")
-                        .foregroundStyle(Color("Navy"))
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 20)
-                .background(Color(UIColor.secondarySystemGroupedBackground))
-                .cornerRadius(10)
-            })
         }
     }
 }
 
 private struct PlayersSectionView: View {
     @Binding var showCreateNewPlayer: Bool
-    var players: [Player]
+    @Query(sort: [SortDescriptor(\Player.name)]) private var players: [Player]
+    
     var body: some View {
         VStack {
             HStack(alignment: .center, spacing: 6) {
@@ -337,31 +367,33 @@ private struct PlayersSectionView: View {
             .foregroundStyle(Color("Navy"))
             .padding(.bottom, -4)
             .padding(.top)
-            ScrollView(.horizontal) {
-                HStack(spacing: 12) {
-                    ForEach(players, id: \.self) {
-                        player in
-                        NavigationLink(value: player, label: {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    PlayerProfileCircleView(player: player, size: 40)
-                                    Text(player.name)
-                                        .font(.body.weight(.semibold))
-                                        .lineLimit(1)
-                                    Text("\(player.getNumGames()) Games")
-                                        .foregroundStyle(.secondary)
-                                        .font(.subheadline.weight(.medium))
+            if !players.isEmpty {
+                ScrollView(.horizontal) {
+                    HStack(spacing: 12) {
+                        ForEach(players, id: \.self) {
+                            player in
+                            NavigationLink(value: player, label: {
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        PlayerProfileCircleView(player: player, size: 40)
+                                        Text(player.name)
+                                            .font(.body.weight(.semibold))
+                                            .lineLimit(1)
+                                        Text("\(player.getNumGames()) Games")
+                                            .foregroundStyle(.secondary)
+                                            .font(.subheadline.weight(.medium))
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
-                            }
-                        })
-                        .foregroundStyle(Color("Navy"))
-                        .padding(8)
-                        .frame(width: 160)
-                        .background(player.getColor())
-                        .cornerRadius(12)
+                            })
+                            .foregroundStyle(Color("Navy"))
+                            .padding(8)
+                            .frame(width: 160)
+                            .background(player.getColor())
+                            .cornerRadius(12)
+                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }
