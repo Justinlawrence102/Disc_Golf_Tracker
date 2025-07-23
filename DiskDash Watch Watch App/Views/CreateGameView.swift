@@ -78,6 +78,21 @@ struct SelectPlayersView: View {
                 Button(action: {
                     let selectedPlayers = players.filter({$0.isSelected})
                     let newGame = Game()
+//                    modelContext.insert(newGame)
+//                    newGame.startDate = Date()
+//                    newGame.playerScores = []
+//                    
+//                    selectedCourse.games?.append(newGame)
+//                    newGame.course = selectedCourse
+//                    
+//                    for player in selectedPlayers {
+//                        for basket in newGame.course?.baskets ?? [] {
+//                            let playerScore = PlayerScore(player: player, game: newGame, basket: basket)
+//                            modelContext.insert(playerScore)
+//                        }
+//                        let playerResult = PlayerScore(player: player, resultsGame: newGame)
+//                        modelContext.insert(playerResult)
+//                    }
                     newGame.createGame(course: selectedCourse, players: selectedPlayers, modelContext: modelContext)
                     stateManager.showCreateGameSheet = false
                     stateManager.selectedGame = newGame

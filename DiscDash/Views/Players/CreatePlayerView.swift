@@ -98,19 +98,27 @@ struct CreatePlayerView: View {
                                     .tint(.white)
                                     .font(.title)
                             }
-                            .onChange(of: selectedImage, initial: false, {
+                            .onChange(of: selectedImage) {
+                                old, new in
                                 Task {
-                                    if let data = try? await
-                                        selectedImage?.loadTransferable(type: Data.self) {
-                                        player.image = data
+                                    if let selectedImage = selectedImage, let data = try? await selectedImage.loadTransferable(type: Data.self) {
+                                        if let uiImage = UIImage(data: data) {
+                                            if let compressed = resizeImage(image: uiImage, maxSize: 150) {
+                                                player.image = compressed.pngData()!
+                                            }
+//                                            player.image = uiImage.jpegData(compressionQuality: 0.5)
+                                        }
                                     }
                                 }
-                            })
+                            }
                         
                             Button(action: {
                                 let pasteboard = UIPasteboard.general
-                                if let image = pasteboard.image {
-                                    player.image = image.pngData()!
+                                if let uiImage = pasteboard.image {
+                                    if let compressed = resizeImage(image: uiImage, maxSize: 150) {
+                                        player.image = compressed.pngData()!
+                                    }
+//                                    player.image = image.jpegData(compressionQuality: 0.5)
                                 }
                                 print("Tapped Clipbard")
                             }, label: {
@@ -188,6 +196,7 @@ struct CreatePlayerView: View {
         }
     }
 }
+
 
 #Preview {
     CreatePlayerView(player: Player(), isNewPerson: true)

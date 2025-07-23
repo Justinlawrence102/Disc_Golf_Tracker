@@ -154,25 +154,34 @@ class Game {
             print("Could not create results")
         }
     }
+    func resetScores() {
+        results?.removeAll()
+    }
     func getResults(limit3: Bool = false, forPlayer: String? = nil, context: ModelContext? = nil) -> [ResultScores] {
         //migrate data and create playerResult object
         if (results ?? []).isEmpty {
-            var legacyPlayers = playerScores?.map { $0.player ?? Player() }
-            legacyPlayers = Array(Set(legacyPlayers ?? [])).sorted(by: {$0.name < $1.name})
-            for player in legacyPlayers ?? [] {
-                let playerResult = PlayerScore(player: player, resultsGame: self)
-                context?.insert(playerResult)
+            if var legacyPlayers = playerScores?.map({ $0.player }) {
+                legacyPlayers = Array(Set(legacyPlayers)).sorted(by: {$0?.name ?? "" < $1?.name ?? ""})
+                for player in legacyPlayers {
+                    if let player = player {
+                        let playerResult = PlayerScore(player: player, resultsGame: self)
+                        context?.insert(playerResult)
+                    }
+                }
+                print("Running migration...this shouldn't happen often. Only once")
+                calculateResults()
             }
-            print("Running migration...this shouldn't happen often. Only once")
-            calculateResults()
         }
         
         if let forPlayer = forPlayer {
             if let results = results?.first(where: {$0.player?.uuid == forPlayer}), let player = results.player {
-                return [ResultScores(player: player, totalScore: results.score, image: player.image, color: player.color, date: startDate)]
+                return [ResultScores(player: player, totalScore: results.score, date: startDate)]
             }
         }
-        if var scoreResults = results?.map({ResultScores(player: $0.player ?? Player(), totalScore: $0.score, image: ($0.player ?? Player()).image, color: ($0.player ?? Player()).color, date: startDate)}) {
+
+//        print("getting results \(results?.count ?? 0)")
+        if var scoreResults = results?.map({
+            ResultScores(player: $0.player ?? Player(), totalScore: $0.score, date: startDate)}) {
             scoreResults.sort(by: {$1.score > $0.score})
             if limit3 {
                 scoreResults = Array(scoreResults.prefix(3))
@@ -274,27 +283,9 @@ struct ResultScores: Identifiable {
     var place: Int?
     var date: Date
     
-    init(player: Player, totalScore: Int, image: Data?, color: String, date: Date) {
-        self.name = player.name
-        self.playerId = player.uuid
-        self.score = totalScore
-        self.image = image
-        self.color = color
-        self.date = date
-    }
-
-    func getParDiff(course: Course?) -> String {
-        var parTotal = 0
-        for basket in course?.baskets ?? [] {
-            parTotal += Int(basket.par) ?? 0
-        }
-        let parDiff = score - parTotal
-        if parDiff > 0 {
-            return "+\(parDiff)"
-        }
-        return String(parDiff)
-    }
-    func getPlaceString() -> String {
+    var player: Player?
+    
+    var placeString: String {
         if let place = place {
             if place == 1 {
                 return "\(place)st"
@@ -307,6 +298,28 @@ struct ResultScores: Identifiable {
             }
         }
         return ""
+    }
+    
+    init(player: Player, totalScore: Int, date: Date) {
+        self.name = player.name
+        self.playerId = player.uuid
+        self.score = totalScore
+        self.image = player.image
+        self.color = player.color
+        self.date = date
+        self.player = player
+    }
+
+    func getParDiff(course: Course?) -> String {
+        var parTotal = 0
+        for basket in course?.baskets ?? [] {
+            parTotal += Int(basket.par) ?? 0
+        }
+        let parDiff = score - parTotal
+        if parDiff > 0 {
+            return "+\(parDiff)"
+        }
+        return String(parDiff)
     }
     func getColor()-> Color {
         return Color(UIColor(hex: color) ?? UIColor(named: "Pink")!)

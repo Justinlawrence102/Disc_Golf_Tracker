@@ -23,20 +23,21 @@ struct SharePlayActivity: GroupActivity {
     }
 }
 
-class SharedActivityManager: ObservableObject {
+@Observable
+class SharedActivityManager {
     var tasks = Set<Task<Void, Never>>()
     var messenger: GroupSessionMessenger?
     var modelContext: ModelContext?
-    @Published var gameModel: Game?
-    @Published var isDeepLinkingToGame = false
+    var gameModel: Game?
+    var isDeepLinkingToGame = false
 //    @Published var gameSelectionPickerStatus = 0
-    @Published var session: GroupSession<SharePlayActivity>?
+    var session: GroupSession<SharePlayActivity>?
     //    var test: Int {
     //
     //        return 0
     //    }
     
-    @Published var numActiveParticipants = 0
+    var numActiveParticipants = 0
     
     func startSharing(game: Game) {
         Task {

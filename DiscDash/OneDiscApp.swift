@@ -43,7 +43,7 @@ struct ContentView: View {
         HomeView()
             .modelContainer(container)
             .environment(locationManager)
-            .environmentObject(sharedActivityManager)
+            .environment(sharedActivityManager)
             .task {
                 try?  Tips.configure([
                     .displayFrequency(.immediate),
@@ -53,6 +53,27 @@ struct ContentView: View {
             }
             .onAppear {
                 locationManager.requestLocation()
+                if !UserDefaults.standard.bool(forKey: "hasCompressedImages") {
+                    let context = ModelContext(container)
+                    var descriptor = FetchDescriptor<Player>()
+                    do {
+                        let players = try context.fetch(descriptor)
+                        for player in players {
+                            print("Player: \(player.name)")
+                            if let data = player.image, let uiImage = UIImage(data: data) {
+                                print("Org size \(data.count)")
+                                if let compressed = resizeImage(image: uiImage, maxSize: 150) {
+                                    let compressedData = compressed.pngData()!
+                                    print("new size \(compressedData.count)")
+                                    player.image = compressedData
+                                }
+                            }
+                        }
+                    }catch(let error) {
+                        print(error)
+                    }
+                }
+                UserDefaults.standard.set(true, forKey: "hasCompressedImages")
             }
             .navigationBarColor(text: UIColor(named: "Pink")!)
             .task {
@@ -91,12 +112,18 @@ extension View {
   }
 }
 
-struct NavigationLazyView<Content: View>: View {
-    let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
-        self.build = build
+func resizeImage(image: UIImage, maxSize: CGFloat) -> UIImage? {
+    let aspectRatio = image.size.width / image.size.height
+
+    var newSize: CGSize
+    if aspectRatio > 1 {
+        newSize = CGSize(width: maxSize, height: maxSize / aspectRatio)
+    } else {
+        newSize = CGSize(width: maxSize * aspectRatio, height: maxSize)
     }
-    var body: Content {
-        build()
+
+    let renderer = UIGraphicsImageRenderer(size: newSize)
+    return renderer.image { _ in
+        image.draw(in: CGRect(origin: .zero, size: newSize))
     }
 }

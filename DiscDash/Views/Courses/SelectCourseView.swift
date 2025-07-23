@@ -158,7 +158,7 @@ struct SelectCourseView: View {
 struct SelectPlayerView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var showCreateNewGameSheet: Bool
-    @EnvironmentObject var sharePlayManager: SharedActivityManager
+    @Environment(SharedActivityManager.self) var sharePlayManager
     @State var showCreateNewPlayer = false
     @Query(sort: \Player.name) private var players: [Player]
     
