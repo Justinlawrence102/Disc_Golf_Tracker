@@ -86,8 +86,7 @@ struct HomeView: View {
                         }
                         .font(.subheadline.weight(.semibold))
                         .padding(6)
-                        .background(.thinMaterial)
-                        .cornerRadius(24)
+
                     }
                 }
             }
@@ -143,7 +142,7 @@ private struct RecentGamesView: View {
     
     @Query var games: [Game]
     @Binding var selectedGame: Game?
-
+    
     init(showAllGames: Binding<Bool>, selectedGame: Binding<Game?>) {
         var descriptor = FetchDescriptor<Game>()
         descriptor.fetchLimit = 6
@@ -179,19 +178,20 @@ private struct RecentGamesView: View {
                     .foregroundStyle(Color("Navy"))
             }
         }else {
-//            let _ = Self._printChanges()
-            ForEach(games, id: \.self) { game in
-                Button(action: {
-                    selectedGame = game
-                }, label: {
-                    GameRowView(game: game)
-                })
-                .padding(12)
-                .background(Color(UIColor.secondarySystemBackground))
-                .cornerRadius(10)
-                .listRowSeparator(.hidden)
+            VStack(spacing: 8) {
+                ForEach(games, id: \.self) { game in
+                    Button(action: {
+                        selectedGame = game
+                    }, label: {
+                        GameRowView(game: game)
+                    })
+                    Divider()
+                }
+                
             }
-            .listStyle(.plain)
+            .padding(12)
+            .background(Color(UIColor.secondarySystemGroupedBackground))
+            .cornerRadius(10)
         }
     }
 }
@@ -314,7 +314,7 @@ private struct CoursesSectionView: View {
                             .foregroundStyle(Color("Navy"))
                             .padding(8)
                             .frame(width: 190)
-                            .background(Color(UIColor.secondarySystemBackground))
+                            .background(Color(UIColor.secondarySystemGroupedBackground))
                             .cornerRadius(12)
                         }
                         Spacer()
@@ -336,7 +336,7 @@ private struct CoursesSectionView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 20)
-                    .background(Color(UIColor.secondarySystemBackground))
+                    .background(Color(UIColor.secondarySystemGroupedBackground))
                     .cornerRadius(10)
                 })
             }

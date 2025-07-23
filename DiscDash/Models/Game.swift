@@ -68,6 +68,10 @@ class Game {
     init() {
         startDate = Date()
     }
+    init(course: Course, playerScores: [PlayerScore]) {
+        self.course = course
+        self.playerScores = playerScores
+    }
     
     func createGame(course: Course, players: [Player], modelContext: ModelContext) {
         modelContext.insert(self)

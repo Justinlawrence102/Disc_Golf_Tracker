@@ -176,7 +176,7 @@ struct PlayerDetailsView: View {
                     }
                 }
             label: {
-                Label("Info", systemImage: "ellipsis.circle")
+                Label("Info", systemImage: "ellipsis")
             }
                 //                .popoverTip(SharePlayerTip())
             }

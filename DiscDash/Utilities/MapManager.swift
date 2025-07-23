@@ -16,9 +16,9 @@ import MapKit
         var coordinateRegion = MKCoordinateRegion()
         if let currentBasket = currentBasket {
             if !currentBasket.basketCoordinates.isEmpty || !currentBasket.teeCoordinates.isEmpty {
-                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinates+currentBasket.teeCoordinates, zoom: zoom)
+                coordinateRegion = Utilities().getCenterOfCoordiantes(coordinates: currentBasket.basketCoordinatesWithOffset+currentBasket.teeCoordinatesWithOffset, zoom: zoom)
             }else if let currentLocation = locationManager?.lastLocation?.coordinate {
-                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
+                coordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: currentLocation.latitude-0.0004, longitude: currentLocation.longitude), span: MKCoordinateSpan(latitudeDelta: CLLocationDegrees(floatLiteral: zoom), longitudeDelta: CLLocationDegrees(floatLiteral: zoom)))
             }else {
                 if let course = currentBasket.course{
                     coordinateRegion = course.getInitailMapPosition()

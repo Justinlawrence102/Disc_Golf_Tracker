@@ -158,10 +158,26 @@ class Basket {
         return coordinates
     }
     
+    var basketCoordinatesWithOffset: [CLLocationCoordinate2D] {
+        var coordinates = [CLLocationCoordinate2D]()
+        for i in 0..<basketLatitudes.count {
+            coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(basketLatitudes[i]-0.0004), longitude: CLLocationDegrees(basketLongitudes[i])))
+        }
+        return coordinates
+    }
+    
     var teeCoordinates: [CLLocationCoordinate2D] {
         var coordinates = [CLLocationCoordinate2D]()
         for i in 0..<teeLatitudes.count {
             coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(teeLatitudes[i]), longitude: CLLocationDegrees(teeLongitudes[i])))
+        }
+        return coordinates
+    }
+    
+    var teeCoordinatesWithOffset: [CLLocationCoordinate2D] {
+        var coordinates = [CLLocationCoordinate2D]()
+        for i in 0..<teeLatitudes.count {
+            coordinates.append(CLLocationCoordinate2D(latitude: CLLocationDegrees(teeLatitudes[i]-0.0004), longitude: CLLocationDegrees(teeLongitudes[i])))
         }
         return coordinates
     }

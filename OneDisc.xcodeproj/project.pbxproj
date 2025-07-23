@@ -66,6 +66,8 @@
 		98D3ECC42ABF0D4700ADC565 /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC792ABF085400ADC565 /* SharedViews.swift */; };
 		98D3ECC52ABF0D7200ADC565 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC622ABF077F00ADC565 /* LocationManager.swift */; };
 		98D3ECC62ABF0D7400ADC565 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D3EC632ABF077F00ADC565 /* SampleData.swift */; };
+		98E322D12E319833003D3B23 /* App Icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 98E322D02E319833003D3B23 /* App Icon.icon */; };
+		98E322D22E319833003D3B23 /* App Icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 98E322D02E319833003D3B23 /* App Icon.icon */; };
 		98EB37432AC70BE8007E119E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB37422AC70BE8007E119E /* AppDelegate.swift */; };
 		98EB37452AC70E1C007E119E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EB37442AC70E1C007E119E /* SceneDelegate.swift */; };
 		98F4B18E2E303CFC0004E38D /* GameMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F4B18D2E303CFC0004E38D /* GameMapView.swift */; };
@@ -176,6 +178,7 @@
 		98D3ECB62ABF0CB900ADC565 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98D3ECB82ABF0CB900ADC565 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98D3ECC72ABFAA6F00ADC565 /* DiscDashComplicationsExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscDashComplicationsExtension.entitlements; sourceTree = "<group>"; };
+		98E322D02E319833003D3B23 /* App Icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "App Icon.icon"; sourceTree = "<group>"; };
 		98EB37422AC70BE8007E119E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98EB37442AC70E1C007E119E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		98F4B18D2E303CFC0004E38D /* GameMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMapView.swift; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 				98D3EC412ABF06E100ADC565 /* OneDiscApp.swift */,
 				983B37182AC89C0A003DD6DE /* player-file-icon.icns */,
 				98D3EC472ABF06E200ADC565 /* Assets.xcassets */,
+				98E322D02E319833003D3B23 /* App Icon.icon */,
 				98D3EC492ABF06E200ADC565 /* DiscDash.entitlements */,
 				98D3EC4D2ABF06E200ADC565 /* Info.plist */,
 				98D3EC4A2ABF06E200ADC565 /* Preview Content */,
@@ -507,6 +511,7 @@
 			files = (
 				983B371A2AC89FC2003DD6DE /* player-file-icon.icns in Resources */,
 				98D3EC4C2ABF06E200ADC565 /* Preview Assets.xcassets in Resources */,
+				98E322D22E319833003D3B23 /* App Icon.icon in Resources */,
 				9805405F2AC65397006541BF /* data.json in Resources */,
 				98D3EC482ABF06E200ADC565 /* Assets.xcassets in Resources */,
 			);
@@ -517,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98D3EC892ABF092A00ADC565 /* Preview Assets.xcassets in Resources */,
+				98E322D12E319833003D3B23 /* App Icon.icon in Resources */,
 				98D3EC862ABF092A00ADC565 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -741,8 +747,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
@@ -786,8 +793,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = DiscDash/DiscDash.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
@@ -831,7 +839,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
@@ -863,7 +871,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "DiskDash Watch Watch App/DiskDash Watch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;

@@ -58,7 +58,7 @@ struct GameView: View {
                                     .padding(.horizontal, 8.0)
                                 ManageBasketDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, game: game, showingEditBasketInfoSheet: $showingEditBasketInfoSheet)
                                     .frame(minHeight: 390, alignment: .top)
-                                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground).opacity(01)]))
+                                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground).opacity(1), Color(UIColor.systemBackground).opacity(1)]))
                             }
                         })
                 }
@@ -294,6 +294,7 @@ struct ManageBasketDetailsView: View {
                             .foregroundStyle(Color("Navy"))
                     }
                     .padding(8)
+                    .frame(maxHeight: .infinity)
                     .glassEffect(in: .rect(cornerRadius: 12))
                 }
                 if let averageScore = basket.getAverageScore(modelContext: modelContext) {
@@ -312,10 +313,12 @@ struct ManageBasketDetailsView: View {
                             .foregroundStyle(Color("Navy"))
                     }
                     .padding(8)
+                    .frame(maxHeight: .infinity)
                     .glassEffect(in: .rect(cornerRadius: 12))
                 }
             }
             .padding(.horizontal, 12)
+            .fixedSize(horizontal: false, vertical: true)
             HStack{
                 Button(action: {
                     AddBasketAndTeeTip.hasAddedALocation = true
