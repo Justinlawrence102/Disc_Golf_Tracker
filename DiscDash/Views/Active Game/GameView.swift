@@ -182,10 +182,11 @@ struct GameView: View {
                             print("Toggle map")
                         } label: {
                             Image(systemName: "map.fill")
-                                .frame(width: 45, height: 45)
-//                                .buttonStyle(.glass)
-                                .glassEffect(.regular.tint(showFullMapToggle ? Color("Teal") : .clear))
+                                .font(.title)
+                                .foregroundStyle(showFullMapToggle ? .white: Color("Teal") )
                         }
+                        .buttonStyle(.glassProminent)
+                        .tint(showFullMapToggle ? Color("Teal") : .clear)
                         
                     }
                     TipView(AddBasketAndTeeTip())
@@ -205,13 +206,26 @@ struct GameView: View {
                         }
                     }
             }
-            
+          
+            VStack {
+                Spacer()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 80)
+                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0.6), Color(UIColor.systemBackground).opacity(0)]))
+                Spacer()
+            }
             VStack {
                 BasketPickerView(game: game, showingScoreSheet: $showingScoreSheet, scrollPosition: $scrollPosition)
                     .environment(mapManager)
                 Spacer()
             }
         }
+//        .overlay(alignment: .top, content: {
+//            Spacer()
+//                .frame(maxWidth: .infinity)
+//                .frame(height: 80)
+//                .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0.6), Color(UIColor.systemBackground).opacity(0)]))
+//        })
         .frame(maxHeight: .infinity)
         .navigationTitle(game.course?.name ?? "Course")
         .navigationBarTitleDisplayMode(.inline)
@@ -261,6 +275,7 @@ struct GameView: View {
                     .enabled
                 )
                 .interactiveDismissDisabled()
+                .background(Color(UIColor.systemBackground).opacity(0.7))
                 .onChange(of: selectedDetent, {
                     withAnimation(.spring()) {
                         sheetIsUp.toggle()
@@ -388,7 +403,9 @@ struct BasketPickerView: View {
                             if let number = basket.number {
                                 Button(action: {
                                     //                                AddBasketAndTeeTip.selectedABasket.sendDonation()
-                                    game.currentHoleIndex = number - 1
+                                    withAnimation {
+                                        game.currentHoleIndex = number - 1
+                                    }
                                     sharePlayManager.send(game)
                                     print("Change Basket")
                                     showingScoreSheet = true
@@ -398,11 +415,13 @@ struct BasketPickerView: View {
                                         .fontWeight(.semibold)
                                         .fontDesign(.rounded)
                                         .foregroundStyle(game.currentHoleIndex + 1 == number ? Color.white : Color("Navy"))
-                                        .padding(.vertical, 8)
-                                        .padding(.horizontal, 35)
+                                        .padding(.horizontal, 25)
                                     //                                            .cornerRadius(12)
                                 })
-                                .glassEffect(.regular.tint(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime")))
+//                                .buttonStyle(.glass)
+                                .buttonStyle(.glassProminent)
+//                                .buttonStyle(.borderedProminent)
+                                .tint(game.currentHoleIndex + 1 == number ? Color("Teal") : game.currentHoleIndex < number ? Color(uiColor: .systemBackground) : Color("Lime"))
                                 .id(basket.number)
                             }
                         }
@@ -416,10 +435,13 @@ struct BasketPickerView: View {
                                 .fontWeight(.semibold)
                                 .fontDesign(.rounded)
                                 .foregroundStyle(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color.white : Color("Navy"))
-                                .padding(8)
                             //                                    .cornerRadius(12)
                         })
-                        .glassEffect(.regular.tint(game.currentHoleIndex == game.course?.baskets?.count ? Color("Teal") : Color(uiColor: .systemBackground)))
+//                        .buttonStyle(.glass)
+                        .buttonStyle(.glassProminent)
+//                        .buttonStyle(.borderedProminent)
+//                        .tint(Color("Teal"))
+                        .tint(game.currentHoleIndex  == game.course?.baskets?.count ?? 0 ? Color("Teal") : Color(uiColor: .systemBackground))
                         .id((game.course?.baskets?.count ?? 99)+1)
                     }
                     
