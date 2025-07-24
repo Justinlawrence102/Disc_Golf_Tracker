@@ -52,6 +52,7 @@ struct ContentView: View {
                 
             }
             .onAppear {
+                container.mainContext.processPendingChanges()
                 locationManager.requestLocation()
                 if !UserDefaults.standard.bool(forKey: "hasCompressedImages") {
                     let context = ModelContext(container)

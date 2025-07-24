@@ -39,6 +39,9 @@ struct DiskDash_Watch_Watch_AppApp: App {
                         }
                     }
                 }
+                .onAppear {
+                    sharedModelContainer.mainContext.processPendingChanges()
+                }
         }
         .modelContainer(sharedModelContainer)
     }
