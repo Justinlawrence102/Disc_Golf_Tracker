@@ -28,42 +28,7 @@ struct CreatePlayerView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    Button(action: {
-                        dismiss.callAsFunction()
-                    }) {
-                        Text("Cancel")
-                            .font(.body)
-                            .foregroundStyle(Color("Teal"))
-                    }
-                    Text("New Player")
-                        .font(.body)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(Color("Pink"))
-                        .frame(maxWidth: .infinity)
-
-                    Button(action: {
-                        if isNewPerson {
-                            playerContext.insert(player)
-                            player.scores = []
-                        }else {
-                            do {
-                                try playerContext.save()
-                            }catch {print("Could not save")}
-                        }
-                        dismiss.callAsFunction()
-                    }) {
-                        Text(isNewPerson ? "Save" : "Update")
-                            .font(.body)
-                            .foregroundStyle(Color("Teal"))
-                            .fontWeight(.semibold)
-                    }
-                }
-                .padding(12.0)
-                Spacer()
-            }
+        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
                     ZStack {
@@ -80,7 +45,7 @@ struct CreatePlayerView: View {
                     .padding()
                     .background(Color(UIColor.secondarySystemBackground))
                     .foregroundStyle(Color("Navy"))
-                    .cornerRadius(12)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
                     .padding([.leading, .bottom, .trailing])
 
                     
@@ -182,7 +147,36 @@ struct CreatePlayerView: View {
                 .scrollClipDisabled(true)
                 .padding([.leading, .bottom, .trailing], 12.0)
             }
-            .padding(.top, 40)
+            .navigationTitle("New Player")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading, content: {
+                    Button(action: {
+                        dismiss.callAsFunction()
+                    }, label: {
+                        Image(systemName: "xmark")
+                    })
+                    .tint(.primary)
+                })
+                
+                ToolbarItem(placement: .topBarTrailing, content: {
+                    Button(action: {
+                        if isNewPerson {
+                            playerContext.insert(player)
+                            player.scores = []
+                        }else {
+                            do {
+                                try playerContext.save()
+                            }catch {print("Could not save")}
+                        }
+                        dismiss.callAsFunction()
+                    }, label: {
+                        Image(systemName: "checkmark")
+                    })
+                    .buttonStyle(.glassProminent)
+                    .tint(.teal)
+                })
+            }
         }
         .sheet(isPresented: $showContactsSheet) {
             EmbeddedContactPicker(contact: $selectedContact)

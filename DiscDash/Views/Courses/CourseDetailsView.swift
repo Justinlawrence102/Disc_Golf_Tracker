@@ -78,10 +78,8 @@ struct CourseDetailsView: View {
             }
         }
         .sheet(item: $showEditCourseSheet, content: {_ in 
-            NavigationStack {
-                CreateCourseDetailsView(course: course, isNewCourse: false, createCourseModalShowing: $showEditCourseSheet)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
+            CreateCourseDetailsView(course: course, isNewCourse: false, createCourseModalShowing: $showEditCourseSheet)
+                .navigationBarTitleDisplayMode(.inline)
         })
         .alert("Delete Course", isPresented: $showDeleteCourseAlert) {
             Button("Delete", role: .destructive) {

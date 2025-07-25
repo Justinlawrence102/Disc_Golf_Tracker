@@ -23,6 +23,9 @@ struct HomeView: View {
 
     @State private var showAllGames = false
     
+    @State private var inMapView = false
+    @State private var inMapViewPercent = 0.0
+    @State private var scrollPosition = ScrollPosition(edge: .top)
 //    @State var createdNewCourse: Course?
     
     var body: some View {
@@ -37,16 +40,46 @@ struct HomeView: View {
                     Spacer()
                 }
                 .background(Color(UIColor.systemGroupedBackground))
-                ScrollView {
-                    VStack(spacing: 8.0) {
-                        RecentGamesView(showAllGames: $showAllGames, selectedGame: $selectedGame)
-                        PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer)                        
-                        CoursesSectionView(showCreateNewCourse: $showCreateNewCourse)
+                GeometryReader { geometry in
+                    ScrollView {
+                        VStack(spacing: 8.0) {
+                            RecentGamesView(showAllGames: $showAllGames, selectedGame: $selectedGame)
+                                .safeAreaPadding(.horizontal, 12)
+                            PlayersSectionView(showCreateNewPlayer: $showCreateNewPlayer)
+                                .safeAreaPadding(.horizontal, 12)
+                            
+                            CoursesSectionView(showCreateNewCourse: $showCreateNewCourse, scrollPosition: $scrollPosition, inMapView: $inMapView, inMapViewPercent: inMapViewPercent, height: geometry.size.height+geometry.safeAreaInsets.top)
+                        }
                     }
-                    .safeAreaPadding(.horizontal)
-                    .safeAreaPadding(.bottom)
+                    .scrollPosition($scrollPosition)
+                    .scrollDisabled(inMapView)
+                    .onScrollGeometryChange(for: Double.self) { geo in
+                        let scrollHeight = geo.contentSize.height
+                        let offset = geo.contentOffset.y
+                        let mapHeight = geometry.size.height+geometry.safeAreaInsets.top
+                        
+                        let startZooming = (scrollHeight-offset) - mapHeight
+                        if startZooming > 425 {
+                            return 0
+                        }else {
+                            return 1-(startZooming/425)
+                        }
+                    } action: { oldValue, newValue in
+                        if newValue > 0.5 && !inMapView {
+                            inMapViewPercent = 1
+                            withAnimation {
+                                scrollPosition = ScrollPosition(edge: .bottom)
+                                inMapView = true
+                            }
+                        }else if newValue > 0 {
+                            inMapViewPercent = newValue
+                        }else {
+                            inMapViewPercent = 0
+                        }
+                    }
                 }
             }
+            .ignoresSafeArea(edges: .bottom)
             .navigationDestination(isPresented: $sharePlayManager.isDeepLinkingToGame) {
                 if let game = sharePlayManager.gameModel {
                     GameView(game: game, selectedGame: $selectedGame)
@@ -77,16 +110,30 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
-                        showCreateNewGame.toggle()
-                    }) {
-                        HStack(alignment: .center, spacing: 4) {
-                            Image(systemName: "plus")
-                                .font(.caption.weight(.semibold))
-                            Text("New Game")
+                        if inMapView{
+                            withAnimation {
+                                scrollPosition = ScrollPosition(y: 100)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    withAnimation {
+                                        inMapView = false
+                                    }
+                                }
+                            }
+                        }else {
+                            showCreateNewGame.toggle()
                         }
-                        .font(.subheadline.weight(.semibold))
-                        .padding(6)
-
+                    }) {
+                        if inMapView {
+                            Image(systemName: "xmark")
+                            .font(.subheadline.weight(.semibold))
+                        }else {
+                            HStack(alignment: .center, spacing: 4) {
+                                Image(systemName: "plus")
+                                    .font(.caption.weight(.semibold))
+                                Text("New Game")
+                            }
+                            .font(.subheadline.weight(.semibold))
+                        }
                     }
                 }
             }
@@ -96,25 +143,12 @@ struct HomeView: View {
             })
             .sheet(isPresented: $showCreateNewPlayer, content: {
                 CreatePlayerView(player: Player(), isNewPerson: true)
-                    .presentationDetents([.medium])
+                    .presentationDetents([.height(600)])
                     .interactiveDismissDisabled()
             })
             .sheet(item:$showCreateNewCourse) { item in
-                NavigationStack {
-                    CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $showCreateNewCourse)
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction, content: {
-                                Button(action: {
-                                    showCreateNewCourse = nil
-                                }, label: {
-                                    Text("Cancel")
-                                })
-                            })
-                        }
-                }
-                .tint(Color("Teal"))
+                CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $showCreateNewCourse)
             }
-            //put them here
         }
         .tint(Color("Teal"))
         .sheet(item: $sceneDelegate.importedGame) { game in
@@ -261,10 +295,15 @@ private struct TopThreeResultsView: View {
 }
 private struct CoursesSectionView: View {
     @Binding var showCreateNewCourse: Course?
-    
+    @Binding var scrollPosition: ScrollPosition
     @Query(sort: [SortDescriptor(\Course.name)]) private var courses: [Course]
+    
+    @Binding var inMapView: Bool
+    var inMapViewPercent: CGFloat
+    var height: CGFloat
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             HStack(alignment: .center, spacing: 6) {
                 Text("Courses")
                     .font(.title3.weight(.semibold))
@@ -279,6 +318,7 @@ private struct CoursesSectionView: View {
                 .padding(8)
                 .buttonStyle(.glass)
             }
+            .safeAreaPadding(.horizontal, 12)
             .foregroundStyle(Color("Navy"))
             .padding(.bottom, -4)
             .padding(.top)
@@ -320,25 +360,39 @@ private struct CoursesSectionView: View {
                         Spacer()
                     }
                 }
-                NavigationLink(destination: {
-                    CoursesMapView()
-                        .navigationTitle("Map")
-                        .navigationBarTitleDisplayMode(.inline)
-                }, label: {
-                    HStack(alignment: .center) {
-                        Image(systemName: "map.fill")
-                            .foregroundStyle(Color("Pink"))
-                        Text("Map")
-                            .foregroundStyle(Color("Navy"))
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 20)
-                    .background(Color(UIColor.secondarySystemGroupedBackground))
-                    .cornerRadius(10)
-                })
+                .safeAreaPadding(.horizontal, 12)
+            }
+            ZStack {
+                CoursesMapView()
+                //                    .padding(.horizontal, -12)
+                    .disabled(!inMapView)
+                    .scrollDisabled(!inMapView)
+                    .frame(height: height)
+                    .clipShape(RoundedRectangle(cornerRadius: 16*(1-inMapViewPercent)))
+                    .padding(.horizontal, 12*(1-inMapViewPercent))
+                    .ignoresSafeArea(edges: .bottom)
+                    .overlay(alignment: .top, content: {
+                        if !inMapView {
+                            Image(systemName: "chevron.compact.up")
+                                .contentTransition(.interpolate)
+                                .foregroundStyle(Color(UIColor.tertiarySystemBackground))
+                                .shadow(radius: 8)
+                                .font(.system(size: 50, weight: .semibold))
+                                .padding(.top, 16)
+                        }
+                    })
+                if !inMapView {
+                    //make the map 'tapable' so you can enter the map without scrolling
+                    Rectangle()
+                        .fill(.clear)
+                        .contentShape(Rectangle())
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .onTapGesture {
+                            withAnimation {
+                                scrollPosition = ScrollPosition(edge: .bottom)
+                            }
+                        }
+                }
             }
         }
     }

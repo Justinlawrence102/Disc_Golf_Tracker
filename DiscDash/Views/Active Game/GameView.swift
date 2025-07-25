@@ -22,6 +22,9 @@ struct GameView: View {
     @State var mapManager = MapManager()
     
     @State var showingEditBasketInfoSheet = false
+    @State var showingAddBasketAlert  = false
+    @State var showingAddTeeAlert  = false
+    
     @State var showDeleteGameAlert = false
 
     @State var showingScoreSheet = true
@@ -56,9 +59,9 @@ struct GameView: View {
                             VStack(spacing: 12) {
                                 TopOfSheetDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, showFullMapToggle: $showFullMapToggle)
                                     .padding(.horizontal, 8.0)
-                                ManageBasketDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, game: game, showingEditBasketInfoSheet: $showingEditBasketInfoSheet)
+                                ManageBasketDetailsView(animation: animation, sheetIsUp: sheetIsUp, basket: basket, game: game, showingEditBasketInfoSheet: $showingEditBasketInfoSheet, showingAddTeeAlert: $showingAddTeeAlert, showingAddBasketAlert: $showingAddBasketAlert)
                                     .frame(minHeight: 390, alignment: .top)
-                                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground).opacity(1), Color(UIColor.systemBackground).opacity(1)]))
+                                    .background(Gradient(colors: [Color(.lime).opacity(0), Color(.lime).opacity(1)]))
                             }
                         })
                 }
@@ -78,8 +81,8 @@ struct GameView: View {
             VStack {
                 Spacer()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 80)
-                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0.6), Color(UIColor.systemBackground).opacity(0)]))
+                    .frame(height: 40)
+                    .background(Gradient(colors: [Color(UIColor.systemBackground).opacity(0.8), Color(UIColor.systemBackground).opacity(0)]))
                 Spacer()
             }
             VStack {
@@ -171,6 +174,28 @@ struct GameView: View {
                         Text("Hi?")
                     }
                 }
+                .alert("How would you like to add a new basket?", isPresented: $showingAddBasketAlert) {
+                    Button("Add Basket") {
+                        game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }
+                    Button("Replace Exisiting Baskets", role: .destructive) {
+                        game.currentBasket!.basketLatitudes.removeAll()
+                        game.currentBasket!.basketLongitudes.removeAll()
+                        game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }
+                    Button("Cancel", role: .cancel) { }
+                }
+                .alert("How would you like to add a new tee?", isPresented: $showingAddTeeAlert) {
+                    Button("Add Tee") {
+                        game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }
+                    Button("Replace Exisiting Tees", role: .destructive) {
+                        game.currentBasket!.teeLatitudes.removeAll()
+                        game.currentBasket!.teeLongitudes.removeAll()
+                        game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
+                    }
+                    Button("Cancel", role: .cancel) { }
+                }
         })
         .onChange(of: game.currentHoleIndex) {
             withAnimation {
@@ -257,8 +282,8 @@ struct ManageBasketDetailsView: View {
     
     @Binding var showingEditBasketInfoSheet: Bool
 
-    @State var showingAddTeeAlert = false
-    @State var showingAddBasketAlert = false
+    @Binding var showingAddTeeAlert: Bool
+    @Binding var showingAddBasketAlert: Bool
 
     var body: some View {
         VStack(spacing: 12.0) {
@@ -370,28 +395,7 @@ struct ManageBasketDetailsView: View {
             }
             .padding(.horizontal, 12)
         }
-        .alert("How would you like to add a new basket?", isPresented: $showingAddBasketAlert) {
-            Button("Add Basket") {
-                game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-            }
-            Button("Replace Exisiting Baskets", role: .destructive) {
-                game.currentBasket!.basketLatitudes.removeAll()
-                game.currentBasket!.basketLongitudes.removeAll()
-                game.currentBasket!.saveBasketLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-            }
-            Button("Cancel", role: .cancel) { }
-        }
-        .alert("How would you like to add a new tee?", isPresented: $showingAddTeeAlert) {
-            Button("Add Tee") {
-                game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-            }
-            Button("Replace Exisiting Tees", role: .destructive) {
-                game.currentBasket!.teeLatitudes.removeAll()
-                game.currentBasket!.teeLongitudes.removeAll()
-                game.currentBasket!.saveTeeLocation(holeNumber: game.currentHoleIndex, locationManager: locationManager)
-            }
-            Button("Cancel", role: .cancel) { }
-        }
+        
     }
 }
 struct CurrentBasketInfoView: View {

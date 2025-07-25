@@ -14,7 +14,7 @@ import MapKit
 struct CreateCourseDetailsView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
-
+    
     @State var course = Course()
     @State private var selectedPhotoItem: PhotosPickerItem?
     
@@ -29,80 +29,89 @@ struct CreateCourseDetailsView: View {
     }
     
     var body: some View {
-        VStack {
-            Form {
-                TextField("Name", text: $course.name, prompt: Text("Course Name"))
-                    .foregroundStyle(Color("Navy"))
-                    .textInputAutocapitalization(.words)
-                
-                ZStack {
-                    //when the map is added, the nav title becomes black for some reason?
-                    Map(initialPosition: .region(course.getInitailMapPosition()))
-                        .onMapCameraChange { context in
-                            course.latitude = context.region.center.latitude
-                            course.longitude = context.region.center.longitude
-                            course.lookUpCurrentLocation()
-                        }
-                        .mapStyle(.standard(elevation: .realistic))
-                        .frame(height: 200)
-                        .cornerRadius(12)
-                    //
-                    Image(systemName: "mappin")
-                        .shadow(color: .blue, radius: 12)
-                        .foregroundStyle(.red)
-                        .font(.title)
-                }
-                VStack {
-                    PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
-                        HStack {
-                            Text("Photo")
-                                .foregroundStyle(Color("Navy"))
-                            Spacer()
-                            Image(systemName: "camera.fill")
-                            Button(action: {
-                                course.image = nil
-                            }, label: {
-                                Image(systemName: "xmark")
-                                    .foregroundStyle(Color("Pink"))
-                            })
-                        }
+        NavigationStack {
+            VStack {
+                Form {
+                    TextField("Name", text: $course.name, prompt: Text("Course Name"))
+                        .foregroundStyle(Color("Navy"))
+                        .textInputAutocapitalization(.words)
+                    
+                    ZStack {
+                        //when the map is added, the nav title becomes black for some reason?
+                        Map(initialPosition: .region(course.getInitailMapPosition()))
+                            .onMapCameraChange { context in
+                                course.latitude = context.region.center.latitude
+                                course.longitude = context.region.center.longitude
+                                course.lookUpCurrentLocation()
+                            }
+                            .mapStyle(.standard(elevation: .realistic))
+                            .frame(height: 200)
+                            .cornerRadius(12)
+                        //
+                        Image(systemName: "mappin")
+                            .shadow(color: .blue, radius: 12)
+                            .foregroundStyle(.red)
+                            .font(.title)
                     }
-                    .onChange(of: selectedPhotoItem, initial: false, {
-                        Task {
-                            if let data = try? await selectedPhotoItem?.loadTransferable(type: Data.self) {
-                                if let uiImage = UIImage(data: data) {
-                                    if let compressedData = uiImage.jpegData(compressionQuality: 0) {
-                                        course.image = compressedData
-                                    }
-                                }
-                                //                                course.image = data
+                    VStack {
+                        PhotosPicker(selection: $selectedPhotoItem, matching: .images) {
+                            HStack {
+                                Text("Photo")
+                                    .foregroundStyle(Color("Navy"))
+                                Spacer()
+                                Image(systemName: "camera.fill")
+                                Button(action: {
+                                    course.image = nil
+                                }, label: {
+                                    Image(systemName: "xmark")
+                                        .foregroundStyle(Color("Pink"))
+                                })
                             }
                         }
-                    })
-                    if let courseImage = course.image, let image = UIImage(data: courseImage) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(height: 200)
-                            .cornerRadius(10)
+                        .onChange(of: selectedPhotoItem, initial: false, {
+                            Task {
+                                if let data = try? await selectedPhotoItem?.loadTransferable(type: Data.self) {
+                                    if let uiImage = UIImage(data: data) {
+                                        if let compressedData = uiImage.jpegData(compressionQuality: 0) {
+                                            course.image = compressedData
+                                        }
+                                    }
+                                    //                                course.image = data
+                                }
+                            }
+                        })
+                        if let courseImage = course.image, let image = UIImage(data: courseImage) {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(height: 200)
+                                .cornerRadius(10)
+                        }
                     }
                 }
             }
-        }
-        .background(Color(UIColor.systemGroupedBackground))
-        .navigationTitle( isNewCourse ? "Create Course" : "Edit Course")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                NavigationLink {
-                    CreateCourseBasketListView(course: course, createCourseModalShowing: $createCourseModalShowing, isNewCourse: isNewCourse)
-                }label: {
-                    HStack {
-                        Text("Next")
+            .background(Color(UIColor.systemGroupedBackground))
+            .navigationTitle( isNewCourse ? "Create Course" : "Edit Course")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading, content: {
+                    Button(action: {
+                        createCourseModalShowing = nil
+                    }, label: {
+                        Image(systemName: "xmark")
+                    })
+                    .tint(.primary)
+                })
+                
+                ToolbarItem(placement: .primaryAction) {
+                    NavigationLink {
+                        CreateCourseBasketListView(course: course, createCourseModalShowing: $createCourseModalShowing, isNewCourse: isNewCourse)
+                    }label: {
                         Image(systemName: "chevron.right")
                     }
                 }
             }
         }
+        .tint(Color("Teal"))
     }
 }
 
@@ -150,8 +159,10 @@ struct CreateCourseBasketListView: View {
                     }
                     dismiss.callAsFunction()
                 }, label: {
-                    Text(isNewCourse ? "Save" : "Update")
+                    Image(systemName: "checkmark")
                 })
+                .buttonStyle(.glassProminent)
+                .tint(.teal)
             })
         }
         .onAppear(){
@@ -218,9 +229,11 @@ struct BasketDetailRow: View {
     }
 }
 
-//#Preview {
-////    let course = Course(name: "Sample")
-////    CreateCourseDetailsView(course: course)
-////    CreateCourseDetailsView()
-////        .modelContainer(CoursePreviewContainer)
-//}
+struct CreateCourseView_Previews: PreviewProvider {
+
+    static var previews: some View {
+        @State var createCourseModalShowing: Course? = Course()
+        CreateCourseDetailsView(course: Course(), isNewCourse: true, createCourseModalShowing: $createCourseModalShowing)
+            .modelContainer(CoursePreviewContainer)
+    }
+}

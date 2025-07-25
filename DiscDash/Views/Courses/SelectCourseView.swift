@@ -116,26 +116,23 @@ struct SelectCourseView: View {
                     Button(action: {
                         showCreateNewGameSheet = false
                     }, label: {
-                        Text("Cancel")
+                        Image(systemName: "xmark")
                     })
                 })
             }
         }
         .sheet(item: $selectedItem) { item in
-            NavigationStack {
-                CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse, createCourseModalShowing: $selectedItem)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction, content: {
-                            Button(action: {
-                                selectedItem = nil
-                                print("Cancel")
-                            }, label: {
-                                Text("Cancel")
-                            })
+            CreateCourseDetailsView(course: item, isNewCourse: isCreatingNewCourse, createCourseModalShowing: $selectedItem)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction, content: {
+                        Button(action: {
+                            selectedItem = nil
+                            print("Cancel")
+                        }, label: {
+                            Text("Cancel")
                         })
-                    }
-            }
-            .tint(Color("Teal"))
+                    })
+                }
         }
         .sheet(isPresented: $showSearchCoursesSheet) {
             NavigationStack {
@@ -182,6 +179,7 @@ struct SelectPlayerView: View {
                             .font(.title2)
                             .foregroundStyle(Color("Teal"))
                     }
+                    .contentShape(Rectangle())
                 })
                 .buttonStyle(.plain)
             }
@@ -208,9 +206,11 @@ struct SelectPlayerView: View {
                     }
                     print("Start Game!")
                 }, label: {
-                    Text("Start Game")
+                    Image(systemName: "checkmark")
                 })
+                .buttonStyle(.glassProminent)
                 .disabled(players.filter({$0.isSelected}).count == 0)
+                .tint(.teal)
             }
         }
         .sheet(isPresented: $showCreateNewPlayer, content: {

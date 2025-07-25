@@ -4,7 +4,33 @@
   },
   "groups" : [
     {
-      "blur-material" : null,
+      "blend-mode" : "lighten",
+      "blur-material" : 0,
+      "layers" : [
+        {
+          "image-name" : "upperLayer 2.png",
+          "name" : "upperLayer 2"
+        }
+      ],
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          -4.609434118713392,
+          -40.137265805456884
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.1
+      }
+    },
+    {
+      "blend-mode" : "lighten",
+      "blur-material" : 0.16,
       "layers" : [
         {
           "hidden" : false,
@@ -12,15 +38,22 @@
           "name" : "plus"
         }
       ],
-      "lighting" : "individual",
+      "lighting" : "combined",
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          -46.33974480281479,
+          -54.108922722941614
+        ]
+      },
       "shadow" : {
         "kind" : "none",
         "opacity" : 0.5
       },
       "specular" : true,
       "translucency" : {
-        "enabled" : false,
-        "value" : 0.5
+        "enabled" : true,
+        "value" : 0.38
       }
     },
     {
@@ -29,35 +62,54 @@
         {
           "blend-mode-specializations" : [
             {
-              "value" : "hard-light"
+              "value" : "screen"
             },
             {
               "appearance" : "dark",
               "value" : "screen"
             }
           ],
+          "fill" : "none",
           "glass" : true,
+          "hidden" : false,
           "image-name" : "text.png",
-          "name" : "text"
+          "name" : "text",
+          "opacity" : 1,
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              -15.227436191105658,
+              -5.07463410778086
+            ]
+          }
+        },
+        {
+          "blend-mode" : "normal",
+          "glass" : true,
+          "hidden" : false,
+          "image-name" : "bottomDisk.png",
+          "name" : "bottomDisk"
         },
         {
           "blend-mode" : "normal",
           "fill" : "none",
           "glass" : true,
-          "hidden" : false,
+          "hidden" : true,
           "image-name" : "disk 2.png",
           "name" : "disk 2"
-        },
-        {
-          "hidden" : true,
-          "image-name" : "disk.png",
-          "name" : "disk"
         }
       ],
       "lighting" : "combined",
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          -4.609434118713392,
+          -40.137265805456884
+        ]
+      },
       "shadow" : {
         "kind" : "neutral",
-        "opacity" : 0.5
+        "opacity" : 0.98
       },
       "translucency" : {
         "enabled" : true,
