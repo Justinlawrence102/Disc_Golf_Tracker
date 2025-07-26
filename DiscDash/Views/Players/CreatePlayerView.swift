@@ -95,48 +95,48 @@ struct CreatePlayerView: View {
                         .foregroundStyle(Color("Navy"))
                     ScrollView(.horizontal) {
                         HStack(spacing: 12.0){
-//                            Button(action: {
-//                                showImagePickerSheet = true
-//                            }, label: {
-//                                Image(systemName: "camera.fill")
-//                                    .frame(width: 75, height: 75)
-//                                    .background(Color("Teal"))
-//                                    .cornerRadius(37.5)
-//                                    .tint(.white)
-//                                    .font(.title)
-//                            })
-//                            .onChange(of: model.image) {
-//                                old, new in
-//                                Task {
-//                                    if let image = model.image {
-//                                        if let compressed = resizeImage(image: image, maxSize: 150) {
-//                                           model.image = compressed
-//                                           model.showEditProfileSheet = true
-//                                       }
-//                                    }
-//                                }
-//                            }
-                            PhotosPicker(selection: $selectedImage, matching: .images) {
+                            Button(action: {
+                                showImagePickerSheet = true
+                            }, label: {
                                 Image(systemName: "camera.fill")
                                     .frame(width: 75, height: 75)
                                     .background(Color("Teal"))
                                     .cornerRadius(37.5)
                                     .tint(.white)
                                     .font(.title)
-                            }
-                            .onChange(of: selectedImage) {
+                            })
+                            .onChange(of: model.image) {
                                 old, new in
                                 Task {
-                                    if let selectedImage = selectedImage, let data = try? await selectedImage.loadTransferable(type: Data.self) {
-                                        if let uiImage = UIImage(data: data) {
-                                            if let compressed = resizeImage(image: uiImage, maxSize: 150) {
-                                                model.image = compressed
-                                                model.showEditProfileSheet = true
-                                            }
-                                        }
+                                    if let image = model.image {
+                                        if let compressed = resizeImage(image: image, maxSize: 150) {
+                                           model.image = compressed
+                                           model.showEditProfileSheet = true
+                                       }
                                     }
                                 }
                             }
+//                            PhotosPicker(selection: $selectedImage, matching: .images) {
+//                                Image(systemName: "camera.fill")
+//                                    .frame(width: 75, height: 75)
+//                                    .background(Color("Teal"))
+//                                    .cornerRadius(37.5)
+//                                    .tint(.white)
+//                                    .font(.title)
+//                            }
+//                            .onChange(of: selectedImage) {
+//                                old, new in
+//                                Task {
+//                                    if let selectedImage = selectedImage, let data = try? await selectedImage.loadTransferable(type: Data.self) {
+//                                        if let uiImage = UIImage(data: data) {
+//                                            if let compressed = resizeImage(image: uiImage, maxSize: 150) {
+//                                                model.image = compressed
+//                                                model.showEditProfileSheet = true
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
                         
                             Button(action: {
                                 let pasteboard = UIPasteboard.general
@@ -220,6 +220,7 @@ struct CreatePlayerView: View {
         .sheet(isPresented: $model.showEditProfileSheet, content: {
             EditProfileImageView(model: $model, player: $player)
                 .presentationDetents([.height(430)])
+                .interactiveDismissDisabled()
         })
         
         .onChange(of: selectedContact) {
