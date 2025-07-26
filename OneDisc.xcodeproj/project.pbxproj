@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9805405F2AC65397006541BF /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 9805405E2AC65397006541BF /* data.json */; };
+		983144C12E351713004C7221 /* RemoveImageBackgroundModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983144C02E35170A004C7221 /* RemoveImageBackgroundModel.swift */; };
+		983144C32E3518FD004C7221 /* EditProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983144C22E3518FD004C7221 /* EditProfileImageView.swift */; };
+		983144C52E3527ED004C7221 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983144C42E3527EB004C7221 /* ImagePicker.swift */; };
 		983B371A2AC89FC2003DD6DE /* player-file-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 983B37182AC89C0A003DD6DE /* player-file-icon.icns */; };
 		9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */; };
 		987861652C1FC49900339AFB /* ImportGameWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987861642C1FC49900339AFB /* ImportGameWizardView.swift */; };
@@ -127,6 +130,9 @@
 
 /* Begin PBXFileReference section */
 		9805405E2AC65397006541BF /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = data.json; path = scripts/data.json; sourceTree = SOURCE_ROOT; };
+		983144C02E35170A004C7221 /* RemoveImageBackgroundModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveImageBackgroundModel.swift; sourceTree = "<group>"; };
+		983144C22E3518FD004C7221 /* EditProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileImageView.swift; sourceTree = "<group>"; };
+		983144C42E3527EB004C7221 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		983B37182AC89C0A003DD6DE /* player-file-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "player-file-icon.icns"; sourceTree = "<group>"; };
 		9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		987861642C1FC49900339AFB /* ImportGameWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportGameWizardView.swift; sourceTree = "<group>"; };
@@ -329,6 +335,9 @@
 		98D3EC732ABF07AB00ADC565 /* Players */ = {
 			isa = PBXGroup;
 			children = (
+				983144C42E3527EB004C7221 /* ImagePicker.swift */,
+				983144C02E35170A004C7221 /* RemoveImageBackgroundModel.swift */,
+				983144C22E3518FD004C7221 /* EditProfileImageView.swift */,
 				98D3EC752ABF07B200ADC565 /* CreatePlayerView.swift */,
 				9876B8862AC0BB6400434331 /* PlayerDetailsView.swift */,
 				98FA7B722AC4E84200C2A8D3 /* CNContactVC.swift */,
@@ -536,6 +545,7 @@
 				9876B8872AC0BB6400434331 /* PlayerDetailsView.swift in Sources */,
 				98D3EC5A2ABF075C00ADC565 /* Course.swift in Sources */,
 				98D3EC6A2ABF079A00ADC565 /* ResultsView.swift in Sources */,
+				983144C12E351713004C7221 /* RemoveImageBackgroundModel.swift in Sources */,
 				98D3EC702ABF07A800ADC565 /* HomeView.swift in Sources */,
 				989007502C22332C00FBDD4F /* CoursesMapView.swift in Sources */,
 				988967D12C1CFFE100695FB4 /* MapManager.swift in Sources */,
@@ -545,6 +555,7 @@
 				98D3EC5B2ABF075C00ADC565 /* Game.swift in Sources */,
 				98D3EC7A2ABF085400ADC565 /* SharedViews.swift in Sources */,
 				98D3EC422ABF06E100ADC565 /* OneDiscApp.swift in Sources */,
+				983144C52E3527ED004C7221 /* ImagePicker.swift in Sources */,
 				98D3EC5F2ABF077200ADC565 /* AcivitySharingViewController.swift in Sources */,
 				98FA7B752AC5AF5A00C2A8D3 /* SearchCourseView.swift in Sources */,
 				98FA7B712AC46D5400C2A8D3 /* AddBasketAndTeeTip.swift in Sources */,
@@ -559,6 +570,7 @@
 				98D3EC602ABF077200ADC565 /* SharePlayActivity.swift in Sources */,
 				98D3EC712ABF07A800ADC565 /* SelectCourseView.swift in Sources */,
 				98FA7B732AC4E84200C2A8D3 /* CNContactVC.swift in Sources */,
+				983144C32E3518FD004C7221 /* EditProfileImageView.swift in Sources */,
 				98EB37452AC70E1C007E119E /* SceneDelegate.swift in Sources */,
 				989007582C28A15500FBDD4F /* ScoreSheetView.swift in Sources */,
 			);

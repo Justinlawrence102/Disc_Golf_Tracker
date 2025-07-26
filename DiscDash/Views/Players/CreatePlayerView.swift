@@ -16,6 +16,11 @@ struct CreatePlayerView: View {
     @Environment(\.dismiss) private var dismiss
     @State var player: Player
     @State var showContactsSheet = false
+    @State var showImagePickerSheet = false
+    
+    @State var model = RemoveImageBackgroundModel()
+
+
     @State var selectedContact = CNContact()
     var isNewPerson: Bool
 
@@ -90,6 +95,27 @@ struct CreatePlayerView: View {
                         .foregroundStyle(Color("Navy"))
                     ScrollView(.horizontal) {
                         HStack(spacing: 12.0){
+//                            Button(action: {
+//                                showImagePickerSheet = true
+//                            }, label: {
+//                                Image(systemName: "camera.fill")
+//                                    .frame(width: 75, height: 75)
+//                                    .background(Color("Teal"))
+//                                    .cornerRadius(37.5)
+//                                    .tint(.white)
+//                                    .font(.title)
+//                            })
+//                            .onChange(of: model.image) {
+//                                old, new in
+//                                Task {
+//                                    if let image = model.image {
+//                                        if let compressed = resizeImage(image: image, maxSize: 150) {
+//                                           model.image = compressed
+//                                           model.showEditProfileSheet = true
+//                                       }
+//                                    }
+//                                }
+//                            }
                             PhotosPicker(selection: $selectedImage, matching: .images) {
                                 Image(systemName: "camera.fill")
                                     .frame(width: 75, height: 75)
@@ -104,9 +130,9 @@ struct CreatePlayerView: View {
                                     if let selectedImage = selectedImage, let data = try? await selectedImage.loadTransferable(type: Data.self) {
                                         if let uiImage = UIImage(data: data) {
                                             if let compressed = resizeImage(image: uiImage, maxSize: 150) {
-                                                player.image = compressed.pngData()!
+                                                model.image = compressed
+                                                model.showEditProfileSheet = true
                                             }
-//                                            player.image = uiImage.jpegData(compressionQuality: 0.5)
                                         }
                                     }
                                 }
@@ -116,9 +142,9 @@ struct CreatePlayerView: View {
                                 let pasteboard = UIPasteboard.general
                                 if let uiImage = pasteboard.image {
                                     if let compressed = resizeImage(image: uiImage, maxSize: 150) {
-                                        player.image = compressed.pngData()!
+                                        model.image = compressed
+                                        model.showEditProfileSheet = true
                                     }
-//                                    player.image = image.jpegData(compressionQuality: 0.5)
                                 }
                                 print("Tapped Clipbard")
                             }, label: {
@@ -186,12 +212,24 @@ struct CreatePlayerView: View {
         }
         .sheet(isPresented: $showContactsSheet) {
             EmbeddedContactPicker(contact: $selectedContact)
-//            CNContactViewControllerRepresentable(contact: $selectedContact)
                 .edgesIgnoringSafeArea(.all)
         }
+        .sheet(isPresented: $showImagePickerSheet, content: {
+            ImagePicker(selectedImage: $model.image)
+        })
+        .sheet(isPresented: $model.showEditProfileSheet, content: {
+            EditProfileImageView(model: $model, player: $player)
+                .presentationDetents([.height(430)])
+        })
+        
         .onChange(of: selectedContact) {
-            if let image = selectedContact.thumbnailImageData {
-                player.image = image
+            if let data = selectedContact.thumbnailImageData {
+                if let uiImage = UIImage(data: data) {
+                    if let compressed = resizeImage(image: uiImage, maxSize: 150) {
+                        model.image = compressed
+                        model.showEditProfileSheet = true
+                    }
+                }
             }
         }
     }
