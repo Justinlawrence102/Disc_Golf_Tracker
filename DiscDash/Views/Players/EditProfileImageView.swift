@@ -46,7 +46,6 @@ struct EditProfileImageView: View {
                     }, label: {
                         Image(systemName: "checkmark")
                     })
-                    .buttonStyle(.glassProminent)
                     .tint(.teal)
                 })
             }
