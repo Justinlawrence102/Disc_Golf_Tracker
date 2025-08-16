@@ -69,7 +69,9 @@ struct HomeView: View {
                             inMapViewPercent = 1
                             withAnimation {
                                 scrollPosition = ScrollPosition(edge: .bottom)
-                                inMapView = true
+                                withAnimation {
+                                    inMapView = true
+                                }
                             }
                         }else if newValue > 0 {
                             inMapViewPercent = newValue
@@ -123,20 +125,17 @@ struct HomeView: View {
                             showCreateNewGame.toggle()
                         }
                     }) {
-                        if inMapView {
-                            Image(systemName: "xmark")
-                            .font(.subheadline.weight(.semibold))
-                        }else {
-                            HStack(alignment: .center, spacing: 4) {
-                                Image(systemName: "plus")
-                                    .font(.caption.weight(.semibold))
+                        HStack {
+                            Image(systemName: inMapView ? "xmark" : "plus")
+                                .contentTransition(.symbolEffect(.replace))
+                            if !inMapView {
                                 Text("New Game")
                             }
-                            .font(.subheadline.weight(.semibold))
                         }
                     }
                 }
             }
+            .sensoryFeedback(.impact(weight: .light), trigger: inMapView)
             .sheet(isPresented: $showCreateNewGame, content: {
                 SelectCourseView(showCreateNewGameSheet: $showCreateNewGame)
                     .presentationDetents([.medium])
@@ -316,6 +315,7 @@ private struct CoursesSectionView: View {
                         .foregroundStyle(Color("Teal"))
                 })
                 .padding(8)
+                .buttonBorderShape(.circle)
                 .buttonStyle(.glass)
             }
             .safeAreaPadding(.horizontal, 12)
@@ -416,6 +416,7 @@ private struct PlayersSectionView: View {
                         .foregroundStyle(Color("Teal"))
                 })
                 .padding(8)
+                .buttonBorderShape(.circle)
                 .buttonStyle(.glass)
             }
             .foregroundStyle(Color("Navy"))

@@ -15,6 +15,7 @@ struct CoursesMapView: View {
 
     
     @Query var courses: [Course]
+    @State var showFullMapToggle = false
     
     var body: some View {
         Map() {
@@ -28,31 +29,48 @@ struct CoursesMapView: View {
                 }
             }
             
-            ForEach(baskets) {
-                hole in
-                ForEach(hole.teeCoordinates, id: \.self) {
-                    teeCoordinate in
-                    Marker("", systemImage: "\(hole.number ?? 1).square.fill", coordinate: teeCoordinate)
-                        .tint(Color("Teal"))
-                    ForEach(hole.basketCoordinates, id: \.self) {
-                        basketCoordiante in
-                        MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
-                            .stroke(.tertiary, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+            if showFullMapToggle {
+                ForEach(baskets) {
+                    hole in
+                    ForEach(hole.teeCoordinates, id: \.self) {
+                        teeCoordinate in
+                        Marker("", systemImage: "\(hole.number ?? 1).square.fill", coordinate: teeCoordinate)
+                            .tint(Color("Teal"))
+                        ForEach(hole.basketCoordinates, id: \.self) {
+                            basketCoordiante in
+                            MapPolyline(points: [MKMapPoint(basketCoordiante), MKMapPoint(teeCoordinate)])
+                                .stroke(.tertiary, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        }
                     }
+                    ForEach(hole.basketCoordinates, id: \.self) {
+                        basketCoordinate in
+                        Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
+                            .tint(Color("Pink"))
+                    }
+    //                if let index = baskets.firstIndex(of: hole), baskets.indices.contains(index+1){
+    //                    if let currentBasket = hole.basketCoordinates.first, let nextTee = baskets[index+1].teeCoordinates.first, hole.course?.uuid == baskets[index+1].course?.uuid {
+    //                        MapPolyline(points: [MKMapPoint(currentBasket), MKMapPoint(nextTee)])
+    //                            .stroke(.secondary, style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 5]))
+    //                    }
+    //                }
                 }
-                ForEach(hole.basketCoordinates, id: \.self) {
-                    basketCoordinate in
-                    Marker("", systemImage: "arrow.up.bin.fill", coordinate: basketCoordinate)
-                        .tint(Color("Pink"))
-                }
-//                if let index = baskets.firstIndex(of: hole), baskets.indices.contains(index+1){
-//                    if let currentBasket = hole.basketCoordinates.first, let nextTee = baskets[index+1].teeCoordinates.first, hole.course?.uuid == baskets[index+1].course?.uuid {
-//                        MapPolyline(points: [MKMapPoint(currentBasket), MKMapPoint(nextTee)])
-//                            .stroke(.secondary, style: StrokeStyle(lineWidth: 1, lineCap: .round, dash: [3, 5]))
-//                    }
-//                }
             }
         }
+        .overlay(alignment: .bottomTrailing, content: {
+            Button {
+                showFullMapToggle.toggle()
+                print("Toggle map")
+            } label: {
+                Image(systemName: "map.fill")
+                    .font(.title)
+                    .foregroundStyle(showFullMapToggle ? .white: Color("Teal") )
+                    .padding(8)
+            }
+            .buttonBorderShape(.circle)
+            .buttonStyle(.glassProminent)
+            .tint(showFullMapToggle ? Color("Teal") : .clear)
+            .padding(16)
+        })
     }
 }
 

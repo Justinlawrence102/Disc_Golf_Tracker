@@ -121,7 +121,52 @@ struct PlayerDetailsView: View {
             playerStats.reloadFilter(modelContext: modelContext)
         }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .topBarTrailing, content: {
+                Picker("Filter", selection: $selectedFilter) {
+                    Label("Lifetime", systemImage: "line.3.horizontal.decrease")
+                        .tag(0)
+                    
+                    Label("Today", systemImage: "calendar.day.timeline.left")
+                        .tag(1)
+                    
+                    Label("Last 30 Days", systemImage: "calendar")
+                        .tag(2)
+                    
+                    Label("This Year", systemImage: "calendar.badge.clock")
+                        .tag(3)
+                }
+                .onChange(of: selectedFilter){
+                    switch selectedFilter {
+                    case 0:
+                        playerStats.statFilter = .lifetime
+                    case 1:
+                        playerStats.statFilter = .today
+                    case 2:
+                        playerStats.statFilter = .lastMonth
+                    case 3:
+                        playerStats.statFilter = .thisYear
+                    default:
+                        playerStats.statFilter = .lifetime
+                    }
+                    playerStats.reloadFilter(modelContext: modelContext)
+                }
+                .pickerStyle(.menu)
+                .labelsHidden()
+                .tint(Color("Teal"))
+            })
+            ToolbarSpacer(.fixed, placement: .topBarTrailing)
+            ToolbarItem(placement: .topBarTrailing, content: {
+                if let image = player.image, let playerImage = UIImage(data: image) {
+                    ShareLink(item: player, preview: SharePreview(player.name, image: Image(uiImage: playerImage))){
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                }else {
+                    ShareLink(item: player, preview: SharePreview(player.name)) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                }
+            })
+            ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Button(action: {
                         showEditPlayerSheet.toggle()
@@ -129,54 +174,16 @@ struct PlayerDetailsView: View {
                         Label("Edit", systemImage: "pencil")
                             .foregroundColor(.red)
                     }
-                    if let image = player.image, let playerImage = UIImage(data: image) {
-                        ShareLink(item: player, preview: SharePreview(player.name, image: Image(uiImage: playerImage))){
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                    }else {
-                        ShareLink(item: player, preview: SharePreview(player.name)) {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                    }
                     Button(role: .destructive, action: {
                         playerToDelete = player
                         showDeletePlayerAlert = true
                     }, label: {
                         Label("Delete Player", systemImage: "trash.fill")
                     })
-                    Section(header: Text("Filter")) {
-                        
-                        Picker(selection: $selectedFilter, label: Text("Sorting options")) {
-                            Label("Lifetime", systemImage: "chart.bar.fill")
-                                .tag(0)
-                            
-                            Label("Today", systemImage: "calendar")
-                                .tag(1)
-                            
-                            Label("Last 30 Days", systemImage: "calendar")
-                                .tag(2)
-                            
-                            Label("This Year", systemImage: "calendar")
-                                .tag(3)
-                        }.onChange(of: selectedFilter){
-                            switch selectedFilter {
-                            case 0:
-                                playerStats.statFilter = .lifetime
-                            case 1:
-                                playerStats.statFilter = .today
-                            case 2:
-                                playerStats.statFilter = .lastMonth
-                            case 3:
-                                playerStats.statFilter = .thisYear
-                            default:
-                                playerStats.statFilter = .lifetime
-                            }
-                            playerStats.reloadFilter(modelContext: modelContext)
-                        }
-                    }
+                    
                 }
             label: {
-                Label("Info", systemImage: "ellipsis")
+                Label("Edit", systemImage: "pencil")
             }
                 //                .popoverTip(SharePlayerTip())
             }

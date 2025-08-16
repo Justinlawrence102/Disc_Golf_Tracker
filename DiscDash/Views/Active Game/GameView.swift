@@ -262,6 +262,7 @@ struct TopOfSheetDetailsView: View {
                     .font(.title)
                     .foregroundStyle(showFullMapToggle ? .white: Color("Teal") )
             }
+            .buttonBorderShape(.circle)
             .buttonStyle(.glassProminent)
             .tint(showFullMapToggle ? Color("Teal") : .clear)
             
